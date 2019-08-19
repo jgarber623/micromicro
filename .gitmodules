@@ -1,0 +1,3 @@
+[submodule "microformats_test_suite"]
+	path = spec/support/fixtures/microformats_test_suite
+	url = https://github.com/microformats/tests
