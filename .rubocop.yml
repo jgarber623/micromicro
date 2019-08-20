@@ -3,6 +3,7 @@ require:
   - rubocop-rspec
 
 Layout/AlignHash:
+  EnforcedColonStyle: table
   EnforcedHashRocketStyle: table
 
 Metrics/LineLength:
