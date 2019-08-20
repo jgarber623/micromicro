@@ -1,7 +1,7 @@
 lib = File.expand_path('lib', __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
-require 'micromicro/version'
+require 'micro_micro/version'
 
 Gem::Specification.new do |spec|
   spec.required_ruby_version = ['>= 2.4', '< 2.7']
@@ -33,4 +33,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rubocop-rspec', '~> 1.35'
   spec.add_development_dependency 'simplecov', '~> 0.17.0'
   spec.add_development_dependency 'simplecov-console', '~> 0.5.0'
+
+  spec.add_runtime_dependency 'nokogiri', '~> 1.10'
 end
