@@ -1,5 +1,6 @@
 require 'ostruct'
 
+require 'active_support/core_ext/object/blank'
 require 'nokogiri'
 
 require 'micro_micro/version'

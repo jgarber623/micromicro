@@ -27,7 +27,7 @@ module MicroMicro
         end
 
         def attributes
-          OpenStruct.new(merged_attributes.select { |_, value| value&.length })
+          @attributes ||= OpenStruct.new(selected_attributes)
         end
 
         private
@@ -35,14 +35,10 @@ module MicroMicro
         def extended_attributes
           {
             hreflang: node['hreflang'],
-            media: node['media'],
-            title: node['title'],
-            type: node['type']
-          }.transform_values { |value| value&.strip }
-        end
-
-        def merged_attributes
-          primary_attributes.merge(extended_attributes)
+            media:    node['media'],
+            title:    node['title'],
+            type:     node['type']
+          }.transform_values { |value| (value || '').strip }
         end
 
         def primary_attributes
@@ -50,6 +46,10 @@ module MicroMicro
             rels: node['rel'].strip.split(/\s+/).uniq.sort,
             text: node.content
           }
+        end
+
+        def selected_attributes
+          primary_attributes.merge(extended_attributes).select { |_, value| value.present? }
         end
       end
     end

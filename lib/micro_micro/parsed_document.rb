@@ -20,8 +20,8 @@ module MicroMicro
 
     def to_h
       {
-        items: items,
-        rels: rels.to_h,
+        items:      items,
+        rels:       rels.to_h,
         'rel-urls': rel_urls.to_h.transform_values(&:to_h)
       }
     end
