@@ -1,22 +1,16 @@
 module MicroMicro
   module Parsers
     class RelUrlsParser < BaseRelParser
-      def results
-        @results ||= OpenStruct.new(mapped_nodes)
-      end
-
       private
 
       def mapped_nodes
-        @mapped_nodes ||= nodes.each_with_object(obj) do |node, hash|
-          key = node['href'].to_sym
-
-          hash[key] = AttributesBuilder.new(node).attributes unless hash.key?(key)
-        end
+        enum_with_obj(Hash).each { |node, hash| process_node(node, hash) }
       end
 
-      def obj
-        @obj ||= Hash.new { |hash, key| hash[key] = {} }
+      def process_node(node, hash)
+        key = node['href'].to_sym
+
+        hash[key] = AttributesBuilder.new(node).attributes unless hash.key?(key)
       end
 
       class AttributesBuilder

@@ -1,24 +1,16 @@
 module MicroMicro
   module Parsers
     class RelsParser < BaseRelParser
-      def results
-        @results ||= OpenStruct.new(mapped_nodes.transform_values(&:uniq))
-      end
-
-      def self.symbols_from(value)
-        value.strip.split(/\s+/).uniq.map(&:to_sym)
-      end
-
       private
 
       def mapped_nodes
-        @mapped_nodes ||= nodes.each_with_object(obj) do |node, hash|
-          self.class.symbols_from(node['rel']).each { |rel| hash[rel] << node['href'].strip }
-        end
+        enum_with_obj(Array).each { |node, hash| process_node(node, hash) }.transform_values(&:uniq)
       end
 
-      def obj
-        @obj ||= Hash.new { |hash, key| hash[key] = [] }
+      def process_node(node, hash)
+        keys = node['rel'].strip.split(/\s+/).uniq.map(&:to_sym)
+
+        keys.each { |rel| hash[rel] << node['href'].strip }
       end
     end
   end
