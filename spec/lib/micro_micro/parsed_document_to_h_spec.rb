@@ -1,8 +1,8 @@
 describe MicroMicro::ParsedDocument, '#to_h' do
   let(:empty_results_hash) do
     {
-      items:      [],
-      rels:       {},
+      items: [],
+      rels: {},
       'rel-urls': {}
     }
   end

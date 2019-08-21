@@ -29,9 +29,9 @@ module MicroMicro
         def extended_attributes
           {
             hreflang: node['hreflang'],
-            media:    node['media'],
-            title:    node['title'],
-            type:     node['type']
+            media: node['media'],
+            title: node['title'],
+            type: node['type']
           }.transform_values { |value| (value || '').strip }
         end
 
