@@ -13,11 +13,11 @@ module MicroMicro
     end
 
     def rel_urls
-      @rel_urls ||= Parsers::RelUrlsParser.new(@doc, @base_url).results
+      @rel_urls ||= Parsers::RelUrlsParser.new(rels_node_set, resolved_base_url).results
     end
 
     def rels
-      @rels ||= Parsers::RelsParser.new(@doc, @base_url).results
+      @rels ||= Parsers::RelsParser.new(rels_node_set, resolved_base_url).results
     end
 
     def to_h
@@ -26,6 +26,24 @@ module MicroMicro
         rels: rels.to_h,
         'rel-urls': rel_urls.to_h.transform_values(&:to_h)
       }
+    end
+
+    private
+
+    def base_element
+      @base_element ||= @doc.css('base[href]').first
+    end
+
+    def rels_node_set
+      @rels_node_set ||= @doc.css('[href][rel]')
+    end
+
+    def resolved_base_url
+      @resolved_base_url ||= begin
+        return @base_url unless base_element
+
+        Absolutely.to_abs(base: @base_url, relative: base_element['href'])
+      end
     end
   end
 end

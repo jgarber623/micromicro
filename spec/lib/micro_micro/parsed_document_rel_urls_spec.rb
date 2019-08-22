@@ -6,7 +6,7 @@ describe MicroMicro::ParsedDocument, '#rel_urls' do
     let(:markup) { '<!doctype html><html><head><link rel="webmention" href="/webmentions"></head></html>' }
 
     let(:results) do
-      OpenStruct.new(:"#{relative_base}/webmentions" => OpenStruct.new(rels: ['webmention']))
+      OpenStruct.new("#{relative_base}/webmentions": OpenStruct.new(rels: ['webmention']))
     end
 
     it 'returns an OpenStruct' do
@@ -18,7 +18,7 @@ describe MicroMicro::ParsedDocument, '#rel_urls' do
     let(:markup) { '<!doctype html><html><head><base href="/foo/bar"><link rel="webmention" href="webmentions"></head></html>' }
 
     let(:results) do
-      OpenStruct.new(:"#{relative_base}/foo/webmentions" => OpenStruct.new(rels: ['webmention']))
+      OpenStruct.new("#{relative_base}/foo/webmentions": OpenStruct.new(rels: ['webmention']))
     end
 
     it 'returns an OpenStruct' do
@@ -30,7 +30,7 @@ describe MicroMicro::ParsedDocument, '#rel_urls' do
     let(:markup) { %(<!doctype html><html><head><base href="#{absolute_base}"><link rel="webmention" href="webmentions"></head></html>) }
 
     let(:results) do
-      OpenStruct.new(:"#{absolute_base}/webmentions" => OpenStruct.new(rels: ['webmention']))
+      OpenStruct.new("#{absolute_base}/webmentions": OpenStruct.new(rels: ['webmention']))
     end
 
     it 'returns an OpenStruct' do

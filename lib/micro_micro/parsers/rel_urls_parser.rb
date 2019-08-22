@@ -3,12 +3,12 @@ module MicroMicro
     class RelUrlsParser < BaseRelParser
       private
 
-      def mapped_nodes
+      def mapped_node_set
         enum_with_obj(Hash).each { |node, hash| process_node(node, hash) }
       end
 
       def process_node(node, hash)
-        key = Absolutely.to_abs(base: resolved_base_url, relative: node['href'].strip).to_sym
+        key = Absolutely.to_abs(base: base_url, relative: node['href'].strip).to_sym
 
         hash[key] = AttributesBuilder.new(node).attributes unless hash.key?(key)
       end
