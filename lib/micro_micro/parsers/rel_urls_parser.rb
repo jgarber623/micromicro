@@ -34,12 +34,7 @@ module MicroMicro
         end
 
         def extended_attributes
-          {
-            hreflang: node['hreflang'],
-            media: node['media'],
-            title: node['title'],
-            type: node['type']
-          }.transform_values { |value| (value || '').strip }
+          node.attributes.select { |key, _| %w[hreflang media title type].include?(key) }.transform_values { |value| value.to_s.strip }
         end
 
         def selected_attributes
