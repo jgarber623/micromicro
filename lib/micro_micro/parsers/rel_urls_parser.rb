@@ -26,6 +26,13 @@ module MicroMicro
 
         private
 
+        def base_attributes
+          {
+            rels: node['rel'].strip.split(/\s+/).uniq.sort,
+            text: node.content
+          }
+        end
+
         def extended_attributes
           {
             hreflang: node['hreflang'],
@@ -35,15 +42,8 @@ module MicroMicro
           }.transform_values { |value| (value || '').strip }
         end
 
-        def primary_attributes
-          {
-            rels: node['rel'].strip.split(/\s+/).uniq.sort,
-            text: node.content
-          }
-        end
-
         def selected_attributes
-          primary_attributes.merge(extended_attributes).select { |_, value| value.present? }
+          base_attributes.merge(extended_attributes).select { |_, value| value.present? }
         end
       end
     end
