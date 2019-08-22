@@ -8,7 +8,7 @@ module MicroMicro
       end
 
       def process_node(node, hash)
-        key = node['href'].to_sym
+        key = Absolutely.to_abs(base: resolved_base_url, relative: node['href'].strip).to_sym
 
         hash[key] = AttributesBuilder.new(node).attributes unless hash.key?(key)
       end

@@ -9,8 +9,9 @@ module MicroMicro
 
       def process_node(node, hash)
         keys = node['rel'].strip.split(/\s+/).uniq.map(&:to_sym)
+        value = Absolutely.to_abs(base: resolved_base_url, relative: node['href'].strip)
 
-        keys.each { |rel| hash[rel] << node['href'].strip }
+        keys.each { |rel| hash[rel] << value }
       end
     end
   end
