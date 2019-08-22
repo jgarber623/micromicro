@@ -13,11 +13,11 @@ module MicroMicro
     end
 
     def rel_urls
-      @rel_urls ||= Parsers::RelUrlsParser.new(rels_node_set, resolved_base_url).results
+      @rel_urls ||= Parsers::RelUrlsParser.parse(rels_node_set, resolved_base_url)
     end
 
     def rels
-      @rels ||= Parsers::RelsParser.new(rels_node_set, resolved_base_url).results
+      @rels ||= Parsers::RelsParser.parse(rels_node_set, resolved_base_url)
     end
 
     def to_h

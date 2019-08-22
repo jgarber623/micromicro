@@ -10,6 +10,10 @@ module MicroMicro
         @results ||= OpenStruct.new(mapped_node_set)
       end
 
+      def self.parse(node_set, base_url)
+        new(node_set, base_url).results
+      end
+
       private
 
       attr_reader :base_url, :node_set
