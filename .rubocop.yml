@@ -5,6 +5,11 @@ require:
 Layout/AlignHash:
   EnforcedHashRocketStyle: table
 
+Metrics/BlockLength:
+  Exclude:
+    - micromicro.gemspec
+    - spec/**/*.rb
+
 Metrics/LineLength:
   Enabled: false
 
