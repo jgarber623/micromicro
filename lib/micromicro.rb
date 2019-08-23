@@ -7,9 +7,10 @@ require 'nokogiri'
 require 'micro_micro/version'
 require 'micro_micro/exceptions'
 
-require 'micro_micro/parsers/base_rel_parser'
-require 'micro_micro/parsers/rel_urls_parser'
-require 'micro_micro/parsers/rels_parser'
+require 'micro_micro/core_ext/ostruct'
+
+require 'micro_micro/parsed_relation_collection'
+require 'micro_micro/parsed_relation'
 
 require 'micro_micro/parsed_document'
 

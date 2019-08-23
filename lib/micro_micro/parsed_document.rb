@@ -13,18 +13,18 @@ module MicroMicro
     end
 
     def rel_urls
-      @rel_urls ||= Parsers::RelUrlsParser.parse(rels_node_set, resolved_base_url)
+      @rel_urls ||= parsed_relation_collection.by_relation_url
     end
 
     def rels
-      @rels ||= Parsers::RelsParser.parse(rels_node_set, resolved_base_url)
+      @rels ||= parsed_relation_collection.by_relation_type
     end
 
     def to_h
       {
         items: items,
-        rels: rels.to_h,
-        'rel-urls': rel_urls.to_h.transform_values(&:to_h)
+        rels: rels.deep_to_h,
+        'rel-urls': rel_urls.deep_to_h
       }
     end
 
@@ -32,6 +32,10 @@ module MicroMicro
 
     def base_element
       @base_element ||= @doc.css('base[href]').first
+    end
+
+    def parsed_relation_collection
+      @parsed_relation_collection ||= ParsedRelationCollection.new(rels_node_set, resolved_base_url)
     end
 
     def rels_node_set
