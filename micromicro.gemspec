@@ -25,16 +25,16 @@ Gem::Specification.new do |spec|
     'changelog_uri'   => "#{spec.homepage}/blob/v#{spec.version}/CHANGELOG.md"
   }
 
-  spec.add_development_dependency 'rake', '~> 12.3'
-  spec.add_development_dependency 'reek', '~> 5.4'
-  spec.add_development_dependency 'rspec', '~> 3.8'
-  spec.add_development_dependency 'rubocop', '~> 0.74.0'
-  spec.add_development_dependency 'rubocop-performance', '~> 1.4'
-  spec.add_development_dependency 'rubocop-rspec', '~> 1.35'
-  spec.add_development_dependency 'simplecov', '~> 0.17.0'
-  spec.add_development_dependency 'simplecov-console', '~> 0.5.0'
+  spec.add_development_dependency 'rake', '~> 13.0'
+  spec.add_development_dependency 'reek', '~> 5.6'
+  spec.add_development_dependency 'rspec', '~> 3.9'
+  spec.add_development_dependency 'rubocop', '~> 0.79.0'
+  spec.add_development_dependency 'rubocop-performance', '~> 1.5'
+  spec.add_development_dependency 'rubocop-rspec', '~> 1.37'
+  spec.add_development_dependency 'simplecov', '~> 0.18.1'
+  spec.add_development_dependency 'simplecov-console', '~> 0.6.0'
 
-  spec.add_runtime_dependency 'absolutely', '~> 3.0'
+  spec.add_runtime_dependency 'absolutely', '~> 3.1'
   spec.add_runtime_dependency 'activesupport', '~> 6.0'
   spec.add_runtime_dependency 'nokogiri', '~> 1.10'
 end
