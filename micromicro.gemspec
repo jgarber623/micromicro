@@ -36,5 +36,5 @@ Gem::Specification.new do |spec|
 
   spec.add_runtime_dependency 'absolutely', '~> 3.0'
   spec.add_runtime_dependency 'activesupport', '~> 6.0'
-  spec.add_runtime_dependency 'nokogiri', '~> 1.10'
+  spec.add_runtime_dependency 'nokogiri', '1.10.8'
 end
