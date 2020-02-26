@@ -1,4 +1,4 @@
-describe MicroMicro::ParsedDocument do
+describe MicroMicro::Document do
   context 'when markup is not a String' do
     it 'raises an ArgumentError' do
       expect { described_class.new(1, 'https://example.com') }.to raise_error(MicroMicro::ArgumentError, 'markup must be a String (given Integer)')

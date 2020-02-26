@@ -9,13 +9,14 @@ require 'micro_micro/exceptions'
 
 require 'micro_micro/core_ext/ostruct'
 
-require 'micro_micro/parsed_relation_collection'
-require 'micro_micro/parsed_relation'
-
-require 'micro_micro/parsed_document'
+require 'micro_micro/document'
+require 'micro_micro/item_collection'
+require 'micro_micro/item'
+require 'micro_micro/relation_collection'
+require 'micro_micro/relation'
 
 module MicroMicro
   def self.parse(markup, base_url)
-    ParsedDocument.new(markup, base_url).to_h
+    Document.new(markup, base_url).to_h
   end
 end

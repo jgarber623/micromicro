@@ -1,4 +1,4 @@
-describe MicroMicro::ParsedDocument, '#rels' do
+describe MicroMicro::Document, '#rels' do
   let(:relative_base) { 'https://relative.example.com' }
   let(:absolute_base) { 'https://absolute.example.com' }
 

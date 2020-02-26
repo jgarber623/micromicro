@@ -1,4 +1,4 @@
-describe MicroMicro::ParsedDocument, '#to_h' do
+describe MicroMicro::Document, '#to_h' do
   let(:base_url) { 'https://example.com' }
 
   let(:empty_results_hash) do

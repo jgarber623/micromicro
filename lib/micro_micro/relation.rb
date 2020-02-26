@@ -1,5 +1,5 @@
 module MicroMicro
-  class ParsedRelation
+  class Relation
     def initialize(node, base_url)
       @node = node
       @base_url = base_url

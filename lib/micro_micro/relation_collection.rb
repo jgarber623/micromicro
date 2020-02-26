@@ -1,5 +1,5 @@
 module MicroMicro
-  class ParsedRelationCollection
+  class RelationCollection
     def initialize(node_set, base_url)
       @node_set = node_set
       @base_url = base_url
@@ -15,8 +15,6 @@ module MicroMicro
 
     private
 
-    attr_reader :base_url, :node_set
-
     def by_relation_type_hash
       enum_with_obj(Array).each do |node, hash|
         node.attributes.rels.each { |rel| hash[rel] << node.url }
@@ -30,11 +28,11 @@ module MicroMicro
     end
 
     def enum_with_obj(obj_class)
-      parsed_node_set.each_with_object(Hash.new { |hash, key| hash[key] = obj_class.new })
+      relations.each_with_object(Hash.new { |hash, key| hash[key] = obj_class.new })
     end
 
-    def parsed_node_set
-      @parsed_node_set ||= node_set.map { |node| ParsedRelation.new(node, base_url) }
+    def relations
+      @relations ||= @node_set.map { |node| Relation.new(node, @base_url) }
     end
   end
 end
