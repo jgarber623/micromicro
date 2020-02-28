@@ -8,45 +8,43 @@ module MicroMicro
       @base_url = base_url
     end
 
-    def items
-      @items ||= ItemCollection.new(doc, resolved_base_url).by_item
-    end
-
     def rel_urls
-      @rel_urls ||= relation_collection.by_relation_url
+      @rel_urls ||= Collections::RelationUrlsCollection.new(relations_node_set, resolved_base_url)
     end
 
     def rels
-      @rels ||= relation_collection.by_relation_type
+      @rels ||= Collections::RelationsCollection.new(relations_node_set, resolved_base_url)
     end
 
     def to_h
-      {
-        items: items.map(&:deep_to_h),
-        rels: rels.deep_to_h,
-        'rel-urls': rel_urls.deep_to_h
+      @to_h ||= {
+        items: [],
+        rels: rels.to_h,
+        'rel-urls': rel_urls.to_h
       }
     end
 
     private
+
+    attr_reader :base_url, :markup
 
     def base_element
       @base_element ||= doc.css('base[href]').first
     end
 
     def doc
-      @doc ||= Nokogiri::HTML(@markup)
+      @doc ||= Nokogiri::HTML(markup)
     end
 
-    def relation_collection
-      @relation_collection ||= RelationCollection.new(doc.css('[href][rel]'), resolved_base_url)
+    def relations_node_set
+      @relations_node_set ||= doc.css('[href][rel]')
     end
 
     def resolved_base_url
       @resolved_base_url ||= begin
-        return @base_url unless base_element
+        return base_url unless base_element
 
-        Absolutely.to_abs(base: @base_url, relative: base_element['href'])
+        Absolutely.to_abs(base: base_url, relative: base_element['href'])
       end
     end
   end

@@ -1,4 +1,6 @@
 describe MicroMicro::Document, '#to_h' do
+  subject(:document) { described_class.new(markup, base_url) }
+
   let(:base_url) { 'https://example.com' }
 
   let(:empty_results_hash) do
@@ -10,8 +12,10 @@ describe MicroMicro::Document, '#to_h' do
   end
 
   context 'when markup is an empty String' do
+    let(:markup) { '' }
+
     it 'returns an empty results Hash' do
-      expect(described_class.new('', base_url).to_h).to eq(empty_results_hash)
+      expect(document.to_h).to eq(empty_results_hash)
     end
   end
 
@@ -19,7 +23,7 @@ describe MicroMicro::Document, '#to_h' do
     let(:markup) { '<!doctype html><html><body><h1>Hello, world!</h1></body></html>' }
 
     it 'returns an empty results Hash' do
-      expect(described_class.new(markup, base_url).to_h).to eq(empty_results_hash)
+      expect(document.to_h).to eq(empty_results_hash)
     end
   end
 end

@@ -1,16 +1,22 @@
-describe MicroMicro::Document, '#rel_urls' do
+describe MicroMicro::Collections::RelationUrlsCollection, '#to_h' do
   let(:relative_base) { 'https://relative.example.com' }
   let(:absolute_base) { 'https://absolute.example.com' }
+
+  let(:node_set) { Nokogiri::HTML(markup).css('[href][rel]') }
 
   context 'when markup contains relative URLs' do
     let(:markup) { '<!doctype html><html><head><link rel="webmention" href="/webmentions"></head></html>' }
 
     let(:results) do
-      OpenStruct.new("#{relative_base}/webmentions": OpenStruct.new(rels: ['webmention']))
+      {
+        "#{relative_base}/webmentions": {
+          rels: ['webmention']
+        }
+      }
     end
 
-    it 'returns an OpenStruct' do
-      expect(described_class.new(markup, relative_base).rel_urls).to eq(results)
+    it 'returns a Hash' do
+      expect(described_class.new(node_set, relative_base).to_h).to eq(results)
     end
   end
 
@@ -18,11 +24,15 @@ describe MicroMicro::Document, '#rel_urls' do
     let(:markup) { '<!doctype html><html><head><base href="/foo/bar"><link rel="webmention" href="webmentions"></head></html>' }
 
     let(:results) do
-      OpenStruct.new("#{relative_base}/foo/webmentions": OpenStruct.new(rels: ['webmention']))
+      {
+        "#{relative_base}/foo/webmentions": {
+          rels: ['webmention']
+        }
+      }
     end
 
-    it 'returns an OpenStruct' do
-      expect(described_class.new(markup, relative_base).rel_urls).to eq(results)
+    it 'returns a Hash' do
+      expect(described_class.new(node_set, "#{relative_base}/foo/bar").to_h).to eq(results)
     end
   end
 
@@ -30,11 +40,15 @@ describe MicroMicro::Document, '#rel_urls' do
     let(:markup) { %(<!doctype html><html><head><base href="#{absolute_base}"><link rel="webmention" href="webmentions"></head></html>) }
 
     let(:results) do
-      OpenStruct.new("#{absolute_base}/webmentions": OpenStruct.new(rels: ['webmention']))
+      {
+        "#{absolute_base}/webmentions": {
+          rels: ['webmention']
+        }
+      }
     end
 
-    it 'returns an OpenStruct' do
-      expect(described_class.new(markup, relative_base).rel_urls).to eq(results)
+    it 'returns a Hash' do
+      expect(described_class.new(node_set, absolute_base).to_h).to eq(results)
     end
   end
 end

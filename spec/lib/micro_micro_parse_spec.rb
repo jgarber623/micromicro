@@ -8,7 +8,7 @@ describe MicroMicro, '.parse' do
       context "when parsing #{test_case_file_path.match(%r{((?:[^/]+/){2}[^/]+)\.json$})[1]}.html" do
         let(:test_case) { FixturesHelpers::MicroformatsTestSuite::TestCase.new(test_case_file_path) }
 
-        it 'returns parsed JSON' do
+        it 'returns a Hash' do
           expect(described_class.parse(test_case.input, base_url)).to eq(test_case.output)
         end
       end

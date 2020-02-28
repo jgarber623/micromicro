@@ -5,6 +5,12 @@ module MicroMicro
       @base_url = base_url
     end
 
+    def <=>(other)
+      return unless other.is_a?(Relation)
+
+      url <=> other.url
+    end
+
     def attributes
       @attributes ||= OpenStruct.new(selected_attributes)
     end
