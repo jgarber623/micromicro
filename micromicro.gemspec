@@ -35,6 +35,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'simplecov-console', '~> 0.6.0'
 
   spec.add_runtime_dependency 'absolutely', '~> 3.1'
-  spec.add_runtime_dependency 'activesupport', '~> 6.0'
+  spec.add_runtime_dependency 'activesupport', '6.0.2.2'
   spec.add_runtime_dependency 'nokogiri', '~> 1.10'
 end
