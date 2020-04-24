@@ -1,29 +1,15 @@
 describe MicroMicro::Document, '#to_h' do
-  subject(:document) { described_class.new(markup, base_url) }
+  let(:base_url) { 'http://example.com' }
 
-  let(:base_url) { 'https://example.com' }
+  FixturesHelpers::MicroformatsTestSuite.test_case_file_paths.each do |test_case_file_path|
+    context "when parsing #{test_case_file_path.match(%r{((?:[^/]+/){2}[^/]+)\.json$})[1]}.html" do
+      subject(:document) { described_class.new(test_case.input, base_url) }
 
-  let(:empty_results_hash) do
-    {
-      items: [],
-      rels: {},
-      'rel-urls': {}
-    }
-  end
+      let(:test_case) { FixturesHelpers::MicroformatsTestSuite::TestCase.new(test_case_file_path) }
 
-  context 'when markup is an empty String' do
-    let(:markup) { '' }
-
-    it 'returns an empty results Hash' do
-      expect(document.to_h).to eq(empty_results_hash)
-    end
-  end
-
-  context 'when markup contains no microformats2-encoded data' do
-    let(:markup) { '<!doctype html><html><body><h1>Hello, world!</h1></body></html>' }
-
-    it 'returns an empty results Hash' do
-      expect(document.to_h).to eq(empty_results_hash)
+      it 'returns a Hash' do
+        expect(document.to_h).to eq(test_case.output)
+      end
     end
   end
 end
