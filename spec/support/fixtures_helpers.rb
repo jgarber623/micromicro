@@ -2,15 +2,27 @@ module FixturesHelpers
   module MicroformatsTestSuite
     class << self
       def test_case_base_path
-        File.expand_path('../../spec/support/fixtures/microformats_test_suite/tests', __dir__)
+        File.expand_path('fixtures/microformats_test_suite/tests', __dir__)
+      end
+
+      def test_case_file_paths
+        test_case_types.map { |test_case_type| Dir[File.join(test_case_base_path, test_case_type, '*.json')] }.flatten
       end
 
       def test_case_types
         %w[
-          microformats-mixed/h-card
-          microformats-mixed/h-entry
-          microformats-mixed/h-resume
-          microformats-v2/rel
+          microformats-v2/h-adr
+          microformats-v2/h-card
+          microformats-v2/h-entry
+          microformats-v2/h-event
+          microformats-v2/h-feed
+          microformats-v2/h-geo
+          microformats-v2/h-product
+          microformats-v2/h-recipe
+          microformats-v2/h-resume
+          microformats-v2/h-review
+          microformats-v2/h-review-aggregate
+          microformats-v2/mixed
         ]
       end
     end
