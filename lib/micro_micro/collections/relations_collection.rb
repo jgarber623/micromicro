@@ -15,13 +15,13 @@ module MicroMicro
 
       # @return [Hash{Symbole => Hash{Symbol => Array, String}}]
       def group_by_url
-        members.group_by(&:url).symbolize_keys.transform_values { |relations| relations.first.to_h.slice!(:url) }
+        members.group_by(&:href).symbolize_keys.transform_values { |relations| relations.first.to_h.slice!(:href) }
       end
 
       # @return [Hash{Symbol => Array<String>}]
       def group_by_rel
         each_with_object(Hash.new { |hash, key| hash[key] = [] }) do |member, hash|
-          member.rels.each { |rel| hash[rel] << member.url }
+          member.rels.each { |rel| hash[rel] << member.href }
         end.symbolize_keys.transform_values(&:uniq)
       end
 

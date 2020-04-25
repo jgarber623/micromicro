@@ -5,6 +5,11 @@ module MicroMicro
       @node = node
     end
 
+    # @return [String]
+    def href
+      @href ||= Absolutely.to_abs(base: node.document.url, relative: node['href'].strip)
+    end
+
     # @return [String, nil]
     def hreflang
       @hreflang ||= node['hreflang']&.strip
@@ -18,7 +23,7 @@ module MicroMicro
     # @return [Hash{Symbol => String}]
     def to_h
       {
-        url: url,
+        href: href,
         rels: rels,
         hreflang: hreflang,
         media: media,
@@ -46,11 +51,6 @@ module MicroMicro
     # @return [String, nil]
     def type
       @type ||= node['type']&.strip
-    end
-
-    # @return [String]
-    def url
-      @url ||= Absolutely.to_abs(base: node.document.url, relative: node['href'].strip)
     end
 
     # @param context [Nokogiri::HTML::Document, Nokogiri::XML::Element]
