@@ -29,10 +29,13 @@ module MicroMicro
       }
     end
 
+    # @param node [Nokogiri::XML::Element]
+    # @return [Boolean]
     def self.ignore_node?(node)
       ignored_node_names.include?(node.name)
     end
 
+    # @return [Array<String>]
     def self.ignored_node_names
       ['script', 'style', 'template']
     end
