@@ -4,12 +4,12 @@ module MicroMicro
       # @see Value Class Pattern sections 3 and 4
       # @see http://microformats.org/wiki/value-class-pattern#Basic_Parsing
       # @see http://microformats.org/wiki/value-class-pattern#Date_and_time_values
-      HTML_ATTRIBUTE_MAP = [
-        ['alt', %w[area img]],
-        ['value', %w[data]],
-        ['title', %w[abbr]],
-        ['datetime', %w[del ins time]]
-      ].freeze
+      HTML_ATTRIBUTE_MAP = {
+        'alt'      => %w[area img],
+        'value'    => %w[data],
+        'title'    => %w[abbr],
+        'datetime' => %w[del ins time]
+      }.freeze
 
       # @param context [Nokogiri::XML::Element]
       # @param separator [String]
@@ -62,9 +62,7 @@ module MicroMicro
       # @param node [Nokogiri::XML::Element]
       # @return [Boolean]
       def self.value_class_node?(node)
-        return unless node['class']
-
-        node['class'].split.include?('value')
+        node.classes.include?('value')
       end
 
       # @param node [Nokogiri::XML::Element]
@@ -82,9 +80,7 @@ module MicroMicro
       # @param node [Nokogiri::XML::Element]
       # @return [Boolean]
       def self.value_title_node?(node)
-        return unless node['class']
-
-        node['class'].split.include?('value-title')
+        node.classes.include?('value-title')
       end
 
       private

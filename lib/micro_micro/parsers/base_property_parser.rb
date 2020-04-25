@@ -13,6 +13,15 @@ module MicroMicro
         @value ||= sanitized_node.text.strip
       end
 
+      # @param node [Nokogiri::XML::Element]
+      # @param attribute_map [Hash{String => Array<String}]
+      # @return [Array<String>]
+      def self.attribute_values_from(node, attribute_map)
+        attribute_map.each_with_object([]) do |(attribute, elements), array|
+          array << node[attribute] if elements.include?(node.name) && node[attribute]
+        end
+      end
+
       private
 
       attr_reader :context, :node

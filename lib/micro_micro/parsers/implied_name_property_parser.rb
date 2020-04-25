@@ -14,9 +14,12 @@ module MicroMicro
 
       private
 
+      def attribute_values
+        @attribute_values ||= self.class.attribute_values_from(node, HTML_ATTRIBUTE_MAP)
+      end
+
       def unresolved_value
-        return node['alt'] if %w[img area].include?(node.name)
-        return node['title'] if node.name == 'abbr'
+        return attribute_values.first.strip if attribute_values.any?
 
         if node.element_children.one?
           child_node = node.first_element_child
