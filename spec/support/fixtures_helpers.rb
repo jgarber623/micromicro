@@ -23,6 +23,7 @@ module FixturesHelpers
           microformats-v2/h-review
           microformats-v2/h-review-aggregate
           microformats-v2/mixed
+          microformats-v2/rel
         ]
       end
     end

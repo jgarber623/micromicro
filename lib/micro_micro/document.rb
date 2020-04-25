@@ -12,6 +12,11 @@ module MicroMicro
       @items ||= Collections::ItemsCollection.new(Item.nodes_from(document))
     end
 
+    # @return [MicroMicro::Collections::RelationsCollection]
+    def relations
+      @relations ||= Collections::RelationsCollection.new(Relation.nodes_from(document))
+    end
+
     # @see microformats2 Parsing Specification section 1.1
     # @see http://microformats.org/wiki/microformats2-parsing#parse_a_document_for_microformats
     #
@@ -19,8 +24,8 @@ module MicroMicro
     def to_h
       {
         items: items.to_a,
-        rels: {},
-        'rel-urls': {}
+        rels: relations.group_by_rel,
+        'rel-urls': relations.group_by_url
       }
     end
 
@@ -29,7 +34,7 @@ module MicroMicro
     end
 
     def self.ignored_node_names
-      %w[script style template]
+      ['script', 'style', 'template']
     end
 
     private
