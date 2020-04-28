@@ -9,10 +9,9 @@ module MicroMicro
         'value'    => %w[data input]
       }.freeze
 
-      # TODO: return proper dates according to the spec
       def value
         @value ||= begin
-          return value_class_pattern_parser.value if value_class_pattern_parser.value?
+          return DateTimeParser.new(value_class_pattern_parser.value).value if value_class_pattern_parser.value?
           return attribute_values.first.strip if attribute_values.any?
 
           super
