@@ -127,7 +127,7 @@ module MicroMicro
       # @param string [String]
       # @return [Hash{Symbol => String, nil}]
       def self.values_from(string)
-        (string.match(%r{^(?:#{DATE_REGEXP_PATTERN})?(?:\s?#{TIME_REGEXP_PATTERN}(?:#{TIMEZONE_REGEXP_PATTERN})?)?$})&.named_captures || {}).symbolize_keys
+        (string.match(/^(?:#{DATE_REGEXP_PATTERN})?(?:\s?#{TIME_REGEXP_PATTERN}(?:#{TIMEZONE_REGEXP_PATTERN})?)?$/)&.named_captures || {}).symbolize_keys
       end
 
       private
