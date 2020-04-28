@@ -66,13 +66,13 @@ module MicroMicro
           return unless hours
           return (hours.to_i + 12).to_s if normalized_abbreviation == 'pm'
 
-          "%02d" % hours
+          format('%<hours>02d', hours: hours)
         end
       end
 
       # @return [String, nil]
       def normalized_minutes
-        @normalized_minutes ||= (hours && !minutes) ? '00' : minutes
+        @normalized_minutes ||= hours && !minutes ? '00' : minutes
       end
 
       # @return [String, nil]
