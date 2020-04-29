@@ -16,118 +16,45 @@ module MicroMicro
         @string = string
       end
 
-      # @return [String, nil]
-      def abbreviation
-        @abbreviation ||= values[:abbreviation]
+      def normalized_date
+        "#{values[:year]}-#{values[:month]}-#{values[:day]}" if values[:year] && values[:month] && values[:day]
       end
 
-      # @return [String, nil]
-      def date
-        @date ||= [year, month, day].join('-') if year && month && day
-      end
-
-      # @return [String, nil]
-      def date_time
-        @date_time ||= [date, time].join(' ') if date && time
-      end
-
-      def date_time_with_offset
-        @date_time_with_offset ||= [date, time_with_offset].join(' ') if date && time_with_offset
-      end
-
-      # @return [String, nil]
-      def day
-        @day ||= values[:day]
-      end
-
-      # @return [String, nil]
-      def hours
-        @hours ||= values[:hours]
-      end
-
-      # @return [String, nil]
-      def minutes
-        @minutes ||= values[:minutes]
-      end
-
-      # @return [String, nil]
-      def month
-        @month ||= values[:month]
-      end
-
-      # @return [String, nil]
-      def normalized_abbreviation
-        @normalized_abbreviation ||= abbreviation.tr('.', '').downcase if abbreviation
-      end
-
-      # @return [String, nil]
       def normalized_hours
-        @normalized_hours ||= begin
-          return unless hours
-          return (hours.to_i + 12).to_s if normalized_abbreviation == 'pm'
+        return unless values[:hours]
+        return (values[:hours].to_i + 12).to_s if values[:abbreviation]&.tr('.', '')&.downcase == 'pm'
 
-          format('%<hours>02d', hours: hours)
-        end
+        format('%<hours>02d', hours: values[:hours])
       end
 
-      # @return [String, nil]
       def normalized_minutes
-        @normalized_minutes ||= hours && !minutes ? '00' : minutes
+        values[:minutes] || '00'
       end
 
-      # @return [String, nil]
-      def normalized_offset
-        @normalized_offset ||= offset.tr(':', '') if offset
+      def normalized_ordinal_date
+        "#{values[:year]}-#{values[:ordinal]}" if values[:year] && values[:ordinal]
       end
 
-      # @return [String, nil]
-      def offset
-        @offset ||= values[:zulu] || values[:offset]
+      def normalized_time
+        [normalized_hours, normalized_minutes, values[:seconds]].compact.join(':') if normalized_hours
       end
 
-      # @return [String, nil]
-      def ordinal_date
-        @ordinal_date ||= [year, ordinal].join('-') if year && ordinal
-      end
-
-      # @return [String, nil]
-      def seconds
-        @seconds ||= values[:seconds]
-      end
-
-      # @return [String, nil]
-      def time
-        @time ||= [normalized_hours, normalized_minutes, seconds].compact.join(':') if normalized_hours
-      end
-
-      # @return [String, nil]
-      def time_with_offset
-        @time_with_offset || [time, normalized_offset].join if time && normalized_offset
+      def normalized_timezone
+        values[:zulu] || values[:offset]&.tr(':', '')
       end
 
       def value
-        @value ||= date_time_with_offset || date_time || date || time_with_offset || time || offset || nil
+        @value ||= "#{normalized_date} #{normalized_time}#{normalized_timezone}".strip
       end
 
-      # @return [String, nil]
-      def year
-        @year ||= values[:year]
-      end
-
-      # @return [Hash{Symbol => String, nil}]
       def values
         @values ||= self.class.values_from(string)
-      end
-
-      # @return [Boolean]
-      def values?
-        values.any?
       end
 
       # @param string [String]
       # @return [Hash{Symbol => String, nil}]
       def self.values_from(string)
-        (string.match(/^(?:#{DATE_REGEXP_PATTERN})?(?:\s?#{TIME_REGEXP_PATTERN}(?:#{TIMEZONE_REGEXP_PATTERN})?)?$/)&.named_captures || {}).symbolize_keys
+        string.match(/^(?:#{DATE_REGEXP_PATTERN})?(?:\s?#{TIME_REGEXP_PATTERN}(?:#{TIMEZONE_REGEXP_PATTERN})?)?$/)&.named_captures.to_h.symbolize_keys
       end
 
       private
