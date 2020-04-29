@@ -113,11 +113,7 @@ module MicroMicro
     end
 
     def parser
-      @parser ||= begin
-        return IMPLIED_PROPERTY_PARSERS_MAP[name].new(node) if implied?
-
-        PROPERTY_PARSERS_MAP[prefix].new(node)
-      end
+      @parser ||= (implied? ? IMPLIED_PROPERTY_PARSERS_MAP[name] : PROPERTY_PARSERS_MAP[prefix]).new(node)
     end
   end
 end
