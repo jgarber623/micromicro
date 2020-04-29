@@ -7,9 +7,7 @@ module MicroMicro
         'href'   => %w[a area link],
         'src'    => %w[audio img source video],
         'poster' => %w[video],
-        'data'   => %w[object],
-        'title'  => %w[abbr],
-        'value'  => %w[data input]
+        'data'   => %w[object]
       }.freeze
 
       # @see microformats2 Parsing Specification section 1.3.2
