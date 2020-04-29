@@ -2,10 +2,8 @@ module MicroMicro
   module Parsers
     class BasePropertyParser
       # @param node [Nokogiri::XML::Element]
-      # @param context [Nokogiri::XML::Element, nil]
-      def initialize(node, context = nil)
+      def initialize(node)
         @node = node
-        @context = context
       end
 
       # @return [String]
@@ -24,7 +22,7 @@ module MicroMicro
 
       private
 
-      attr_reader :context, :node
+      attr_reader :node
 
       # @see microformats2 Parsing Specification sections 1.3.1 and 1.3.4
       # @see http://microformats.org/wiki/microformats2-parsing#parsing_a_p-_property

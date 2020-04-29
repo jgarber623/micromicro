@@ -4,10 +4,8 @@ module MicroMicro
       include Collectible
 
       # @param node_set [Nokogiri::XML::NodeSet]
-      # @param context [Nokogiri::XML::Element]
-      def initialize(node_set, context)
+      def initialize(node_set)
         @node_set = node_set
-        @context = context
       end
 
       # @return [Array<MicroMicro::Property>]
@@ -24,12 +22,12 @@ module MicroMicro
 
       private
 
-      attr_reader :node_set, :context
+      attr_reader :node_set
 
       # @return [Array<MicroMicro::Property>]
       def properties_from(node)
         Property.types_from(node).map do |prefix, name|
-          Property.new(node, context, name: name, prefix: prefix)
+          Property.new(node, name: name, prefix: prefix)
         end
       end
     end

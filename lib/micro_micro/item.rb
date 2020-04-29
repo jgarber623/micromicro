@@ -23,7 +23,7 @@ module MicroMicro
 
     # @return [MicroMicro::Collections::PropertiesCollection]
     def properties
-      @properties ||= Collections::PropertiesCollection.new(Property.nodes_from(node.element_children), node)
+      @properties ||= Collections::PropertiesCollection.new(Property.nodes_from(node.element_children))
     end
 
     # @see microformats2 Parsing Specification section 1.2

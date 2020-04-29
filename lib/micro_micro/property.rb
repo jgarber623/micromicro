@@ -16,13 +16,11 @@ module MicroMicro
     attr_reader :name, :prefix
 
     # @param node [Nokogiri::XML::Element]
-    # @param context [Nokogiri::XML::Element]
     # @param name [String]
     # @param prefix [String<dt, e, p, u>]
     # @param implied [Boolean]
-    def initialize(node, context = nil, name:, prefix:, implied: false)
+    def initialize(node, name:, prefix:, implied: false)
       @node = node
-      @context = context
       @name = name
       @prefix = prefix
       @implied = implied
@@ -91,7 +89,7 @@ module MicroMicro
 
     private
 
-    attr_reader :context, :implied, :node
+    attr_reader :implied, :node
 
     # @return [MicroMicro::Item, nil]
     def item
@@ -118,7 +116,7 @@ module MicroMicro
       @parser ||= begin
         return IMPLIED_PROPERTY_PARSERS_MAP[name].new(node) if implied?
 
-        PROPERTY_PARSERS_MAP[prefix].new(node, context)
+        PROPERTY_PARSERS_MAP[prefix].new(node)
       end
     end
   end
