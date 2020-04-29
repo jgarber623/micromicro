@@ -37,7 +37,7 @@ module MicroMicro
 
     # @return [Array<String>]
     def self.ignored_node_names
-      ['script', 'style', 'template']
+      %w[script style template]
     end
 
     private

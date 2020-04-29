@@ -4,8 +4,8 @@ module MicroMicro
       # @see microformats2 Parsing Specification section 1.3.5
       # @see http://microformats.org/wiki/microformats2-parsing#parsing_for_implied_properties
       HTML_ATTRIBUTE_MAP = [
-        ['img', 'src'],
-        ['object', 'data']
+        %w[img src],
+        %w[object data]
       ].freeze
 
       def value
