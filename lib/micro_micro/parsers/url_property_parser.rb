@@ -43,17 +43,17 @@ module MicroMicro
 
       # @return [String]
       def resolved_value
-        @resolved_value ||= Absolutely.to_abs(base: node.document.url, relative: unresolved_value)
+        @resolved_value ||= Absolutely.to_abs(base: node.document.url, relative: unresolved_value.strip)
       end
 
       # @return [String]
       def unresolved_value
         @unresolved_value ||= begin
-          return primary_attribute_values.first.strip if primary_attribute_values.any?
+          return primary_attribute_values.first if primary_attribute_values.any?
           return value_class_pattern_parser.value if value_class_pattern_parser.value?
-          return secondary_attribute_values.first.strip if secondary_attribute_values.any?
+          return secondary_attribute_values.first if secondary_attribute_values.any?
 
-          sanitized_node.text.strip
+          serialized_node.text
         end
       end
 

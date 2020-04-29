@@ -10,7 +10,7 @@ module MicroMicro
 
       # @return [String]
       def value
-        @value ||= sanitized_node.text.strip
+        @value ||= serialized_node.text.strip
       end
 
       # @param node [Nokogiri::XML::Element]
@@ -26,11 +26,14 @@ module MicroMicro
 
       attr_reader :context, :node
 
-      def sanitized_node
-        @sanitized_node ||= begin
+      # @see microformats2 Parsing Specification sections 1.3.1 and 1.3.4
+      # @see http://microformats.org/wiki/microformats2-parsing#parsing_a_p-_property
+      # @see http://microformats.org/wiki/microformats2-parsing#parsing_an_e-_property
+      def serialized_node
+        @serialized_node ||= begin
           node.css(*Document.ignored_node_names).unlink
 
-          node.css('img').each { |img| img.content = img['alt'] || Absolutely.to_abs(base: node.document.url, relative: img['src']) }
+          node.css('img').each { |img| img.content = " #{img['alt'] || Absolutely.to_abs(base: node.document.url, relative: img['src'])} " }
 
           node
         end

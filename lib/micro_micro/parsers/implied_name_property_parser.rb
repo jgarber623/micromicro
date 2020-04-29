@@ -19,7 +19,7 @@ module MicroMicro
       end
 
       def unresolved_value
-        return attribute_values.first.strip if attribute_values.any?
+        return attribute_values.first if attribute_values.any?
 
         if node.element_children.one?
           child_node = node.first_element_child
@@ -39,9 +39,9 @@ module MicroMicro
           end
         end
 
-        sanitized_node.css('img').each { |img| img.content = img['alt'] }
+        serialized_node.css('img').each { |img| img.content = img['alt'] }
 
-        sanitized_node.text
+        serialized_node.text
       end
     end
   end
