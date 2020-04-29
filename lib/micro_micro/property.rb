@@ -72,6 +72,12 @@ module MicroMicro
     end
 
     # @param node [Nokogiri::XML::Element]
+    # @return [Array<MicroMicro::Property>]
+    def self.properties_from(node)
+      types_from(node).map { |prefix, name| new(node, name: name, prefix: prefix) }
+    end
+
+    # @param node [Nokogiri::XML::Element]
     # @return [Boolean]
     def self.property_node?(node)
       types_from(node).any?

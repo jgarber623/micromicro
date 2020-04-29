@@ -10,7 +10,7 @@ module MicroMicro
 
       # @return [Array<MicroMicro::Property>]
       def members
-        @members ||= node_set.map { |node| properties_from(node) }.flatten
+        @members ||= node_set.map { |node| Property.properties_from(node) }.flatten
       end
 
       # @return [Hash{Symbol => Array<String, Hash>}]
@@ -23,13 +23,6 @@ module MicroMicro
       private
 
       attr_reader :node_set
-
-      # @return [Array<MicroMicro::Property>]
-      def properties_from(node)
-        Property.types_from(node).map do |prefix, name|
-          Property.new(node, name: name, prefix: prefix)
-        end
-      end
     end
   end
 end
