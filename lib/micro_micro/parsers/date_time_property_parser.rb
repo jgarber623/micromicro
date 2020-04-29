@@ -11,7 +11,7 @@ module MicroMicro
 
       def value
         @value ||= begin
-          return DateTimeParser.new(value_class_pattern_parser.value).value if value_class_pattern_parser.value?
+          return date_time_parser.value if value_class_pattern_parser.value?
           return attribute_values.first.strip if attribute_values.any?
 
           super
@@ -22,6 +22,10 @@ module MicroMicro
 
       def attribute_values
         @attribute_values ||= self.class.attribute_values_from(node, HTML_ATTRIBUTE_MAP)
+      end
+
+      def date_time_parser
+        @date_time_parser ||= DateTimeParser.new(value_class_pattern_parser.value)
       end
 
       def value_class_pattern_parser

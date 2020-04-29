@@ -14,33 +14,40 @@ module MicroMicro
       # @param string [String]
       def initialize(string)
         @string = string
+
+        values.each do |name, value|
+          define_singleton_method(name) { value }
+          define_singleton_method("#{name}?") { value.present? }
+        end
       end
 
       def normalized_date
-        "#{values[:year]}-#{values[:month]}-#{values[:day]}" if values[:year] && values[:month] && values[:day]
+        @normalized_date ||= "#{year}-#{month}-#{day}" if year? && month? && day?
       end
 
       def normalized_hours
-        return unless values[:hours]
-        return (values[:hours].to_i + 12).to_s if values[:abbreviation]&.tr('.', '')&.downcase == 'pm'
+        @normalized_hours ||= begin
+          return unless hours?
+          return (hours.to_i + 12).to_s if abbreviation&.tr('.', '')&.downcase == 'pm'
 
-        format('%<hours>02d', hours: values[:hours])
+          format('%<hours>02d', hours: hours)
+        end
       end
 
       def normalized_minutes
-        values[:minutes] || '00'
+        @normalized_minutes ||= minutes || '00'
       end
 
       def normalized_ordinal_date
-        "#{values[:year]}-#{values[:ordinal]}" if values[:year] && values[:ordinal]
+        @normalized_ordinal_date ||= "#{year}-#{ordinal}" if year? && ordinal?
       end
 
       def normalized_time
-        [normalized_hours, normalized_minutes, values[:seconds]].compact.join(':') if normalized_hours
+        @normalized_time ||= [normalized_hours, normalized_minutes, seconds].compact.join(':') if normalized_hours
       end
 
       def normalized_timezone
-        values[:zulu] || values[:offset]&.tr(':', '')
+        @normalized_timezone ||= zulu || offset&.tr(':', '')
       end
 
       def value
