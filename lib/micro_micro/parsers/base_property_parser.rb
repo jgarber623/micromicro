@@ -6,18 +6,27 @@ module MicroMicro
         @node = node
       end
 
+      # @return [Nokogiri::XML::NodeSet]
+      def node_set
+        @node_set ||= Nokogiri::XML::NodeSet.new(node.document, [node])
+      end
+
       # @return [String]
       def value
         @value ||= serialized_node.text.strip
       end
 
-      # @param node [Nokogiri::XML::Element]
-      # @param attribute_map [Hash{String => Array<String}]
-      # @return [Array<String>]
-      def self.attribute_values_from(node, attribute_map)
-        attribute_map.each_with_object([]) do |(attribute, elements), array|
-          array << node[attribute] if elements.include?(node.name) && node[attribute]
-        end
+      # @see microformats2 Parsing Specification section 1.5
+      # @see http://microformats.org/wiki/microformats2-parsing#parse_an_img_element_for_src_and_alt
+      #
+      # @return [String, Hash{Symbol => String}]
+      def self.structured_value_from(node, value)
+        return value unless node.name == 'img' && node['alt']
+
+        {
+          value: value,
+          alt: node['alt'].strip
+        }
       end
 
       private

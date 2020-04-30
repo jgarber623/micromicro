@@ -3,7 +3,7 @@ module MicroMicro
     class UrlPropertyParser < BasePropertyParser
       # @see microformats2 Parsing Specification section 1.3.2
       # @see http://microformats.org/wiki/microformats2-parsing#parsing_a_u-_property
-      PRIMARY_HTML_ATTRIBUTE_MAP = {
+      HTML_ATTRIBUTE_MAP = {
         'href'   => %w[a area link],
         'src'    => %w[audio img source video],
         'poster' => %w[video],
@@ -12,33 +12,26 @@ module MicroMicro
 
       # @see microformats2 Parsing Specification section 1.3.2
       # @see http://microformats.org/wiki/microformats2-parsing#parsing_a_u-_property
-      SECONDARY_HTML_ATTRIBUTE_MAP = {
+      EXTENDED_HTML_ATTRIBUTE_MAP = {
         'title' => %w[abbr],
         'value' => %w[data input]
       }.freeze
 
       # @return [String, Hash{Symbol => String}]
       def value
-        @value ||= begin
-          return resolved_value unless node.name == 'img' && node['alt']
-
-          {
-            value: resolved_value,
-            alt: node['alt'].strip
-          }
-        end
+        @value ||= self.class.structured_value_from(node, resolved_value)
       end
 
       private
 
-      # @return [Array]
-      def primary_attribute_values
-        @primary_attribute_values ||= self.class.attribute_values_from(node, PRIMARY_HTML_ATTRIBUTE_MAP)
+      # @return [MicroMicro::Parsers::AttributesParser]
+      def attributes_parser
+        @attributes_parser ||= AttributesParser.new(node_set, HTML_ATTRIBUTE_MAP)
       end
 
-      # @return [Array]
-      def secondary_attribute_values
-        @secondary_attribute_values ||= self.class.attribute_values_from(node, SECONDARY_HTML_ATTRIBUTE_MAP)
+      # @return [MicroMicro::Parsers::AttributesParser]
+      def extended_attributes_parser
+        @extended_attributes_parser ||= AttributesParser.new(node_set, EXTENDED_HTML_ATTRIBUTE_MAP)
       end
 
       # @return [String]
@@ -49,14 +42,15 @@ module MicroMicro
       # @return [String]
       def unresolved_value
         @unresolved_value ||= begin
-          return primary_attribute_values.first if primary_attribute_values.any?
+          return attributes_parser.values.first if attributes_parser.values?
           return value_class_pattern_parser.value if value_class_pattern_parser.value?
-          return secondary_attribute_values.first if secondary_attribute_values.any?
+          return extended_attributes_parser.values.first if extended_attributes_parser.values?
 
           serialized_node.text
         end
       end
 
+      # @return [MicroMicro::Parsers::ValueClassPatternParser]
       def value_class_pattern_parser
         @value_class_pattern_parser ||= ValueClassPatternParser.new(node)
       end

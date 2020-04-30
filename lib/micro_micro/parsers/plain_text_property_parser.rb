@@ -12,7 +12,7 @@ module MicroMicro
       def value
         @value ||= begin
           return value_class_pattern_parser.value if value_class_pattern_parser.value?
-          return attribute_values.first.strip if attribute_values.any?
+          return attributes_parser.values.first.strip if attributes_parser.values?
 
           super
         end
@@ -20,10 +20,12 @@ module MicroMicro
 
       private
 
-      def attribute_values
-        @attribute_values ||= self.class.attribute_values_from(node, HTML_ATTRIBUTE_MAP)
+      # @return [MicroMicro::Parsers::AttributesParser]
+      def attributes_parser
+        @attributes_parser ||= AttributesParser.new(node_set, HTML_ATTRIBUTE_MAP)
       end
 
+      # @return [MicroMicro::Parsers::ValueClassPatternParser]
       def value_class_pattern_parser
         @value_class_pattern_parser ||= ValueClassPatternParser.new(node)
       end

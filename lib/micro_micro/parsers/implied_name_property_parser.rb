@@ -8,36 +8,49 @@ module MicroMicro
         'title' => %w[abbr]
       }.freeze
 
+      # @param node [Nokogiri::XML::Element]
+      def initialize(node)
+        super
+
+        node_set << child_node if parse_child_node?
+        node_set << grandchild_node if parse_grandchild_node?
+      end
+
+      # @return [String]
       def value
         @value ||= unresolved_value.strip
       end
 
       private
 
-      def attribute_values
-        @attribute_values ||= self.class.attribute_values_from(node, HTML_ATTRIBUTE_MAP)
+      # @return [MicroMicro::Parsers::AttributesParser]
+      def attributes_parser
+        @attributes_parser ||= AttributesParser.new(node_set, HTML_ATTRIBUTE_MAP)
       end
 
+      # @return [Nokogiri::XML::Element, nil]
+      def child_node
+        @child_node ||= node.first_element_child if node.element_children.one?
+      end
+
+      # @return [Nokogiri::XML::Element, nil]
+      def grandchild_node
+        @grandchild_node ||= child_node.first_element_child if child_node.element_children.one?
+      end
+
+      # @return [Boolean]
+      def parse_child_node?
+        child_node && !Item.item_node?(child_node)
+      end
+
+      # @return [Boolean]
+      def parse_grandchild_node?
+        parse_child_node? && grandchild_node && !Item.item_node?(grandchild_node)
+      end
+
+      # @return [String]
       def unresolved_value
-        return attribute_values.first if attribute_values.any?
-
-        if node.element_children.one?
-          child_node = node.first_element_child
-
-          unless Item.item_node?(child_node)
-            return child_node['alt'] if %w[img area].include?(child_node.name) && child_node['alt'].present?
-            return child_node['title'] if child_node.name == 'abbr' && child_node['title'].present?
-
-            if child_node.element_children.one?
-              grandchild_node = child_node.first_element_child
-
-              unless Item.item_node?(grandchild_node)
-                return grandchild_node['alt'] if %w[img area].include?(grandchild_node.name) && grandchild_node['alt'].present?
-                return grandchild_node['title'] if grandchild_node.name == 'abbr' && grandchild_node['title'].present?
-              end
-            end
-          end
-        end
+        return attributes_parser.present_values.first if attributes_parser.present_values?
 
         serialized_node.css('img').each { |img| img.content = img['alt'] }
 

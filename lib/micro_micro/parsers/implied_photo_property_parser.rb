@@ -9,17 +9,15 @@ module MicroMicro
       ].freeze
 
       def value
-        @value ||= begin
-          return unless unresolved_value
-
-          Absolutely.to_abs(base: node.document.url, relative: unresolved_value.strip)
-        end
+        @value ||= self.class.structured_value_from(node, resolved_value) if unresolved_value
       end
 
       private
 
-      # TODO: Parse <img> for src and alt
-      # http://microformats.org/wiki/microformats2-parsing#parse_an_img_element_for_src_and_alt
+      def resolved_value
+        @resolved_value ||= Absolutely.to_abs(base: node.document.url, relative: unresolved_value.strip)
+      end
+
       def unresolved_value
         HTML_ATTRIBUTE_MAP.each do |element, attribute|
           return node[attribute] if element == node.name && node[attribute].present?

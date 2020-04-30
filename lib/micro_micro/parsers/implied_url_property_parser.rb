@@ -9,11 +9,7 @@ module MicroMicro
       ].freeze
 
       def value
-        @value ||= begin
-          return unless unresolved_value
-
-          Absolutely.to_abs(base: node.document.url, relative: unresolved_value.strip)
-        end
+        @value ||= Absolutely.to_abs(base: node.document.url, relative: unresolved_value.strip) if unresolved_value
       end
 
       private

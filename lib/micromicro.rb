@@ -7,6 +7,9 @@ require 'nokogiri'
 
 require 'micro_micro/version'
 
+require 'micro_micro/parsers/attributes_parser'
+require 'micro_micro/parsers/value_class_pattern_parser'
+
 require 'micro_micro/parsers/base_property_parser'
 require 'micro_micro/parsers/date_time_parser'
 require 'micro_micro/parsers/date_time_property_parser'
@@ -16,7 +19,6 @@ require 'micro_micro/parsers/implied_photo_property_parser'
 require 'micro_micro/parsers/implied_url_property_parser'
 require 'micro_micro/parsers/plain_text_property_parser'
 require 'micro_micro/parsers/url_property_parser'
-require 'micro_micro/parsers/value_class_pattern_parser'
 
 require 'micro_micro/document'
 require 'micro_micro/item'
