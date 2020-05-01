@@ -3,45 +3,59 @@ module MicroMicro
     class ImpliedPhotoPropertyParser < BasePropertyParser
       # @see microformats2 Parsing Specification section 1.3.5
       # @see http://microformats.org/wiki/microformats2-parsing#parsing_for_implied_properties
-      HTML_ATTRIBUTE_MAP = [
-        %w[img src],
-        %w[object data]
-      ].freeze
+      HTML_ELEMENTS_MAP = {
+        'img'    => 'src',
+        'object' => 'data'
+      }.freeze
 
+      # @return [String, nil]
       def value
-        @value ||= self.class.structured_value_from(node, resolved_value) if unresolved_value
+        @value ||= begin
+          return unless resolved_value
+          return resolved_value unless value_node.matches?('img[alt]')
+
+          {
+            value: resolved_value,
+            alt: value_node['alt'].strip
+          }
+        end
       end
 
       private
 
+      # @return [String, nil]
       def resolved_value
-        @resolved_value ||= Absolutely.to_abs(base: node.document.url, relative: unresolved_value.strip)
+        @resolved_value ||= Absolutely.to_abs(base: node.document.url, relative: unresolved_value.strip) if unresolved_value
       end
 
+      # @return [String, nil]
       def unresolved_value
-        HTML_ATTRIBUTE_MAP.each do |element, attribute|
-          return node[attribute] if element == node.name && node[attribute].present?
-        end
+        @unresolved_value ||= value_node[HTML_ELEMENTS_MAP[value_node.name]] if value_node
+      end
 
-        HTML_ATTRIBUTE_MAP.each do |element, attribute|
-          child_node = node.at_css("> #{element}[#{attribute}]:only-of-type")
+      # @return [Nokogiri::XML::Element, nil]
+      def value_node
+        @value_node ||= begin
+          HTML_ELEMENTS_MAP.each do |element, attribute|
+            return node if node.matches?("#{element}[#{attribute}]")
+          end
 
-          return child_node[attribute] if child_node && child_node[attribute].present? && !Item.item_node?(child_node)
-        end
+          HTML_ELEMENTS_MAP.each do |element, attribute|
+            child_node = node.at_css("> #{element}[#{attribute}]:only-of-type")
 
-        if node.element_children.one?
-          child_node = node.element_children.first
+            return child_node if child_node && !Item.item_node?(child_node) && element == child_node.name && child_node[attribute]
+          end
 
-          if child_node && !Item.item_node?(child_node)
-            HTML_ATTRIBUTE_MAP.each do |element, attribute|
-              grandchild_node = child_node.at_css("> #{element}[#{attribute}]:only-of-type")
+          if node.element_children.one? && !Item.item_node?(node.first_element_child)
+            HTML_ELEMENTS_MAP.each do |element, attribute|
+              child_node = node.first_element_child.at_css("> #{element}[#{attribute}]:only-of-type")
 
-              return grandchild_node[attribute] if grandchild_node && grandchild_node[attribute].present? && !Item.item_node?(grandchild_node)
+              return child_node if child_node && !Item.item_node?(child_node) && element == child_node.name && child_node[attribute]
             end
           end
-        end
 
-        nil
+          nil
+        end
       end
     end
   end

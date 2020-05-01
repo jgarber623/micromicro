@@ -3,36 +3,36 @@ module MicroMicro
     class UrlPropertyParser < BasePropertyParser
       # @see microformats2 Parsing Specification section 1.3.2
       # @see http://microformats.org/wiki/microformats2-parsing#parsing_a_u-_property
-      HTML_ATTRIBUTE_MAP = {
+      HTML_ATTRIBUTES_MAP = {
         'href'   => %w[a area link],
-        'src'    => %w[audio img source video],
+        'src'    => %w[audio iframe img source video],
         'poster' => %w[video],
         'data'   => %w[object]
       }.freeze
 
       # @see microformats2 Parsing Specification section 1.3.2
       # @see http://microformats.org/wiki/microformats2-parsing#parsing_a_u-_property
-      EXTENDED_HTML_ATTRIBUTE_MAP = {
+      EXTENDED_HTML_ATTRIBUTES_MAP = {
         'title' => %w[abbr],
         'value' => %w[data input]
       }.freeze
 
+      # @see microformats2 Parsing Specification section 1.5
+      # @see http://microformats.org/wiki/microformats2-parsing#parse_an_img_element_for_src_and_alt
+      #
       # @return [String, Hash{Symbol => String}]
       def value
-        @value ||= self.class.structured_value_from(node, resolved_value)
+        @value ||= begin
+          return resolved_value unless node.matches?('img[alt]')
+
+          {
+            value: resolved_value,
+            alt: node['alt'].strip
+          }
+        end
       end
 
       private
-
-      # @return [MicroMicro::Parsers::AttributesParser]
-      def attributes_parser
-        @attributes_parser ||= AttributesParser.new(node_set, HTML_ATTRIBUTE_MAP)
-      end
-
-      # @return [MicroMicro::Parsers::AttributesParser]
-      def extended_attributes_parser
-        @extended_attributes_parser ||= AttributesParser.new(node_set, EXTENDED_HTML_ATTRIBUTE_MAP)
-      end
 
       # @return [String]
       def resolved_value
@@ -42,9 +42,15 @@ module MicroMicro
       # @return [String]
       def unresolved_value
         @unresolved_value ||= begin
-          return attributes_parser.values.first if attributes_parser.values?
+          HTML_ATTRIBUTES_MAP.each do |attribute, names|
+            return node[attribute] if names.include?(node.name) && node[attribute]
+          end
+
           return value_class_pattern_parser.value if value_class_pattern_parser.value?
-          return extended_attributes_parser.values.first if extended_attributes_parser.values?
+
+          EXTENDED_HTML_ATTRIBUTES_MAP.each do |attribute, names|
+            return node[attribute] if names.include?(node.name) && node[attribute]
+          end
 
           serialized_node.text
         end

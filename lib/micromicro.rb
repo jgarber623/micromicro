@@ -7,11 +7,10 @@ require 'nokogiri'
 
 require 'micro_micro/version'
 
-require 'micro_micro/parsers/attributes_parser'
+require 'micro_micro/parsers/date_time_parser'
 require 'micro_micro/parsers/value_class_pattern_parser'
 
 require 'micro_micro/parsers/base_property_parser'
-require 'micro_micro/parsers/date_time_parser'
 require 'micro_micro/parsers/date_time_property_parser'
 require 'micro_micro/parsers/embedded_markup_property_parser'
 require 'micro_micro/parsers/implied_name_property_parser'

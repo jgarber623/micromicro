@@ -4,7 +4,7 @@ module MicroMicro
       # @see Value Class Pattern sections 3 and 4
       # @see http://microformats.org/wiki/value-class-pattern#Basic_Parsing
       # @see http://microformats.org/wiki/value-class-pattern#Date_and_time_values
-      HTML_ATTRIBUTE_MAP = {
+      HTML_ATTRIBUTES_MAP = {
         'alt'      => %w[area img],
         'value'    => %w[data],
         'title'    => %w[abbr],
@@ -20,11 +20,7 @@ module MicroMicro
 
       # @return [String, nil]
       def value
-        @value ||= begin
-          return unless values?
-
-          values.join(separator).strip
-        end
+        @value ||= values.join(separator).strip if values?
       end
 
       # @return [Boolean]
@@ -34,7 +30,7 @@ module MicroMicro
 
       # @return [Array<String>]
       def values
-        @values ||= value_nodes.map { |value_node| self.class.value_from(value_node) }.compact.reject(&:empty?)
+        @values ||= value_nodes.map { |value_node| self.class.value_from(value_node) }.select(&:present?)
       end
 
       # @return [Boolean]
@@ -70,8 +66,8 @@ module MicroMicro
       def self.value_from(node)
         return node['title'] if value_title_node?(node)
 
-        HTML_ATTRIBUTE_MAP.each do |attribute, elements|
-          return node[attribute] if elements.include?(node.name) && node[attribute]
+        HTML_ATTRIBUTES_MAP.each do |attribute, names|
+          return node[attribute] if names.include?(node.name) && node[attribute]
         end
 
         node.text
