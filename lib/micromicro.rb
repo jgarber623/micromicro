@@ -23,6 +23,7 @@ require 'micro_micro/parsers/url_property_parser'
 require 'micro_micro/document'
 require 'micro_micro/item'
 require 'micro_micro/property'
+require 'micro_micro/implied_property'
 require 'micro_micro/relation'
 
 require 'micro_micro/collections/collectible'

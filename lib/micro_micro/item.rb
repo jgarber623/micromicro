@@ -93,9 +93,9 @@ module MicroMicro
 
     attr_reader :node
 
-    # @return [MicroMicro::Property]
+    # @return [MicroMicro::ImpliedProperty]
     def implied_name
-      @implied_name ||= Property.new(node, name: 'name', prefix: 'p', implied: true)
+      @implied_name ||= ImpliedProperty.new(node, name: 'name', prefix: 'p')
     end
 
     # @return [Boolean]
@@ -103,9 +103,9 @@ module MicroMicro
       imply_name? && implied_name.value?
     end
 
-    # @return [MicroMicro::Property]
+    # @return [MicroMicro::ImpliedProperty]
     def implied_photo
-      @implied_photo ||= Property.new(node, name: 'photo', prefix: 'u', implied: true)
+      @implied_photo ||= ImpliedProperty.new(node, name: 'photo', prefix: 'u')
     end
 
     # @return [Boolean]
@@ -113,9 +113,9 @@ module MicroMicro
       imply_photo? && implied_photo.value?
     end
 
-    # @return [MicroMicro::Property]
+    # @return [MicroMicro::ImpliedProperty]
     def implied_url
-      @implied_url ||= Property.new(node, name: 'url', prefix: 'u', implied: true)
+      @implied_url ||= ImpliedProperty.new(node, name: 'url', prefix: 'u')
     end
 
     # @return [Boolean]

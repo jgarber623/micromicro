@@ -7,37 +7,25 @@ module MicroMicro
       'u'  => Parsers::UrlPropertyParser
     }.freeze
 
-    IMPLIED_PROPERTY_PARSERS_MAP = {
-      'name'  => Parsers::ImpliedNamePropertyParser,
-      'photo' => Parsers::ImpliedPhotoPropertyParser,
-      'url'   => Parsers::ImpliedUrlPropertyParser
-    }.freeze
-
     attr_reader :name, :prefix
 
     # @param node [Nokogiri::XML::Element]
     # @param name [String]
     # @param prefix [String<dt, e, p, u>]
-    # @param implied [Boolean]
-    def initialize(node, name:, prefix:, implied: false)
+    def initialize(node, name:, prefix:)
       @node = node
       @name = name
       @prefix = prefix
-      @implied = implied
     end
 
     # @return [Boolean]
     def implied?
-      implied
+      false
     end
 
     # @return [Boolean]
     def item_node?
-      @item_node ||= begin
-        return false if implied?
-
-        Item.item_node?(node)
-      end
+      @item_node ||= Item.item_node?(node)
     end
 
     # @return [String, Hash, MicroMicro::Item]
@@ -95,7 +83,7 @@ module MicroMicro
 
     private
 
-    attr_reader :implied, :node
+    attr_reader :node
 
     # @return [MicroMicro::Item, nil]
     def item
@@ -116,7 +104,7 @@ module MicroMicro
     end
 
     def parser
-      @parser ||= (implied? ? IMPLIED_PROPERTY_PARSERS_MAP[name] : PROPERTY_PARSERS_MAP[prefix]).new(node)
+      @parser ||= PROPERTY_PARSERS_MAP[prefix].new(node)
     end
   end
 end
