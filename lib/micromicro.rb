@@ -2,6 +2,7 @@ require 'absolutely'
 require 'active_support/core_ext/hash/deep_transform_values'
 require 'active_support/core_ext/hash/keys'
 require 'active_support/core_ext/hash/slice'
+require 'active_support/core_ext/module/delegation'
 require 'active_support/core_ext/object/blank'
 require 'nokogiri'
 

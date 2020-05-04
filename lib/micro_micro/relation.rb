@@ -59,6 +59,12 @@ module MicroMicro
       context.css('[href][rel]:not([rel=""])').reject { |node| (node.ancestors.map(&:name) & Document.ignored_node_names).any? }
     end
 
+    # @param context [Nokogiri::HTML::Document, Nokogiri::XML::NodeSet, Nokogiri::XML::Element]
+    # @return [Array<MicroMicro::Relation>]
+    def self.relations_from(context)
+      nodes_from(context).map { |node| new(node) }
+    end
+
     private
 
     attr_reader :node

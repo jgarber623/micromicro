@@ -13,7 +13,7 @@ module MicroMicro
 
     # @return [MicroMicro::Collections::ItemsCollection]
     def children
-      @children ||= Collections::ItemsCollection.new(Item.nodes_from(node.element_children))
+      @children ||= Collections::ItemsCollection.new(Item.items_from(node.element_children))
     end
 
     # @return [String, nil]
@@ -23,7 +23,7 @@ module MicroMicro
 
     # @return [MicroMicro::Collections::PropertiesCollection]
     def properties
-      @properties ||= Collections::PropertiesCollection.new(Property.nodes_from(node.element_children))
+      @properties ||= Collections::PropertiesCollection.new(Property.properties_from(node.element_children))
     end
 
     # @see microformats2 Parsing Specification section 1.2
@@ -52,6 +52,12 @@ module MicroMicro
     # @return [Boolean]
     def self.item_node?(node)
       types_from(node).any?
+    end
+
+    # @param context [Nokogiri::HTML::Document, Nokogiri::XML::NodeSet, Nokogiri::XML::Element]
+    # @return [Array<MicroMicro::Item>]
+    def self.items_from(context)
+      nodes_from(context).map { |node| new(node) }
     end
 
     # @param context [Nokogiri::HTML::Document, Nokogiri::XML::NodeSet, Nokogiri::XML::Element]

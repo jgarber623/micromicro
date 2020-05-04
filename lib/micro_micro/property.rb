@@ -71,10 +71,10 @@ module MicroMicro
       node_set
     end
 
-    # @param node [Nokogiri::XML::Element]
+    # @param context [Nokogiri::XML::NodeSet, Nokogiri::XML::Element]
     # @return [Array<MicroMicro::Property>]
-    def self.properties_from(node)
-      types_from(node).map { |prefix, name| new(node, name: name, prefix: prefix) }
+    def self.properties_from(context)
+      nodes_from(context).map { |node| types_from(node).map { |prefix, name| new(node, name: name, prefix: prefix) } }.flatten
     end
 
     # @param node [Nokogiri::XML::Element]
@@ -99,19 +99,16 @@ module MicroMicro
 
     # @return [MicroMicro::Item, nil]
     def item
-      @item ||= begin
-        return unless item_node?
-
-        Item.new(node)
-      end
+      @item ||= Item.new(node) if item_node?
     end
 
+    # @reutrn [String, nil]
     def item_value
       return unless item_node?
 
       obj_by_prefix = case prefix
-                      when 'p' then item.properties.find_by(:name, 'name')
                       when 'e' then item
+                      when 'p' then item.properties.find_by(:name, 'name')
                       when 'u' then item.properties.find_by(:name, 'url')
                       end
 

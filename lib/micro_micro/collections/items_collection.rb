@@ -3,24 +3,19 @@ module MicroMicro
     class ItemsCollection
       include Collectible
 
-      # @param node_set [Nokogiri::XML::NodeSet]
-      def initialize(node_set)
-        @node_set = node_set
-      end
-
-      # @return [Array<MicroMicro::Item>]
-      def members
-        @members ||= node_set.map { |node| Item.new(node) }
+      # @param members [Array<MicroMicro::Item>]
+      def initialize(members = [])
+        @members = members
       end
 
       # @return [Array<Hash{Symbol => Array<String, Hash>}>]
       def to_a
-        members.map(&:to_h)
+        map(&:to_h)
       end
 
       private
 
-      attr_reader :node_set
+      attr_reader :members
     end
   end
 end

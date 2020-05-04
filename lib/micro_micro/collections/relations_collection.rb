@@ -3,21 +3,22 @@ module MicroMicro
     class RelationsCollection
       include Collectible
 
-      # @param node_set [Nokogiri::XML::NodeSet]
-      def initialize(node_set)
-        @node_set = node_set
+      # @param members [Array<MicroMicro::Relation>]
+      def initialize(members = [])
+        @members = members
       end
 
-      # @return [Array<MicroMicro::Relation>]
-      def members
-        @members ||= node_set.map { |node| Relation.new(node) }
-      end
-
+      # @see microformats2 Parsing Specification section 1.4
+      # @see http://microformats.org/wiki/microformats2-parsing#parse_a_hyperlink_element_for_rel_microformats
+      #
       # @return [Hash{Symbole => Hash{Symbol => Array, String}}]
       def group_by_url
-        members.group_by(&:href).symbolize_keys.transform_values { |relations| relations.first.to_h.slice!(:href) }
+        group_by(&:href).symbolize_keys.transform_values { |relations| relations.first.to_h.slice!(:href) }
       end
 
+      # @see microformats2 Parsing Specification section 1.4
+      # @see http://microformats.org/wiki/microformats2-parsing#parse_a_hyperlink_element_for_rel_microformats
+      #
       # @return [Hash{Symbol => Array<String>}]
       def group_by_rel
         each_with_object(Hash.new { |hash, key| hash[key] = [] }) do |member, hash|
@@ -27,7 +28,7 @@ module MicroMicro
 
       private
 
-      attr_reader :node_set
+      attr_reader :members
     end
   end
 end

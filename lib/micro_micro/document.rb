@@ -9,12 +9,12 @@ module MicroMicro
 
     # @return [MicroMicro::Collections::ItemsCollection]
     def items
-      @items ||= Collections::ItemsCollection.new(Item.nodes_from(document))
+      @items ||= Collections::ItemsCollection.new(Item.items_from(document))
     end
 
     # @return [MicroMicro::Collections::RelationsCollection]
     def relations
-      @relations ||= Collections::RelationsCollection.new(Relation.nodes_from(document))
+      @relations ||= Collections::RelationsCollection.new(Relation.relations_from(document))
     end
 
     # @see microformats2 Parsing Specification section 1.1
