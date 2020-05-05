@@ -1,13 +1,6 @@
 module MicroMicro
   module Collections
-    class RelationsCollection
-      include Collectible
-
-      # @param members [Array<MicroMicro::Relation>]
-      def initialize(members = [])
-        @members = members
-      end
-
+    class RelationsCollection < BaseCollection
       # @see microformats2 Parsing Specification section 1.4
       # @see http://microformats.org/wiki/microformats2-parsing#parse_a_hyperlink_element_for_rel_microformats
       #
@@ -25,10 +18,6 @@ module MicroMicro
           member.rels.each { |rel| hash[rel] << member.href }
         end.symbolize_keys.transform_values(&:uniq)
       end
-
-      private
-
-      attr_reader :members
     end
   end
 end

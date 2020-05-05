@@ -7,7 +7,8 @@ module MicroMicro
       'u'  => Parsers::UrlPropertyParser
     }.freeze
 
-    attr_reader :name, :prefix
+    attr_accessor :collection
+    attr_reader :name, :node, :prefix
 
     # @param node [Nokogiri::XML::Element]
     # @param name [String]
@@ -62,7 +63,9 @@ module MicroMicro
     # @param context [Nokogiri::XML::NodeSet, Nokogiri::XML::Element]
     # @return [Array<MicroMicro::Property>]
     def self.properties_from(context)
-      nodes_from(context).map { |node| types_from(node).map { |prefix, name| new(node, name: name, prefix: prefix) } }.flatten
+      nodes_from(context).map do |node|
+        types_from(node).map { |prefix, name| new(node, name: name, prefix: prefix) }
+      end.flatten
     end
 
     # @param node [Nokogiri::XML::Element]
@@ -83,8 +86,6 @@ module MicroMicro
 
     private
 
-    attr_reader :node
-
     # @return [MicroMicro::Item, nil]
     def item
       @item ||= Item.new(node) if item_node?
@@ -104,7 +105,7 @@ module MicroMicro
     end
 
     def parser
-      @parser ||= PROPERTY_PARSERS_MAP[prefix].new(node)
+      @parser ||= PROPERTY_PARSERS_MAP[prefix].new(self)
     end
   end
 end

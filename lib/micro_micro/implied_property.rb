@@ -19,7 +19,7 @@ module MicroMicro
     private
 
     def parser
-      @parser ||= IMPLIED_PROPERTY_PARSERS_MAP[name].new(node)
+      @parser ||= IMPLIED_PROPERTY_PARSERS_MAP[name].new(self)
     end
   end
 end

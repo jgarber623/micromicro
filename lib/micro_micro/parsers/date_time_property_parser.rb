@@ -12,7 +12,7 @@ module MicroMicro
       # @return [String]
       def value
         @value ||= begin
-          return date_time_parser.value if value_class_pattern_parser.value?
+          return resolved_value if date_time_parser.value?
 
           HTML_ATTRIBUTES_MAP.each do |attribute, names|
             return node[attribute] if names.include?(node.name) && node[attribute]
@@ -24,14 +24,34 @@ module MicroMicro
 
       private
 
+      # @return [MicroMicro::Parsers::DateTimeParser, nil]
+      def adopted_date_time
+        @adopted_date_time ||= begin
+          collections = property.collection.find_all_by(:prefix, 'dt').split(property)
+
+          (collections.shift.reverse + collections).flatten.map { |prop| DateTimeParser.new(prop.value) }.find(&:normalized_date)
+        end
+      end
+
       # @return [MicroMicro::Parsers::DateTimeParser]
       def date_time_parser
         @date_time_parser ||= DateTimeParser.new(value_class_pattern_parser.value)
       end
 
+      # @return [Boolean]
+      def imply_date?
+        date_time_parser.normalized_time && !date_time_parser.normalized_date
+      end
+
+      def resolved_value
+        return "#{adopted_date_time.normalized_date} #{date_time_parser.value}" if imply_date? && adopted_date_time
+
+        date_time_parser.value
+      end
+
       # @return [MicroMicro::Parsers::ValueClassPatternParser]
       def value_class_pattern_parser
-        @value_class_pattern_parser ||= ValueClassPatternParser.new(node, ' ')
+        ValueClassPatternParser.new(node, ' ')
       end
     end
   end

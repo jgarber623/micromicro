@@ -1,13 +1,6 @@
 module MicroMicro
   module Collections
-    class PropertiesCollection
-      include Collectible
-
-      # @param members [Array<MicroMicro::Property>]
-      def initialize(members = [])
-        @members = members
-      end
-
+    class PropertiesCollection < BaseCollection
       # @return [Hash{Symbol => Array<String, Hash>}]
       def to_h
         group_by(&:name).symbolize_keys.deep_transform_values do |property|
@@ -17,7 +10,9 @@ module MicroMicro
 
       private
 
-      attr_reader :members
+      def decorate_members
+        each { |member| member.collection = self }
+      end
     end
   end
 end

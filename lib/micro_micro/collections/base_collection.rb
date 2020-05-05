@@ -1,9 +1,16 @@
 module MicroMicro
   module Collections
-    module Collectible
+    class BaseCollection
       include Enumerable
 
-      delegate :[], :<<, :each, :last, :length, :push, to: :members
+      delegate :[], :each, :last, :length, :split, to: :members
+
+      # @param members [Array<MicroMicro::Item, MicroMicro::Property, MicroMicro::Relation>]
+      def initialize(members = [])
+        @members = members
+
+        decorate_members if respond_to?(:decorate_members, true)
+      end
 
       # @param method [Symbol, String]
       # @param values [List<String>]
@@ -18,6 +25,22 @@ module MicroMicro
       def find_all_by(method, *values)
         select { |member| values.include?(member.public_send(method)) }
       end
+
+      # @param member [MicroMicro::Item, MicroMicro::Property, MicroMicro::Relation]
+      # @return [self]
+      def push(member)
+        members.push(member)
+
+        decorate_members if respond_to?(:decorate_members, true)
+
+        self
+      end
+
+      alias << push
+
+      private
+
+      attr_reader :members
     end
   end
 end

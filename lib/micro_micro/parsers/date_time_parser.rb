@@ -11,18 +11,24 @@ module MicroMicro
       # Regexp pattern matching +/-(XX:YY|XXYY|XX) or the literal string Z
       TIMEZONE_REGEXP_PATTERN = '(?<zulu>Z)|(?<offset>(?:\+|-)(?:1[0-2]|0?\d)(?::?[0-5]\d)?)'.freeze
 
+      CAPTURE_NAMES = [:year, :ordinal, :month, :day, :hours, :minutes, :seconds, :abbreviation, :zulu, :offset].freeze
+
       # @param string [String]
       def initialize(string)
         @string = string
+      end
 
-        values.each do |name, value|
-          define_singleton_method(name) { value }
-          define_singleton_method("#{name}?") { value.present? }
-        end
+      CAPTURE_NAMES.each do |name|
+        define_method(name) { values[name] }
+        define_method("#{name}?") { public_send(name).present? }
+      end
+
+      def normalized_calendar_date
+        @normalized_calendar_date ||= "#{year}-#{month}-#{day}" if year? && month? && day?
       end
 
       def normalized_date
-        @normalized_date ||= "#{year}-#{month}-#{day}" if year? && month? && day?
+        @normalized_date ||= normalized_calendar_date || normalized_ordinal_date
       end
 
       def normalized_hours
@@ -50,10 +56,17 @@ module MicroMicro
         @normalized_timezone ||= zulu || offset&.tr(':', '')
       end
 
+      # @return [String]
       def value
         @value ||= "#{normalized_date} #{normalized_time}#{normalized_timezone}".strip
       end
 
+      # @return [Boolean]
+      def value?
+        value.present?
+      end
+
+      # @return [Hash{Symbol => String, nil}]
       def values
         @values ||= self.class.values_from(string)
       end
@@ -61,7 +74,7 @@ module MicroMicro
       # @param string [String]
       # @return [Hash{Symbol => String, nil}]
       def self.values_from(string)
-        string.match(/^(?:#{DATE_REGEXP_PATTERN})?(?:\s?#{TIME_REGEXP_PATTERN}(?:#{TIMEZONE_REGEXP_PATTERN})?)?$/)&.named_captures.to_h.symbolize_keys
+        string&.match(/^(?:#{DATE_REGEXP_PATTERN})?(?:\s?#{TIME_REGEXP_PATTERN}(?:#{TIMEZONE_REGEXP_PATTERN})?)?$/)&.named_captures.to_h.symbolize_keys
       end
 
       private
