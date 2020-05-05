@@ -97,8 +97,8 @@ module MicroMicro
 
       obj_by_prefix = case prefix
                       when 'e' then item
-                      when 'p' then item.properties.find_by(:name, 'name')
-                      when 'u' then item.properties.find_by(:name, 'url')
+                      when 'p' then item.properties.find { |property| property.name == 'name' }
+                      when 'u' then item.properties.find { |property| property.name == 'url' }
                       end
 
       (obj_by_prefix || parser).value

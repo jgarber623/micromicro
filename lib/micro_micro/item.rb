@@ -125,22 +125,22 @@ module MicroMicro
 
     # @return [Boolean]
     def imply_name?
-      !properties.find_by(:name, 'name') && properties.find_all_by(:prefix, 'p', 'e').none? && !nested_items?
+      properties.none? { |prop| prop.name == 'name' } && properties.none? { |prop| %w[e p].include?(prop.prefix) } && !nested_items?
     end
 
     # @return [Boolean]
     def imply_photo?
-      !properties.find_by(:name, 'photo') && properties.find_all_by(:prefix, 'u').reject(&:implied?).none? && !nested_items?
+      properties.none? { |prop| prop.name == 'photo '} && properties.reject(&:implied?).none? { |prop| prop.prefix == 'u' } && !nested_items?
     end
 
     # @return [Boolean]
     def imply_url?
-      !properties.find_by(:name, 'url') && properties.find_all_by(:prefix, 'u').reject(&:implied?).none? && !nested_items?
+      properties.none? { |prop| prop.name == 'url' } && properties.reject(&:implied?).none? { |prop| prop.prefix == 'u' } && !nested_items?
     end
 
     # @return [Boolean]
     def nested_items?
-      @nested_items ||= properties.find_by(:item_node?, true) || children.any?
+      @nested_items ||= properties.find(&:item_node?) || children.any?
     end
   end
 end

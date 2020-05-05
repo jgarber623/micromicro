@@ -27,7 +27,7 @@ module MicroMicro
       # @return [MicroMicro::Parsers::DateTimeParser, nil]
       def adopted_date_time
         @adopted_date_time ||= begin
-          collections = property.collection.find_all_by(:prefix, 'dt').split(property)
+          collections = property.collection.select { |prop| prop.prefix == 'dt' }.split(property)
 
           (collections.shift.reverse + collections).flatten.map { |prop| DateTimeParser.new(prop.value) }.find(&:normalized_date)
         end
