@@ -1,10 +1,7 @@
-lib = File.expand_path('lib', __dir__)
-$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-
-require 'micro_micro/version'
+require_relative 'lib/micro_micro/version'
 
 Gem::Specification.new do |spec|
-  spec.required_ruby_version = ['>= 2.5', '< 2.8']
+  spec.required_ruby_version = Gem::Requirement.new('>= 2.5', '< 2.8')
 
   spec.name          = 'micromicro'
   spec.version       = MicroMicro::VERSION
@@ -16,14 +13,15 @@ Gem::Specification.new do |spec|
   spec.homepage      = 'https://github.com/jgarber623/micromicro'
   spec.license       = 'MIT'
 
-  spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(bin|spec)/}) }
+  spec.files         = Dir.chdir(File.expand_path('..', __FILE__)) do
+    `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(bin|spec)/}) }
+  end
 
   spec.require_paths = ['lib']
 
-  spec.metadata = {
-    'bug_tracker_uri' => "#{spec.homepage}/issues",
-    'changelog_uri'   => "#{spec.homepage}/blob/v#{spec.version}/CHANGELOG.md"
-  }
+  spec.metadata['bug_tracker_uri'] = "#{spec.homepage}/issues"
+  spec.metadata['changelog_uri']   = "#{spec.homepage}/blob/v#{spec.version}/CHANGELOG.md"
+  spec.metadata['homepage_uri']    = spec.homepage
 
   spec.add_runtime_dependency 'absolutely', '~> 3.1'
   spec.add_runtime_dependency 'activesupport', '~> 6.0'
