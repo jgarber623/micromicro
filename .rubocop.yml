@@ -13,7 +13,6 @@ Layout/LineLength:
 
 Metrics/BlockLength:
   Exclude:
-    - micromicro.gemspec
     - spec/**/*.rb
 
 Style/Documentation:
