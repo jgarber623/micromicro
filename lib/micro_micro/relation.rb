@@ -15,6 +15,12 @@ module MicroMicro
       @hreflang ||= node['hreflang']&.strip
     end
 
+    # @return [String]
+    def inspect
+      format(%(#<#{self.class.name}:%#0x href: #{href.inspect}, rels: #{rels.inspect}>), object_id)
+      # format(%(#<#{self.class.name}:%#0x rels: #{rels}>), object_id)
+    end
+
     # @return [String, nil]
     def media
       @media ||= node['media']&.strip

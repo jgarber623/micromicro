@@ -7,6 +7,11 @@ module MicroMicro
       @base_url = base_url
     end
 
+    # @return [String]
+    def inspect
+      format(%(#<#{self.class.name}:%#0x items: #{items.inspect}, relations: #{relations.inspect}>), object_id)
+    end
+
     # @return [MicroMicro::Collections::ItemsCollection]
     def items
       @items ||= Collections::ItemsCollection.new(Item.items_from(document))

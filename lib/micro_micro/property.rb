@@ -24,6 +24,11 @@ module MicroMicro
       false
     end
 
+    # @return [String]
+    def inspect
+      format(%(#<#{self.class.name}:%#0x name: #{name.inspect}, prefix: #{prefix.inspect}, value: #{value.inspect}>), object_id)
+    end
+
     # @return [Boolean]
     def item_node?
       @item_node ||= Item.item_node?(node)

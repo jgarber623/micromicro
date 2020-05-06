@@ -21,6 +21,11 @@ module MicroMicro
       @id ||= node['id']&.strip
     end
 
+    # @return [String]
+    def inspect
+      format(%(#<#{self.class.name}:%#0x types: #{types.inspect}, properties: #{properties.count}, children: #{children.count}>), object_id)
+    end
+
     # @return [MicroMicro::Collections::PropertiesCollection]
     def properties
       @properties ||= Collections::PropertiesCollection.new(Property.properties_from(node.element_children))
