@@ -1,4 +1,4 @@
-describe MicroMicro, '.parse' do
+RSpec.describe MicroMicro, '.parse' do
   subject(:document) { described_class.parse(markup, base_url) }
 
   let(:base_url) { 'http://example.com' }

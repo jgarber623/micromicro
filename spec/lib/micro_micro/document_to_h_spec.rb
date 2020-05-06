@@ -1,4 +1,4 @@
-describe MicroMicro::Document, '#to_h' do
+RSpec.describe MicroMicro::Document, '#to_h' do
   let(:base_url) { 'http://example.com' }
 
   FixturesHelpers::MicroformatsTestSuite.test_case_file_paths.each do |test_case_file_path|

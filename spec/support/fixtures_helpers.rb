@@ -1,3 +1,5 @@
+require 'json'
+
 module FixturesHelpers
   module MicroformatsTestSuite
     TEST_CASE_TYPES = %w[
