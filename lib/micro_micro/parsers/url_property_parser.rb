@@ -34,6 +34,22 @@ module MicroMicro
 
       private
 
+      def attribute_values
+        @attribute_values ||= begin
+          HTML_ATTRIBUTES_MAP.map do |attribute, names|
+            node[attribute] if names.include?(node.name) && node[attribute]
+          end.compact
+        end
+      end
+
+      def extended_attribute_values
+        @extended_attribute_values ||= begin
+          EXTENDED_HTML_ATTRIBUTES_MAP.map do |attribute, names|
+            node[attribute] if names.include?(node.name) && node[attribute]
+          end
+        end.compact
+      end
+
       # @return [String]
       def resolved_value
         @resolved_value ||= Absolutely.to_abs(base: node.document.url, relative: unresolved_value.strip)
@@ -42,15 +58,9 @@ module MicroMicro
       # @return [String]
       def unresolved_value
         @unresolved_value ||= begin
-          HTML_ATTRIBUTES_MAP.each do |attribute, names|
-            return node[attribute] if names.include?(node.name) && node[attribute]
-          end
-
+          return attribute_values.first if attribute_values.any?
           return value_class_pattern_parser.value if value_class_pattern_parser.value?
-
-          EXTENDED_HTML_ATTRIBUTES_MAP.each do |attribute, names|
-            return node[attribute] if names.include?(node.name) && node[attribute]
-          end
+          return extended_attribute_values.first if extended_attribute_values.any?
 
           serialized_node.text
         end

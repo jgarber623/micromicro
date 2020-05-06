@@ -16,14 +16,41 @@ module MicroMicro
 
       private
 
+      # @return [Array<String>]
+      def attribute_values
+        @attribute_values ||= begin
+          HTML_ELEMENTS_MAP.map do |element, attribute|
+            node[attribute] if node.matches?("#{element}[#{attribute}]")
+          end.compact
+        end
+      end
+
       # @return [Nokogiri::XML::Element, nil]
       def child_node
         @child_node ||= node.at_css('> :only-child')
       end
 
+      # @return [Array<String>]
+      def child_node_attribute_values
+        @child_node_attribute_values ||= begin
+          HTML_ELEMENTS_MAP.map do |element, attribute|
+            child_node[attribute] if child_node.matches?("#{element}[#{attribute}]")
+          end.compact
+        end
+      end
+
       # @return [Nokogiri::XML::Element, nil]
       def grandchild_node
         @grandchild_node ||= child_node.at_css('> :only-child')
+      end
+
+      # @return [Array<String>]
+      def grandchild_node_attribute_values
+        @grandchild_node_attribute_values ||= begin
+          HTML_ELEMENTS_MAP.map do |element, attribute|
+            grandchild_node[attribute] if grandchild_node.matches?("#{element}[#{attribute}]")
+          end.compact
+        end
       end
 
       # @return [Boolean]
@@ -38,21 +65,9 @@ module MicroMicro
 
       # @return [String]
       def unresolved_value
-        HTML_ELEMENTS_MAP.each do |element, attribute|
-          return node[attribute] if node.matches?("#{element}[#{attribute}]")
-        end
-
-        if parse_child_node?
-          HTML_ELEMENTS_MAP.each do |element, attribute|
-            return child_node[attribute] if child_node.matches?("#{element}[#{attribute}]")
-          end
-        end
-
-        if parse_grandchild_node?
-          HTML_ELEMENTS_MAP.each do |element, attribute|
-            return grandchild_node[attribute] if grandchild_node.matches?("#{element}[#{attribute}]")
-          end
-        end
+        return attribute_values.first if attribute_values.any?
+        return child_node_attribute_values.first if parse_child_node? && child_node_attribute_values.any?
+        return grandchild_node_attribute_values.first if parse_grandchild_node? && grandchild_node_attribute_values.any?
 
         serialized_node.css('img').each { |img| img.content = img['alt'] }
 

@@ -130,7 +130,7 @@ module MicroMicro
 
     # @return [Boolean]
     def imply_photo?
-      properties.none? { |prop| prop.name == 'photo '} && properties.reject(&:implied?).none? { |prop| prop.prefix == 'u' } && !nested_items?
+      properties.none? { |prop| prop.name == 'photo' } && properties.reject(&:implied?).none? { |prop| prop.prefix == 'u' } && !nested_items?
     end
 
     # @return [Boolean]

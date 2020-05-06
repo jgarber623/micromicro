@@ -13,10 +13,7 @@ module MicroMicro
       def value
         @value ||= begin
           return resolved_value if date_time_parser.value?
-
-          HTML_ATTRIBUTES_MAP.each do |attribute, names|
-            return node[attribute] if names.include?(node.name) && node[attribute]
-          end
+          return attribute_values.first if attribute_values.any?
 
           super
         end
@@ -33,6 +30,15 @@ module MicroMicro
         end
       end
 
+      # @return [Array<String>]
+      def attribute_values
+        @attribute_values ||= begin
+          HTML_ATTRIBUTES_MAP.map do |attribute, names|
+            node[attribute] if names.include?(node.name) && node[attribute]
+          end.compact
+        end
+      end
+
       # @return [MicroMicro::Parsers::DateTimeParser]
       def date_time_parser
         @date_time_parser ||= DateTimeParser.new(value_class_pattern_parser.value)
@@ -43,6 +49,7 @@ module MicroMicro
         date_time_parser.normalized_time && !date_time_parser.normalized_date
       end
 
+      # @return [String]
       def resolved_value
         return "#{adopted_date_time.normalized_date} #{date_time_parser.value}" if imply_date? && adopted_date_time
 

@@ -15,6 +15,15 @@ module MicroMicro
 
       private
 
+      # @return [Array<String>]
+      def attribute_values
+        @attribute_values ||= begin
+          HTML_ELEMENTS_MAP.map do |element, attribute|
+            node if node.matches?("#{element}[#{attribute}]")
+          end.compact
+        end
+      end
+
       # @return [String, nil]
       def resolved_value
         @resolved_value ||= Absolutely.to_abs(base: node.document.url, relative: unresolved_value.strip) if unresolved_value
@@ -28,9 +37,7 @@ module MicroMicro
       # @return [Nokogiri::XML::Element, nil]
       def value_node
         @value_node ||= begin
-          HTML_ELEMENTS_MAP.each do |element, attribute|
-            return node if node.matches?("#{element}[#{attribute}]")
-          end
+          return attribute_values.first if attribute_values.any?
 
           HTML_ELEMENTS_MAP.each do |element, attribute|
             child_node = node.at_css("> #{element}[#{attribute}]:only-of-type")

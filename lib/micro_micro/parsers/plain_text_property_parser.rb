@@ -13,16 +13,22 @@ module MicroMicro
       def value
         @value ||= begin
           return value_class_pattern_parser.value if value_class_pattern_parser.value?
-
-          HTML_ATTRIBUTES_MAP.each do |attribute, names|
-            return node[attribute] if names.include?(node.name) && node[attribute]
-          end
+          return attribute_values.first if attribute_values.any?
 
           super
         end
       end
 
       private
+
+      # @return [Array<String>]
+      def attribute_values
+        @attribute_values ||= begin
+          HTML_ATTRIBUTES_MAP.map do |attribute, names|
+            node[attribute] if names.include?(node.name) && node[attribute]
+          end.compact
+        end
+      end
 
       # @return [MicroMicro::Parsers::ValueClassPatternParser]
       def value_class_pattern_parser
