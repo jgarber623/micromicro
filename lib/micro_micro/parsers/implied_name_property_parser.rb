@@ -2,32 +2,21 @@ module MicroMicro
   module Parsers
     class ImpliedNamePropertyParser < BasePropertyParser
       # @see http://microformats.org/wiki/microformats2-parsing#parsing_for_implied_properties
-      HTML_ELEMENTS_MAP = {
-        'area' => 'alt',
-        'img'  => 'alt',
-        'abbr' => 'title'
+      HTML_ATTRIBUTES_MAP = {
+        'alt'   => %w[area img],
+        'title' => %w[abbr]
       }.freeze
 
       # @return [String]
       def value
-        @value ||= begin
-          return attribute_values.first if attribute_values.any?
-          return child_node_attribute_values.first if parse_child_node? && child_node_attribute_values.any?
-          return grandchild_node_attribute_values.first if parse_grandchild_node? && grandchild_node_attribute_values.any?
-
-          Document.text_content_from(node) { |context| context.css('img').each { |img| img.content = img['alt'] } }
-        end
+        @value ||= attribute_value || child_node_attribute_value || grandchild_node_attribute_value || text_content
       end
 
       private
 
-      # @return [Array<String>]
-      def attribute_values
-        @attribute_values ||= begin
-          HTML_ELEMENTS_MAP.map do |element, attribute|
-            node[attribute] if node.matches?("#{element}[#{attribute}]")
-          end.compact
-        end
+      # @return [String, nil]
+      def attribute_value
+        @attribute_value ||= self.class.attribute_value_from(node, HTML_ATTRIBUTES_MAP)
       end
 
       # @return [Nokogiri::XML::Element, nil]
@@ -35,13 +24,9 @@ module MicroMicro
         @child_node ||= node.at_css('> :only-child')
       end
 
-      # @return [Array<String>]
-      def child_node_attribute_values
-        @child_node_attribute_values ||= begin
-          HTML_ELEMENTS_MAP.map do |element, attribute|
-            child_node[attribute] if child_node.matches?("#{element}[#{attribute}]")
-          end.compact
-        end
+      # @return [String, nil]
+      def child_node_attribute_value
+        @child_node_attribute_value ||= self.class.attribute_value_from(child_node, HTML_ATTRIBUTES_MAP) if parse_child_node?
       end
 
       # @return [Nokogiri::XML::Element, nil]
@@ -49,13 +34,9 @@ module MicroMicro
         @grandchild_node ||= child_node.at_css('> :only-child')
       end
 
-      # @return [Array<String>]
-      def grandchild_node_attribute_values
-        @grandchild_node_attribute_values ||= begin
-          HTML_ELEMENTS_MAP.map do |element, attribute|
-            grandchild_node[attribute] if grandchild_node.matches?("#{element}[#{attribute}]")
-          end.compact
-        end
+      # @return [String, nil]
+      def grandchild_node_attribute_value
+        @grandchild_node_attribute_value ||= self.class.attribute_value_from(grandchild_node, HTML_ATTRIBUTES_MAP) if parse_grandchild_node?
       end
 
       # @return [Boolean]
@@ -66,6 +47,11 @@ module MicroMicro
       # @return [Boolean]
       def parse_grandchild_node?
         parse_child_node? && grandchild_node && !Item.item_node?(grandchild_node)
+      end
+
+      # @return [String]
+      def text_content
+        @text_content ||= Document.text_content_from(node) { |context| context.css('img').each { |img| img.content = img['alt'] } }
       end
     end
   end

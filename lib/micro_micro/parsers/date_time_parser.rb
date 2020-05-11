@@ -57,12 +57,7 @@ module MicroMicro
 
       # @return [String]
       def value
-        @value ||= "#{normalized_date} #{normalized_time}#{normalized_timezone}".strip
-      end
-
-      # @return [Boolean]
-      def value?
-        value.present?
+        @value ||= "#{normalized_date} #{normalized_time}#{normalized_timezone}".strip if normalized_date || normalized_time || normalized_timezone
       end
 
       # @return [Hash{Symbol => String, nil}]

@@ -19,22 +19,12 @@ module MicroMicro
 
       # @return [String, nil]
       def value
-        @value ||= values.join(separator).strip if values?
-      end
-
-      # @return [Boolean]
-      def value?
-        value.present?
+        @value ||= values.join(separator).strip if values.any?
       end
 
       # @return [Array<String>]
       def values
         @values ||= value_nodes.map { |value_node| self.class.value_from(value_node) }.select(&:present?)
-      end
-
-      # @return [Boolean]
-      def values?
-        values.any?
       end
 
       # @param context [Nokogiri::XML::NodeSet, Nokogiri::XML::Element]

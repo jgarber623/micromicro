@@ -10,28 +10,19 @@ module MicroMicro
 
       # @return [String]
       def value
-        @value ||= begin
-          return value_class_pattern_parser.value if value_class_pattern_parser.value?
-          return attribute_values.first if attribute_values.any?
-
-          super
-        end
+        @value ||= value_class_pattern_value || attribute_value || super
       end
 
       private
 
-      # @return [Array<String>]
-      def attribute_values
-        @attribute_values ||= begin
-          HTML_ATTRIBUTES_MAP.map do |attribute, names|
-            node[attribute] if names.include?(node.name) && node[attribute]
-          end.compact
-        end
+      # @return [String, nil]
+      def attribute_value
+        self.class.attribute_value_from(node, HTML_ATTRIBUTES_MAP)
       end
 
-      # @return [MicroMicro::Parsers::ValueClassPatternParser]
-      def value_class_pattern_parser
-        @value_class_pattern_parser ||= ValueClassPatternParser.new(node)
+      # @return [String, nil]
+      def value_class_pattern_value
+        ValueClassPatternParser.new(node).value
       end
     end
   end
