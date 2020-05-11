@@ -7,7 +7,7 @@ module MicroMicro
 
     # @return [String]
     def href
-      @href ||= Absolutely.to_abs(base: node.document.url, relative: node['href'].strip)
+      @href ||= node['href']
     end
 
     # @return [String, nil]
@@ -18,7 +18,6 @@ module MicroMicro
     # @return [String]
     def inspect
       format(%(#<#{self.class.name}:%#0x href: #{href.inspect}, rels: #{rels.inspect}>), object_id)
-      # format(%(#<#{self.class.name}:%#0x rels: #{rels}>), object_id)
     end
 
     # @return [String, nil]

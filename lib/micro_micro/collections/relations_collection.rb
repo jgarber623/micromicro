@@ -1,7 +1,6 @@
 module MicroMicro
   module Collections
     class RelationsCollection < BaseCollection
-      # @see microformats2 Parsing Specification section 1.4
       # @see http://microformats.org/wiki/microformats2-parsing#parse_a_hyperlink_element_for_rel_microformats
       #
       # @return [Hash{Symbole => Hash{Symbol => Array, String}}]
@@ -9,7 +8,6 @@ module MicroMicro
         group_by(&:href).symbolize_keys.transform_values { |relations| relations.first.to_h.slice!(:href) }
       end
 
-      # @see microformats2 Parsing Specification section 1.4
       # @see http://microformats.org/wiki/microformats2-parsing#parse_a_hyperlink_element_for_rel_microformats
       #
       # @return [Hash{Symbol => Array<String>}]

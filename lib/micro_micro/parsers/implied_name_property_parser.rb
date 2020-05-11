@@ -1,7 +1,6 @@
 module MicroMicro
   module Parsers
     class ImpliedNamePropertyParser < BasePropertyParser
-      # @see microformats2 Parsing Specification section 1.3.5
       # @see http://microformats.org/wiki/microformats2-parsing#parsing_for_implied_properties
       HTML_ELEMENTS_MAP = {
         'area' => 'alt',
@@ -11,7 +10,13 @@ module MicroMicro
 
       # @return [String]
       def value
-        @value ||= unresolved_value.strip
+        @value ||= begin
+          return attribute_values.first if attribute_values.any?
+          return child_node_attribute_values.first if parse_child_node? && child_node_attribute_values.any?
+          return grandchild_node_attribute_values.first if parse_grandchild_node? && grandchild_node_attribute_values.any?
+
+          Document.text_content_from(node) { |context| context.css('img').each { |img| img.content = img['alt'] } }
+        end
       end
 
       private
@@ -61,17 +66,6 @@ module MicroMicro
       # @return [Boolean]
       def parse_grandchild_node?
         parse_child_node? && grandchild_node && !Item.item_node?(grandchild_node)
-      end
-
-      # @return [String]
-      def unresolved_value
-        return attribute_values.first if attribute_values.any?
-        return child_node_attribute_values.first if parse_child_node? && child_node_attribute_values.any?
-        return grandchild_node_attribute_values.first if parse_grandchild_node? && grandchild_node_attribute_values.any?
-
-        serialized_node.css('img').each { |img| img.content = img['alt'] }
-
-        serialized_node.text
       end
     end
   end

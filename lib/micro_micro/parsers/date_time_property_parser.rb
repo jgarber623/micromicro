@@ -1,7 +1,6 @@
 module MicroMicro
   module Parsers
     class DateTimePropertyParser < BasePropertyParser
-      # @see microformats2 Parsing Specification section 1.3.3
       # @see http://microformats.org/wiki/microformats2-parsing#parsing_a_dt-_property
       HTML_ATTRIBUTES_MAP = {
         'datetime' => %w[del ins time],

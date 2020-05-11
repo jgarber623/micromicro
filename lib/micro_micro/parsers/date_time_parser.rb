@@ -1,7 +1,6 @@
 module MicroMicro
   module Parsers
     class DateTimeParser
-      # @see Value Class Pattern section 4.2
       # @see http://microformats.org/wiki/value-class-pattern#Date_and_time_parsing
       #
       # Regexp pattern matching YYYY-MM-DD and YYY-DDD

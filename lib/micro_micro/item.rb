@@ -2,6 +2,8 @@ module MicroMicro
   class Item
     attr_accessor :value
 
+    # Parse a node for microformats2-encoded data.
+    #
     # @param node [Nokogiri::XML::Element]
     def initialize(node)
       @node = node
@@ -11,11 +13,17 @@ module MicroMicro
       properties << implied_url if implied_url?
     end
 
+    # A collection of child items parsed from the node.
+    #
+    # @see http://microformats.org/wiki/microformats2-parsing#parse_an_element_for_class_microformats
+    #
     # @return [MicroMicro::Collections::ItemsCollection]
     def children
       @children ||= Collections::ItemsCollection.new(Item.items_from(node.element_children))
     end
 
+    # The value of the node's `id` attribute, if present.
+    #
     # @return [String, nil]
     def id
       @id ||= node['id']&.strip
@@ -31,7 +39,8 @@ module MicroMicro
       @properties ||= Collections::PropertiesCollection.new(Property.properties_from(node.element_children))
     end
 
-    # @see microformats2 Parsing Specification section 1.2
+    # Return the parsed item as a Hash.
+    #
     # @see http://microformats.org/wiki/microformats2-parsing#parse_an_element_for_class_microformats
     #
     # @return [Hash]
@@ -48,23 +57,31 @@ module MicroMicro
       hash
     end
 
+    # An array of root class names parsed from the node's `class` attribute.
+    #
     # @return [Array<String>]
     def types
       @types ||= self.class.types_from(node)
     end
 
+    # Does this node's `class` attribute contain root class names?
+    #
     # @param node [Nokogiri::XML::Element]
     # @return [Boolean]
     def self.item_node?(node)
       types_from(node).any?
     end
 
+    # Extract items from a context.
+    #
     # @param context [Nokogiri::HTML::Document, Nokogiri::XML::NodeSet, Nokogiri::XML::Element]
     # @return [Array<MicroMicro::Item>]
     def self.items_from(context)
       nodes_from(context).map { |node| new(node) }
     end
 
+    # Extract item nodes from a context.
+    #
     # @param context [Nokogiri::HTML::Document, Nokogiri::XML::NodeSet, Nokogiri::XML::Element]
     # @param node_set [Nokogiri::XML::NodeSet]
     # @return [Nokogiri::XML::NodeSet]
@@ -84,12 +101,13 @@ module MicroMicro
       node_set
     end
 
-    # @param node [Nokogiri::XML::Element]
-    # @return [Array<String>]
+    # Extract root class names from a node.
     #
-    # @example
     #   node = Nokogiri::HTML('<div class="h-card">Jason Garber</div>').at_css('div')
     #   MicroMicro::Item.types_from(node) #=> ['h-card']
+    #
+    # @param node [Nokogiri::XML::Element]
+    # @return [Array<String>]
     def self.types_from(node)
       node.classes.select { |token| token.match?(/^h(?:\-[0-9a-z]+)?(?:\-[a-z]+)+$/) }.uniq.sort
     end

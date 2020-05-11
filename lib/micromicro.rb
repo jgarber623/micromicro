@@ -33,6 +33,14 @@ require 'micro_micro/collections/properties_collection'
 require 'micro_micro/collections/relations_collection'
 
 module MicroMicro
+  # Parse a string of HTML for microformats2-encoded data.
+  # Convenience method for MicroMicro::Document.new.
+  #
+  #   MicroMicro.parse('<a href="/" class="h-card" rel="me">Jason Garber</a>', 'https://sixtwothree.org')
+  #
+  # @param markup [String] The HTML to parse for microformats2-encoded data.
+  # @param base_url [String] The URL associated with markup. Used for relative URL resolution.
+  # @return [MicroMicro::Document]
   def self.parse(markup, base_url)
     Document.new(markup, base_url)
   end
