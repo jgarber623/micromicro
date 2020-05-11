@@ -1,5 +1,5 @@
 module MicroMicro
-  class Relation
+  class Relationship
     # @param node [Nokogiri::XML::Element]
     def initialize(node)
       @node = node
@@ -65,8 +65,8 @@ module MicroMicro
     end
 
     # @param context [Nokogiri::HTML::Document, Nokogiri::XML::Element]
-    # @return [Array<MicroMicro::Relation>]
-    def self.relations_from(context)
+    # @return [Array<MicroMicro::Relationship>]
+    def self.relationships_from(context)
       nodes_from(context).map { |node| new(node) }
     end
 

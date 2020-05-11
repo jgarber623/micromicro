@@ -46,7 +46,7 @@ module MicroMicro
 
     # @return [String]
     def inspect
-      format(%(#<#{self.class.name}:%#0x items: #{items.inspect}, relations: #{relations.inspect}>), object_id)
+      format(%(#<#{self.class.name}:%#0x items: #{items.inspect}, relationships: #{relationships.inspect}>), object_id)
     end
 
     # A collection of items parsed from the provided markup.
@@ -56,11 +56,11 @@ module MicroMicro
       @items ||= Collections::ItemsCollection.new(Item.items_from(document))
     end
 
-    # A collection of relations parsed from the provided markup.
+    # A collection of relationships parsed from the provided markup.
     #
-    # @return [MicroMicro::Collections::RelationsCollection]
-    def relations
-      @relations ||= Collections::RelationsCollection.new(Relation.relations_from(document))
+    # @return [MicroMicro::Collections::RelationshipsCollection]
+    def relationships
+      @relationships ||= Collections::RelationshipsCollection.new(Relationship.relationships_from(document))
     end
 
     # Return the parsed document as a Hash.
@@ -71,8 +71,8 @@ module MicroMicro
     def to_h
       {
         items: items.to_a,
-        rels: relations.group_by_rel,
-        'rel-urls': relations.group_by_url
+        rels: relationships.group_by_rel,
+        'rel-urls': relationships.group_by_url
       }
     end
 

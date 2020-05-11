@@ -1,11 +1,11 @@
 module MicroMicro
   module Collections
-    class RelationsCollection < BaseCollection
+    class RelationshipsCollection < BaseCollection
       # @see http://microformats.org/wiki/microformats2-parsing#parse_a_hyperlink_element_for_rel_microformats
       #
       # @return [Hash{Symbole => Hash{Symbol => Array, String}}]
       def group_by_url
-        group_by(&:href).symbolize_keys.transform_values { |relations| relations.first.to_h.slice!(:href) }
+        group_by(&:href).symbolize_keys.transform_values { |relationships| relationships.first.to_h.slice!(:href) }
       end
 
       # @see http://microformats.org/wiki/microformats2-parsing#parse_a_hyperlink_element_for_rel_microformats

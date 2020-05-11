@@ -53,7 +53,7 @@ An example using a simple `String` of HTML as input:
 require 'micromicro'
 
 doc = MicroMicro.parse('<div class="h-card">Jason Garber</div>', 'https://sixtwothree.org')
-#=> #<MicroMicro::Document items: #<MicroMicro::Collections::ItemsCollection count: 1, members: [#<MicroMicro::Item types: ["h-card"], properties: 1, children: 0>]>, relations: #<MicroMicro::Collections::RelationsCollection count: 0, members: []>>
+#=> #<MicroMicro::Document items: #<MicroMicro::Collections::ItemsCollection count: 1, members: [#<MicroMicro::Item types: ["h-card"], properties: 1, children: 0>]>, relationships: #<MicroMicro::Collections::RelationshipsCollection count: 0, members: []>>
 
 doc.to_h
 #=> { :items => [{ :type => ["h-card"], :properties => { :name => ["Jason Garber"] } }], :rels => {}, :"rel-urls" => {} }
@@ -71,7 +71,7 @@ url = "https://tantek.com"
 rsp = Net::HTTP.get(URI.parse(url))
 
 doc = MicroMicro.parse(rsp, url)
-#=> #<MicroMicro::Document items: #<MicroMicro::Collections::ItemsCollection count: 1, members: […]>, relations: #<MicroMicro::Collections::RelationsCollection count: 31, members: […]>>
+#=> #<MicroMicro::Document items: #<MicroMicro::Collections::ItemsCollection count: 1, members: […]>, relationships: #<MicroMicro::Collections::RelationshipsCollection count: 31, members: […]>>
 
 doc.to_h
 #=> { :items => [{ :type => ["h-card"], :properties => {…}, :children => […]}], :rels => {…}, :'rel-urls' => {…} }
@@ -97,14 +97,14 @@ doc.items.first.properties.take(5).map { |property| [property.name, property.val
 doc.items.first.children
 #=> #<MicroMicro::Collections::ItemsCollection count: 6, members: […]>
 
-doc.relations.first
-#=> #<MicroMicro::Relation href: "https://tantek.com/", rels: ["canonical"]>
+doc.relationships.first
+#=> #<MicroMicro::Relationship href: "https://tantek.com/", rels: ["canonical"]>
 
-doc.relations.map(&:rels).flatten.uniq.sort
+doc.relationships.map(&:rels).flatten.uniq.sort
 #=> ["alternate", "apple-touch-icon-precomposed", "author", "authorization_endpoint", "bookmark", "canonical", "hub", "icon", "me", "microsub", …]
 
-doc.relations.find { |relation| relation.rels.include?('webmention') }
-# => #<MicroMicro::Relation href: "https://webmention.io/tantek.com/webmention", rels: ["webmention"]>
+doc.relationships.find { |relationships| relationships.rels.include?('webmention') }
+# => #<MicroMicro::Relationship href: "https://webmention.io/tantek.com/webmention", rels: ["webmention"]>
 ```
 
 ## Contributing

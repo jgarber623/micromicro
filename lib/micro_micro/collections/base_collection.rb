@@ -5,7 +5,7 @@ module MicroMicro
 
       delegate :[], :each, :last, :length, :split, to: :members
 
-      # @param members [Array<MicroMicro::Item, MicroMicro::Property, MicroMicro::Relation>]
+      # @param members [Array<MicroMicro::Item, MicroMicro::Property, MicroMicro::Relationship>]
       def initialize(members = [])
         @members = members
 
@@ -17,7 +17,7 @@ module MicroMicro
         format(%(#<#{self.class.name}:%#0x count: #{count}, members: #{members.inspect}>), object_id)
       end
 
-      # @param member [MicroMicro::Item, MicroMicro::Property, MicroMicro::Relation]
+      # @param member [MicroMicro::Item, MicroMicro::Property, MicroMicro::Relationship]
       # @return [self]
       def push(member)
         members.push(member)
