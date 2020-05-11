@@ -25,12 +25,12 @@ require 'micro_micro/document'
 require 'micro_micro/item'
 require 'micro_micro/property'
 require 'micro_micro/implied_property'
-require 'micro_micro/relation'
+require 'micro_micro/relationship'
 
 require 'micro_micro/collections/base_collection'
 require 'micro_micro/collections/items_collection'
 require 'micro_micro/collections/properties_collection'
-require 'micro_micro/collections/relations_collection'
+require 'micro_micro/collections/relationships_collection'
 
 module MicroMicro
   # Parse a string of HTML for microformats2-encoded data.
