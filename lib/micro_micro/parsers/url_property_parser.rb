@@ -1,7 +1,6 @@
 module MicroMicro
   module Parsers
     class UrlPropertyParser < BasePropertyParser
-      # @see http://microformats.org/wiki/microformats2-parsing#parsing_a_u-_property
       HTML_ATTRIBUTES_MAP = {
         'href'   => %w[a area link],
         'src'    => %w[audio iframe img source video],
@@ -9,12 +8,12 @@ module MicroMicro
         'data'   => %w[object]
       }.freeze
 
-      # @see http://microformats.org/wiki/microformats2-parsing#parsing_a_u-_property
       EXTENDED_HTML_ATTRIBUTES_MAP = {
         'title' => %w[abbr],
         'value' => %w[data input]
       }.freeze
 
+      # @see http://microformats.org/wiki/microformats2-parsing#parsing_a_u-_property
       # @see http://microformats.org/wiki/microformats2-parsing#parse_an_img_element_for_src_and_alt
       #
       # @return [String, Hash{Symbol => String}]

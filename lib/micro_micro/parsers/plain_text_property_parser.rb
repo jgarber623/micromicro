@@ -1,13 +1,14 @@
 module MicroMicro
   module Parsers
     class PlainTextPropertyParser < BasePropertyParser
-      # @see http://microformats.org/wiki/microformats2-parsing#parsing_a_p-_property
       HTML_ATTRIBUTES_MAP = {
         'title' => %w[abbr link],
         'value' => %w[data input],
         'alt'   => %w[area img]
       }.freeze
 
+      # @see http://microformats.org/wiki/microformats2-parsing#parsing_a_p-_property
+      #
       # @return [String]
       def value
         @value ||= value_class_pattern_value || attribute_value || super

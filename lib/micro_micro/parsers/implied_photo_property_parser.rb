@@ -1,13 +1,15 @@
 module MicroMicro
   module Parsers
     class ImpliedPhotoPropertyParser < BasePropertyParser
-      # @see http://microformats.org/wiki/microformats2-parsing#parsing_for_implied_properties
       HTML_ELEMENTS_MAP = {
         'img'    => 'src',
         'object' => 'data'
       }.freeze
 
-      # @return [String, nil]
+      # @see http://microformats.org/wiki/microformats2-parsing#parsing_for_implied_properties
+      # @see http://microformats.org/wiki/microformats2-parsing#parse_an_img_element_for_src_and_alt
+      #
+      # @return [String, Hash{Symbol => String}, nil]
       def value
         @value ||= begin
           return unless resolved_value

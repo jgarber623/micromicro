@@ -1,52 +1,33 @@
 module MicroMicro
   module Parsers
     class ImpliedNamePropertyParser < BasePropertyParser
-      # @see http://microformats.org/wiki/microformats2-parsing#parsing_for_implied_properties
       HTML_ATTRIBUTES_MAP = {
         'alt'   => %w[area img],
         'title' => %w[abbr]
       }.freeze
 
+      # @see http://microformats.org/wiki/microformats2-parsing#parsing_for_implied_properties
+      #
       # @return [String]
       def value
-        @value ||= attribute_value || child_node_attribute_value || grandchild_node_attribute_value || text_content
+        @value ||= attribute_value || text_content
       end
 
       private
 
+      # @return [Nokogiri::XML::NodeSet]
+      def candidate_nodes
+        @candidate_nodes ||= Nokogiri::XML::NodeSet.new(node.document, child_nodes.unshift(node))
+      end
+
+      # @return [Array]
+      def child_nodes
+        [node.at_css('> :only-child'), node.at_css('> :only-child > :only-child')].compact.reject { |child_node| Item.item_node?(child_node) }
+      end
+
       # @return [String, nil]
       def attribute_value
-        @attribute_value ||= self.class.attribute_value_from(node, HTML_ATTRIBUTES_MAP)
-      end
-
-      # @return [Nokogiri::XML::Element, nil]
-      def child_node
-        @child_node ||= node.at_css('> :only-child')
-      end
-
-      # @return [String, nil]
-      def child_node_attribute_value
-        @child_node_attribute_value ||= self.class.attribute_value_from(child_node, HTML_ATTRIBUTES_MAP) if parse_child_node?
-      end
-
-      # @return [Nokogiri::XML::Element, nil]
-      def grandchild_node
-        @grandchild_node ||= child_node.at_css('> :only-child')
-      end
-
-      # @return [String, nil]
-      def grandchild_node_attribute_value
-        @grandchild_node_attribute_value ||= self.class.attribute_value_from(grandchild_node, HTML_ATTRIBUTES_MAP) if parse_grandchild_node?
-      end
-
-      # @return [Boolean]
-      def parse_child_node?
-        child_node && !Item.item_node?(child_node)
-      end
-
-      # @return [Boolean]
-      def parse_grandchild_node?
-        parse_child_node? && grandchild_node && !Item.item_node?(grandchild_node)
+        candidate_nodes.map { |node| self.class.attribute_value_from(node, HTML_ATTRIBUTES_MAP) }.compact.first
       end
 
       # @return [String]

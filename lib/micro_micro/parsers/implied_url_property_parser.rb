@@ -1,12 +1,13 @@
 module MicroMicro
   module Parsers
     class ImpliedUrlPropertyParser < BasePropertyParser
-      # @see http://microformats.org/wiki/microformats2-parsing#parsing_for_implied_properties
       HTML_ELEMENTS_MAP = {
         'a'    => 'href',
         'area' => 'href'
       }.freeze
 
+      # @see http://microformats.org/wiki/microformats2-parsing#parsing_for_implied_properties
+      #
       # @return [String, nil]
       def value
         @value ||= value_node[HTML_ELEMENTS_MAP[value_node.name]] if value_node
