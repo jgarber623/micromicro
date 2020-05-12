@@ -1,7 +1,5 @@
 module MicroMicro
   class Item
-    attr_accessor :value
-
     # Parse a node for microformats2-encoded data.
     #
     # @param node [Nokogiri::XML::Element]
@@ -52,7 +50,6 @@ module MicroMicro
 
       hash[:id] = id if id.present?
       hash[:children] = children.to_a if children.any?
-      hash[:value] = value if value.present?
 
       hash
     end

@@ -29,19 +29,29 @@ module MicroMicro
       format(%(#<#{self.class.name}:%#0x name: #{name.inspect}, prefix: #{prefix.inspect}, value: #{value.inspect}>), object_id)
     end
 
+    # @return [MicroMicro::Item, nil]
+    def item
+      @item ||= Item.new(node) if item_node?
+    end
+
     # @return [Boolean]
     def item_node?
       @item_node ||= Item.item_node?(node)
     end
 
-    # @return [String, Hash, MicroMicro::Item]
+    # @return [String, Hash]
     def value
       @value ||= begin
         return parser.value unless item_node?
 
-        item.value = item_value
+        hash = item.to_h
 
-        item
+        return hash.merge(parser.value) if prefix == 'e'
+
+        p_property = item.properties.find { |property| property.name == 'name' } if prefix == 'p'
+        u_property = item.properties.find { |property| property.name == 'url' } if prefix == 'u'
+
+        hash.merge(value: (p_property || u_property || parser).value)
       end
     end
 
@@ -90,23 +100,6 @@ module MicroMicro
     end
 
     private
-
-    # @return [MicroMicro::Item, nil]
-    def item
-      @item ||= Item.new(node) if item_node?
-    end
-
-    # @reutrn [String, nil]
-    def item_value
-      return unless item_node?
-
-      obj_by_prefix = case prefix
-                      when 'p' then item.properties.find { |property| property.name == 'name' }
-                      when 'u' then item.properties.find { |property| property.name == 'url' }
-                      end
-
-      (obj_by_prefix || parser).value
-    end
 
     def parser
       @parser ||= PROPERTY_PARSERS_MAP[prefix].new(self)
