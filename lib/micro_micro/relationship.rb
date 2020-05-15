@@ -1,5 +1,7 @@
 module MicroMicro
   class Relationship
+    include Collectible
+
     # @param node [Nokogiri::XML::Element]
     def initialize(node)
       @node = node

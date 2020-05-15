@@ -1,13 +1,15 @@
+require 'forwardable'
+
 require 'absolutely'
 require 'active_support/core_ext/array/grouping'
 require 'active_support/core_ext/hash/deep_transform_values'
 require 'active_support/core_ext/hash/keys'
 require 'active_support/core_ext/hash/slice'
-require 'active_support/core_ext/module/delegation'
 require 'active_support/core_ext/object/blank'
 require 'nokogiri'
 
 require 'micro_micro/version'
+require 'micro_micro/collectible'
 
 require 'micro_micro/parsers/date_time_parser'
 require 'micro_micro/parsers/value_class_pattern_parser'

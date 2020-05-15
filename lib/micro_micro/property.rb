@@ -7,7 +7,8 @@ module MicroMicro
       'u'  => Parsers::UrlPropertyParser
     }.freeze
 
-    attr_accessor :collection
+    include Collectible
+
     attr_reader :name, :node, :prefix
 
     # @param node [Nokogiri::XML::Element]

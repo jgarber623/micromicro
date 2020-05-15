@@ -1,15 +1,15 @@
 module MicroMicro
   module Collections
     class BaseCollection
+      extend Forwardable
+
       include Enumerable
 
-      delegate :[], :each, :last, :length, :split, to: :members
+      def_delegators :members, :[], :each, :last, :length, :split
 
       # @param members [Array<MicroMicro::Item, MicroMicro::Property, MicroMicro::Relationship>]
       def initialize(members = [])
-        @members = members
-
-        decorate_members if respond_to?(:decorate_members, true)
+        members.each { |member| push(member) }
       end
 
       # @return [String]
@@ -18,20 +18,19 @@ module MicroMicro
       end
 
       # @param member [MicroMicro::Item, MicroMicro::Property, MicroMicro::Relationship]
-      # @return [self]
       def push(member)
-        members.push(member)
+        members << member
 
-        decorate_members if respond_to?(:decorate_members, true)
-
-        self
+        member.collection = self
       end
 
       alias << push
 
       private
 
-      attr_reader :members
+      def members
+        @members ||= []
+      end
     end
   end
 end

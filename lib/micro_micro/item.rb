@@ -1,5 +1,7 @@
 module MicroMicro
   class Item
+    include Collectible
+
     # Parse a node for microformats2-encoded data.
     #
     # @param node [Nokogiri::XML::Element]
