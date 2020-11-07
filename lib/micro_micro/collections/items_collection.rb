@@ -5,6 +5,11 @@ module MicroMicro
       def to_a
         map(&:to_h)
       end
+
+      # @return [Array<String>]
+      def types
+        @types ||= map(&:types).flatten.uniq.sort
+      end
     end
   end
 end
