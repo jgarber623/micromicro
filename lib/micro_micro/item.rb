@@ -35,6 +35,11 @@ module MicroMicro
     end
 
     # @return [MicroMicro::Collections::PropertiesCollection]
+    def plain_text_properties
+      @plain_text_properties ||= Collections::PropertiesCollection.new(properties.select { |property| property.prefix == 'p' })
+    end
+
+    # @return [MicroMicro::Collections::PropertiesCollection]
     def properties
       @properties ||= Collections::PropertiesCollection.new(Property.properties_from(node.element_children))
     end
@@ -61,6 +66,11 @@ module MicroMicro
     # @return [Array<String>]
     def types
       @types ||= self.class.types_from(node)
+    end
+
+    # @return [MicroMicro::Collections::PropertiesCollection]
+    def url_properties
+      @url_properties ||= Collections::PropertiesCollection.new(properties.select { |property| property.prefix == 'u' })
     end
 
     # Does this node's `class` attribute contain root class names?
