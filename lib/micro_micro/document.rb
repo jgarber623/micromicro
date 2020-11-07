@@ -140,9 +140,11 @@ module MicroMicro
     # @return [String]
     def resolved_base_url
       @resolved_base_url ||= begin
-        return base_url unless base_element
-
-        Absolutely.to_abs(base: base_url, relative: base_element['href'].strip)
+        if base_element
+          Absolutely.to_abs(base: base_url, relative: base_element['href'].strip)
+        else
+          base_url
+        end
       end
     end
   end
