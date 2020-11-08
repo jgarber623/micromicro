@@ -81,29 +81,64 @@ doc.to_h
 
 Building on the example above, a MicroMicro-parsed document is navigable and manipulable using a familiar `Enumerable`-esque interface.
 
+#### Items
+
 ```ruby
 doc.items.first
 #=> #<MicroMicro::Item types: ["h-card"], properties: 42, children: 6>
 
+# 🆕 in v1.0.0
+doc.items.types
+#=> ["h-card"]
+
+doc.items.first.children
+#=> #<MicroMicro::Collections::ItemsCollection count: 6, members: […]>
+```
+
+#### Properties
+
+```ruby
 doc.items.first.properties
 #=> #<MicroMicro::Collections::PropertiesCollection count: 42, members: […]>
+
+# 🆕 in v1.0.0
+doc.items.first.plain_text_properties
+#=> #<MicroMicro::Collections::PropertiesCollection count: 34, members: […]>
+
+# 🆕 in v1.0.0
+doc.items.first.url_properties
+#=> #<MicroMicro::Collections::PropertiesCollection count: 11, members: […]>
+
+# 🆕 in v1.0.0
+doc.items.first.properties.names
+#=> ["category", "name", "note", "org", "photo", "pronoun", "pronouns", "role", "uid", "url"]
+
+# 🆕 in v1.0.0
+doc.items.first.properties.values
+#=> [{:value=>"https://tantek.com/photo.jpg", :alt=>""}, "https://tantek.com/", "Tantek Çelik", "Inventor, writer, teacher, runner, coder, more.", "Inventor", "writer", "teacher", "runner", "coder", …]
 
 doc.items.first.properties[7]
 #=> #<MicroMicro::Property name: "category", prefix: "p", value: "teacher">
 
 doc.items.first.properties.take(5).map { |property| [property.name, property.value] }
 #=> [["photo", { :value => "https://tantek.com/photo.jpg", :alt => "" }], ["url", "https://tantek.com/"], ["uid", "https://tantek.com/"], ["name", "Tantek Çelik"], ["role", "Inventor, writer, teacher, runner, coder, more."]]
+```
 
-doc.items.first.children
-#=> #<MicroMicro::Collections::ItemsCollection count: 6, members: […]>
+#### Relationships
 
+```ruby
 doc.relationships.first
 #=> #<MicroMicro::Relationship href: "https://tantek.com/", rels: ["canonical"]>
 
-doc.relationships.map(&:rels).flatten.uniq.sort
+# 🆕 in v1.0.0
+doc.relationships.rels
 #=> ["alternate", "apple-touch-icon-precomposed", "author", "authorization_endpoint", "bookmark", "canonical", "hub", "icon", "me", "microsub", …]
 
-doc.relationships.find { |relationships| relationships.rels.include?('webmention') }
+# 🆕 in v1.0.0
+doc.relationships.urls
+#=> ["http://dribbble.com/tantek/", "http://last.fm/user/tantekc", "https://aperture.p3k.io/microsub/277", "https://en.wikipedia.org/wiki/User:Tantek", "https://github.com/tantek", "https://indieauth.com/auth", "https://indieauth.com/openid", "https://micro.blog/t", "https://pubsubhubbub.superfeedr.com/", "https://tantek.com/", …]
+
+doc.relationships.find { |relationship| relationship.rels.include?('webmention') }
 # => #<MicroMicro::Relationship href: "https://webmention.io/tantek.com/webmention", rels: ["webmention"]>
 ```
 
