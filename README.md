@@ -2,6 +2,7 @@
 
 **A Ruby gem for extracting [microformats2](http://microformats.org/wiki/microformats2)-encoded data from HTML documents.**
 
+[![Gem](https://img.shields.io/gem/v/micromicro.svg?style=for-the-badge)](https://rubygems.org/gems/micromicro)
 [![Build](https://img.shields.io/travis/com/jgarber623/micromicro/master.svg?style=for-the-badge)](https://travis-ci.com/jgarber623/micromicro)
 [![Dependencies](https://img.shields.io/depfu/jgarber623/micromicro.svg?style=for-the-badge)](https://depfu.com/github/jgarber623/micromicro)
 [![Maintainability](https://img.shields.io/codeclimate/maintainability/jgarber623/micromicro.svg?style=for-the-badge)](https://codeclimate.com/github/jgarber623/micromicro)
