@@ -34,11 +34,15 @@ module MicroMicro
       format(%(#<#{self.class.name}:%#0x types: #{types.inspect}, properties: #{properties.count}, children: #{children.count}>), object_id)
     end
 
+    # A collection of plain text properties parsed from the node.
+    #
     # @return [MicroMicro::Collections::PropertiesCollection]
     def plain_text_properties
       @plain_text_properties ||= Collections::PropertiesCollection.new(properties.select { |property| property.prefix == 'p' })
     end
 
+    # A collection of properties parsed from the node.
+    #
     # @return [MicroMicro::Collections::PropertiesCollection]
     def properties
       @properties ||= Collections::PropertiesCollection.new(Property.properties_from(node.element_children))
@@ -68,6 +72,8 @@ module MicroMicro
       @types ||= self.class.types_from(node)
     end
 
+    # A collection of url properties parsed from the node.
+    #
     # @return [MicroMicro::Collections::PropertiesCollection]
     def url_properties
       @url_properties ||= Collections::PropertiesCollection.new(properties.select { |property| property.prefix == 'u' })

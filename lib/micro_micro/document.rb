@@ -67,7 +67,7 @@ module MicroMicro
     #
     # @see http://microformats.org/wiki/microformats2-parsing#parse_a_document_for_microformats
     #
-    # @return [Hash]
+    # @return [Hash{Symbol => Array, Hash}]
     def to_h
       {
         items: items.to_a,
