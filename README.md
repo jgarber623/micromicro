@@ -1,6 +1,6 @@
 # MicroMicro
 
-**A Ruby gem for extracting [microformats2](http://microformats.org/wiki/microformats2)-encoded data from HTML documents.**
+**A Ruby gem for extracting [microformats2](https://microformats.org/wiki/microformats2)-encoded data from HTML documents.**
 
 [![Gem](https://img.shields.io/gem/v/micromicro.svg?style=for-the-badge)](https://rubygems.org/gems/micromicro)
 [![Build](https://img.shields.io/travis/com/jgarber623/micromicro/main.svg?style=for-the-badge)](https://travis-ci.com/jgarber623/micromicro)
@@ -10,11 +10,11 @@
 
 ## Key Features
 
-- Parses microformats2-encoded HTML documents according to the [microformats2 parsing specification](http://microformats.org/wiki/microformats2-parsing)
+- Parses microformats2-encoded HTML documents according to the [microformats2 parsing specification](https://microformats.org/wiki/microformats2-parsing)
 - Passes all microformats2 tests from [the official test suite](https://github.com/microformats/tests)¹
 - Supports Ruby 2.5 and newer
 
-**Note:** MicroMicro **does not** parse [Classic Microformats](http://microformats.org/wiki/Main_Page#Classic_Microformats) (referred to in [the parsing specification](http://microformats.org/wiki/microformats2-parsing#note_backward_compatibility_details) as "backcompat root classes" and "backcompat properties" and in vocabulary specifications in the "Parser Compatibility" sections [e.g. [h-entry](https://microformats.org/wiki/h-entry#Parser_Compatibility)]). To parse documents marked up with Classic Microformats, consider using [the official microformats-ruby parser](https://github.com/microformats/microformats-ruby).
+**Note:** MicroMicro **does not** parse [Classic Microformats](https://microformats.org/wiki/Main_Page#Classic_Microformats) (referred to in [the parsing specification](https://microformats.org/wiki/microformats2-parsing#note_backward_compatibility_details) as "backcompat root classes" and "backcompat properties" and in vocabulary specifications in the "Parser Compatibility" sections [e.g. [h-entry](https://microformats.org/wiki/h-entry#Parser_Compatibility)]). To parse documents marked up with Classic Microformats, consider using [the official microformats-ruby parser](https://github.com/microformats/microformats-ruby).
 
 <small>¹ …with some exceptions until [this pull request](https://github.com/microformats/tests/pull/112) is merged.</small>
 
@@ -149,7 +149,7 @@ Interested in helping improve MicroMicro? Awesome! Your help is greatly apprecia
 
 ## Acknowledgments
 
-MicroMicro wouldn't exist without the hard work of everyone involved in the [microformats](http://microformats.org) community. Additionally, the comprehensive [microformats test suite](https://github.com/microformats/tests) was invaluable in the development of this Ruby gem.
+MicroMicro wouldn't exist without the hard work of everyone involved in the [microformats](https://microformats.org) community. Additionally, the comprehensive [microformats test suite](https://github.com/microformats/tests) was invaluable in the development of this Ruby gem.
 
 MicroMicro is written and maintained by [Jason Garber](https://sixtwothree.org).
 
