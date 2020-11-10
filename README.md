@@ -14,7 +14,7 @@
 - Passes all microformats2 tests from [the official test suite](https://github.com/microformats/tests)¹
 - Supports Ruby 2.5 and newer
 
-**Note:** MicroMicro **does not** parse [Classic Microformats](http://microformats.org/wiki/Main_Page#Classic_Microformats) (referred to in [the parsing specification](http://microformats.org/wiki/microformats2-parsing#note_backward_compatibility_details) as "backcompat root classes" and "backcompat properties", and as "Parser Compatibility" in the vocabulary specifications e.g. [h-entry Parser Compatibility](https://microformats.org/wiki/h-entry#Parser_Compatibility)). To parse documents marked up with Classic Microformats, consider using [the official microformats-ruby parser](https://github.com/microformats/microformats-ruby).
+**Note:** MicroMicro **does not** parse [Classic Microformats](http://microformats.org/wiki/Main_Page#Classic_Microformats) (referred to in [the parsing specification](http://microformats.org/wiki/microformats2-parsing#note_backward_compatibility_details) as "backcompat root classes" and "backcompat properties" and in vocabulary specifications in the "Parser Compatibility" sections [e.g. [h-entry](https://microformats.org/wiki/h-entry#Parser_Compatibility)]). To parse documents marked up with Classic Microformats, consider using [the official microformats-ruby parser](https://github.com/microformats/microformats-ruby).
 
 <small>¹ …with some exceptions until [this pull request](https://github.com/microformats/tests/pull/112) is merged.</small>
 
