@@ -65,10 +65,10 @@ The `Hash` produced by calling `doc.to_h` may be converted to JSON (e.g. `doc.to
 Another example pulling the source HTML from [Tantek](https://tantek.com)'s website:
 
 ```ruby
-require "net/http"
-require "micromicro"
+require 'net/http'
+require 'micromicro'
 
-url = "https://tantek.com"
+url = 'https://tantek.com'
 rsp = Net::HTTP.get(URI.parse(url))
 
 doc = MicroMicro.parse(rsp, url)
