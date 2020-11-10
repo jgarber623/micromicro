@@ -7,8 +7,8 @@ module MicroMicro
         @node = property.node
       end
 
-      # @see http://microformats.org/wiki/microformats2-parsing#parsing_a_p-_property
-      # @see http://microformats.org/wiki/microformats2-parsing#parsing_an_e-_property
+      # @see https://microformats.org/wiki/microformats2-parsing#parsing_a_p-_property
+      # @see https://microformats.org/wiki/microformats2-parsing#parsing_an_e-_property
       #
       # @return [String]
       def value

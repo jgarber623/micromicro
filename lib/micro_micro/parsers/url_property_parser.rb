@@ -13,8 +13,8 @@ module MicroMicro
         'value' => %w[data input]
       }.freeze
 
-      # @see http://microformats.org/wiki/microformats2-parsing#parsing_a_u-_property
-      # @see http://microformats.org/wiki/microformats2-parsing#parse_an_img_element_for_src_and_alt
+      # @see https://microformats.org/wiki/microformats2-parsing#parsing_a_u-_property
+      # @see https://microformats.org/wiki/microformats2-parsing#parse_an_img_element_for_src_and_alt
       #
       # @return [String, Hash{Symbol => String}]
       def value

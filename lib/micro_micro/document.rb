@@ -65,7 +65,7 @@ module MicroMicro
 
     # Return the parsed document as a Hash.
     #
-    # @see http://microformats.org/wiki/microformats2-parsing#parse_a_document_for_microformats
+    # @see https://microformats.org/wiki/microformats2-parsing#parse_a_document_for_microformats
     #
     # @return [Hash{Symbol => Array, Hash}]
     def to_h
@@ -91,8 +91,8 @@ module MicroMicro
       %w[script style template]
     end
 
-    # @see http://microformats.org/wiki/microformats2-parsing#parse_an_element_for_properties
-    # @see http://microformats.org/wiki/microformats2-parsing#parsing_for_implied_properties
+    # @see https://microformats.org/wiki/microformats2-parsing#parse_an_element_for_properties
+    # @see https://microformats.org/wiki/microformats2-parsing#parsing_for_implied_properties
     #
     # @param context [Nokogiri::HTML::Document, Nokogiri::XML::NodeSet, Nokogiri::XML::Element]
     # @yield [context]

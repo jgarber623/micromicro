@@ -7,7 +7,7 @@ module MicroMicro
         'alt'   => %w[area img]
       }.freeze
 
-      # @see http://microformats.org/wiki/microformats2-parsing#parsing_a_p-_property
+      # @see https://microformats.org/wiki/microformats2-parsing#parsing_a_p-_property
       #
       # @return [String]
       def value

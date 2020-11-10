@@ -1,8 +1,8 @@
 module MicroMicro
   module Parsers
     class ValueClassPatternParser
-      # @see http://microformats.org/wiki/value-class-pattern#Basic_Parsing
-      # @see http://microformats.org/wiki/value-class-pattern#Date_and_time_values
+      # @see https://microformats.org/wiki/value-class-pattern#Basic_Parsing
+      # @see https://microformats.org/wiki/value-class-pattern#Date_and_time_values
       HTML_ATTRIBUTES_MAP = {
         'alt'      => %w[area img],
         'value'    => %w[data],

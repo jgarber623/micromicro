@@ -15,7 +15,7 @@ module MicroMicro
 
     # A collection of child items parsed from the node.
     #
-    # @see http://microformats.org/wiki/microformats2-parsing#parse_an_element_for_class_microformats
+    # @see https://microformats.org/wiki/microformats2-parsing#parse_an_element_for_class_microformats
     #
     # @return [MicroMicro::Collections::ItemsCollection]
     def children
@@ -50,7 +50,7 @@ module MicroMicro
 
     # Return the parsed item as a Hash.
     #
-    # @see http://microformats.org/wiki/microformats2-parsing#parse_an_element_for_class_microformats
+    # @see https://microformats.org/wiki/microformats2-parsing#parse_an_element_for_class_microformats
     #
     # @return [Hash]
     def to_h

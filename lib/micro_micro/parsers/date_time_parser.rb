@@ -1,7 +1,7 @@
 module MicroMicro
   module Parsers
     class DateTimeParser
-      # @see http://microformats.org/wiki/value-class-pattern#Date_and_time_parsing
+      # @see https://microformats.org/wiki/value-class-pattern#Date_and_time_parsing
       #
       # Regexp pattern matching YYYY-MM-DD and YYY-DDD
       DATE_REGEXP_PATTERN = '(?<year>\d{4})-((?<ordinal>3[0-6]{2}|[0-2]\d{2})|(?<month>0\d|1[0-2])-(?<day>3[0-1]|[0-2]\d))'.freeze
