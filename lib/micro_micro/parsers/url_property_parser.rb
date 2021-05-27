@@ -42,7 +42,7 @@ module MicroMicro
 
       # @return [String]
       def resolved_value
-        @resolved_value ||= Absolutely.to_abs(base: node.document.url, relative: unresolved_value.strip)
+        @resolved_value ||= Addressable::URI.join(node.document.url, unresolved_value.strip).to_s
       end
 
       # @return [String]

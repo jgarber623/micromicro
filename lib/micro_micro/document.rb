@@ -122,7 +122,7 @@ module MicroMicro
     def resolve_relative_urls
       HTML_URL_ATTRIBUTES_MAP.each do |attribute, names|
         document.xpath(*names.map { |name| "//#{name}[@#{attribute}]" }).each do |node|
-          node[attribute] = Absolutely.to_abs(base: resolved_base_url, relative: node[attribute].strip)
+          node[attribute] = Addressable::URI.join(resolved_base_url, node[attribute].strip).normalize.to_s
         end
       end
 
@@ -130,7 +130,7 @@ module MicroMicro
         document.xpath(*names.map { |name| "//#{name}[@#{attribute}]" }).each do |node|
           candidates = node[attribute].split(',').map(&:strip).map { |candidate| candidate.match(/^(?<url>.+?)(?<descriptor>\s+.+)?$/) }
 
-          node[attribute] = candidates.map { |candidate| "#{Absolutely.to_abs(base: resolved_base_url, relative: candidate[:url])}#{candidate[:descriptor]}" }.join(', ')
+          node[attribute] = candidates.map { |candidate| "#{Addressable::URI.join(resolved_base_url, candidate[:url]).normalize}#{candidate[:descriptor]}" }.join(', ')
         end
       end
 
@@ -141,7 +141,7 @@ module MicroMicro
     def resolved_base_url
       @resolved_base_url ||= begin
         if base_element
-          Absolutely.to_abs(base: base_url, relative: base_element['href'].strip)
+          Addressable::URI.join(base_url, base_element['href'].strip).normalize.to_s
         else
           base_url
         end
