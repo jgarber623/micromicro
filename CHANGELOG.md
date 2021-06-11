@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.1.0 / 2021-06-10
+
+- Replace Absolutely dependency with Addressable (e93721b)
+- Add support for Ruby 3.0 (d897c54)
+- Update development Ruby version to 2.5.9 (051c9ad)
+
 ## 1.0.0 / 2020-11-08
 
 - Add `MicroMicro::Item#plain_text_properties` and `MicroMicro::Item#url_properties` methods (351e1f1)
