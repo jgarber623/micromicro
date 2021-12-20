@@ -23,6 +23,6 @@ Gem::Specification.new do |spec|
   spec.metadata['changelog_uri']   = "#{spec.homepage}/blob/v#{spec.version}/CHANGELOG.md"
 
   spec.add_runtime_dependency 'addressable', '~> 2.7'
-  spec.add_runtime_dependency 'activesupport', '~> 6.1'
+  spec.add_runtime_dependency 'activesupport', '>= 6.1', '< 8.0'
   spec.add_runtime_dependency 'nokogiri', '~> 1.11'
 end
