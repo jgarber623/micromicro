@@ -12,7 +12,7 @@
 
 - Parses microformats2-encoded HTML documents according to the [microformats2 parsing specification](https://microformats.org/wiki/microformats2-parsing)
 - Passes all microformats2 tests from [the official test suite](https://github.com/microformats/tests)¹
-- Supports Ruby 2.5 and newer
+- Supports Ruby 2.6 and newer
 
 **Note:** MicroMicro **does not** parse [Classic Microformats](https://microformats.org/wiki/Main_Page#Classic_Microformats) (referred to in [the parsing specification](https://microformats.org/wiki/microformats2-parsing#note_backward_compatibility_details) as "backcompat root classes" and "backcompat properties" and in vocabulary specifications in the "Parser Compatibility" sections [e.g. [h-entry](https://microformats.org/wiki/h-entry#Parser_Compatibility)]). To parse documents marked up with Classic Microformats, consider using [the official microformats-ruby parser](https://github.com/microformats/microformats-ruby).
 
@@ -20,9 +20,9 @@
 
 ## Getting Started
 
-Before installing and using MicroMicro, you'll want to have [Ruby](https://www.ruby-lang.org) 2.5 (or newer) installed. It's recommended that you use a Ruby version managment tool like [rbenv](https://github.com/rbenv/rbenv), [chruby](https://github.com/postmodern/chruby), or [rvm](https://github.com/rvm/rvm).
+Before installing and using MicroMicro, you'll want to have [Ruby](https://www.ruby-lang.org) 2.6 (or newer) installed. It's recommended that you use a Ruby version managment tool like [rbenv](https://github.com/rbenv/rbenv), [chruby](https://github.com/postmodern/chruby), or [rvm](https://github.com/rvm/rvm).
 
-MicroMicro is developed using Ruby 2.5.9 and is additionally tested against Ruby 2.6, 2.7, and 3.0 using [GitHub Actions](https://github.com/jgarber623/micromicro/actions).
+MicroMicro is developed using Ruby 2.6.10 and is additionally tested against Ruby 2.6, 2.7, and 3.0 using [GitHub Actions](https://github.com/jgarber623/micromicro/actions).
 
 ## Installation
 
