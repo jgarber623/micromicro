@@ -4,7 +4,7 @@
 
 [![Gem](https://img.shields.io/gem/v/micromicro.svg?logo=rubygems&style=for-the-badge)](https://rubygems.org/gems/micromicro)
 [![Downloads](https://img.shields.io/gem/dt/micromicro.svg?logo=rubygems&style=for-the-badge)](https://rubygems.org/gems/micromicro)
-[![Build](https://img.shields.io/circleci/build/github/jgarber623/micromicro?logo=circleci&style=for-the-badge)](https://app.circleci.com/pipelines/github/jgarber623/micromicro)
+[![Build](https://img.shields.io/github/workflow/status/jgarber623/micromicro/CI?logo=github&style=for-the-badge)](https://github.com/jgarber623/micromicro/actions/workflows/ci.yml)
 [![Maintainability](https://img.shields.io/codeclimate/maintainability/jgarber623/micromicro.svg?logo=code-climate&style=for-the-badge)](https://codeclimate.com/github/jgarber623/micromicro)
 [![Coverage](https://img.shields.io/codeclimate/c/jgarber623/micromicro.svg?logo=code-climate&style=for-the-badge)](https://codeclimate.com/github/jgarber623/micromicro/code)
 
@@ -22,7 +22,7 @@
 
 Before installing and using MicroMicro, you'll want to have [Ruby](https://www.ruby-lang.org) 2.5 (or newer) installed. It's recommended that you use a Ruby version managment tool like [rbenv](https://github.com/rbenv/rbenv), [chruby](https://github.com/postmodern/chruby), or [rvm](https://github.com/rvm/rvm).
 
-MicroMicro is developed using Ruby 2.5.9 and is additionally tested against Ruby 2.6, 2.7, and 3.0 using [CircleCI](https://app.circleci.com/pipelines/github/jgarber623/micromicro).
+MicroMicro is developed using Ruby 2.5.9 and is additionally tested against Ruby 2.6, 2.7, and 3.0 using [GitHub Actions](https://github.com/jgarber623/micromicro/actions).
 
 ## Installation
 
