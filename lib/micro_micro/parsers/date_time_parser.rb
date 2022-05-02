@@ -6,11 +6,11 @@ module MicroMicro
       # @see https://microformats.org/wiki/value-class-pattern#Date_and_time_parsing
       #
       # Regexp pattern matching YYYY-MM-DD and YYY-DDD
-      DATE_REGEXP_PATTERN = '(?<year>\d{4})-((?<ordinal>3[0-6]{2}|[0-2]\d{2})|(?<month>0\d|1[0-2])-(?<day>3[0-1]|[0-2]\d))'.freeze
+      DATE_REGEXP_PATTERN = '(?<year>\d{4})-((?<ordinal>3[0-6]{2}|[0-2]\d{2})|(?<month>0\d|1[0-2])-(?<day>3[0-1]|[0-2]\d))'
       # Regexp pattern matching HH:MM and HH:MM:SS
-      TIME_REGEXP_PATTERN = '(?<hours>2[0-3]|[0-1]?\d)(?::(?<minutes>[0-5]\d))?(?::(?<seconds>[0-5]\d))?(?:\s*?(?<abbreviation>[apPP]\.?[mM]\.?))?'.freeze
+      TIME_REGEXP_PATTERN = '(?<hours>2[0-3]|[0-1]?\d)(?::(?<minutes>[0-5]\d))?(?::(?<seconds>[0-5]\d))?(?:\s*?(?<abbreviation>[apPP]\.?[mM]\.?))?'
       # Regexp pattern matching +/-(XX:YY|XXYY|XX) or the literal string Z
-      TIMEZONE_REGEXP_PATTERN = '(?<zulu>Z)|(?<offset>(?:\+|-)(?:1[0-2]|0?\d)(?::?[0-5]\d)?)'.freeze
+      TIMEZONE_REGEXP_PATTERN = '(?<zulu>Z)|(?<offset>(?:\+|-)(?:1[0-2]|0?\d)(?::?[0-5]\d)?)'
 
       CAPTURE_NAMES = [:year, :ordinal, :month, :day, :hours, :minutes, :seconds, :abbreviation, :zulu, :offset].freeze
 
