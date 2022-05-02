@@ -141,13 +141,12 @@ module MicroMicro
 
     # @return [String]
     def resolved_base_url
-      @resolved_base_url ||= begin
+      @resolved_base_url ||=
         if base_element
           Addressable::URI.join(base_url, base_element['href'].strip).normalize.to_s
         else
           base_url
         end
-      end
     end
   end
 end

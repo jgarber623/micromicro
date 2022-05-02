@@ -44,18 +44,19 @@ module MicroMicro
 
     # @return [String, Hash]
     def value
-      @value ||= begin
-        return parser.value unless item_node?
+      @value ||=
+        if item_node?
+          hash = item.to_h
 
-        hash = item.to_h
+          return hash.merge(parser.value) if prefix == 'e'
 
-        return hash.merge(parser.value) if prefix == 'e'
+          p_property = item.properties.find { |property| property.name == 'name' } if prefix == 'p'
+          u_property = item.properties.find { |property| property.name == 'url' } if prefix == 'u'
 
-        p_property = item.properties.find { |property| property.name == 'name' } if prefix == 'p'
-        u_property = item.properties.find { |property| property.name == 'url' } if prefix == 'u'
-
-        hash.merge(value: (p_property || u_property || parser).value)
-      end
+          hash.merge(value: (p_property || u_property || parser).value)
+        else
+          parser.value
+        end
     end
 
     # @return [Boolean]

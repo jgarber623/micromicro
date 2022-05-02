@@ -33,12 +33,12 @@ module MicroMicro
       end
 
       def normalized_hours
-        @normalized_hours ||= begin
-          return unless hours?
-          return (hours.to_i + 12).to_s if abbreviation&.tr('.', '')&.downcase == 'pm'
+        @normalized_hours ||=
+          if hours?
+            return (hours.to_i + 12).to_s if abbreviation&.tr('.', '')&.downcase == 'pm'
 
-          format('%<hours>02d', hours: hours)
-        end
+            format('%<hours>02d', hours: hours)
+          end
       end
 
       def normalized_minutes
@@ -59,7 +59,10 @@ module MicroMicro
 
       # @return [String]
       def value
-        @value ||= "#{normalized_date} #{normalized_time}#{normalized_timezone}".strip if normalized_date || normalized_time || normalized_timezone
+        @value ||=
+          if normalized_date || normalized_time || normalized_timezone
+            "#{normalized_date} #{normalized_time}#{normalized_timezone}".strip
+          end
       end
 
       # @return [Hash{Symbol => String, nil}]

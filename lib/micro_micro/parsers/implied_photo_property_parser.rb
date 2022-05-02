@@ -13,26 +13,25 @@ module MicroMicro
       #
       # @return [String, Hash{Symbol => String}, nil]
       def value
-        @value ||= begin
-          return unless resolved_value
-          return resolved_value unless value_node.matches?('img[alt]')
+        @value ||=
+          if resolved_value
+            return resolved_value unless value_node.matches?('img[alt]')
 
-          {
-            value: resolved_value,
-            alt: value_node['alt'].strip
-          }
-        end
+            {
+              value: resolved_value,
+              alt: value_node['alt'].strip
+            }
+          end
       end
 
       private
 
       # @return [Array<String>]
       def attribute_values
-        @attribute_values ||= begin
+        @attribute_values ||=
           HTML_ELEMENTS_MAP.map do |element, attribute|
             node if node.matches?("#{element}[#{attribute}]")
           end.compact
-        end
       end
 
       # @return [String, nil]
@@ -42,25 +41,30 @@ module MicroMicro
 
       # @return [Nokogiri::XML::Element, nil]
       def value_node
-        @value_node ||= begin
-          return attribute_values.first if attribute_values.any?
-
-          HTML_ELEMENTS_MAP.each do |element, attribute|
-            child_node = node.at_css("> #{element}[#{attribute}]:only-of-type")
-
-            return child_node if child_node && !Item.item_node?(child_node) && element == child_node.name && child_node[attribute]
-          end
-
-          if node.element_children.one? && !Item.item_node?(node.first_element_child)
+        @value_node ||=
+          if attribute_values.any?
+            attribute_values.first
+          else
             HTML_ELEMENTS_MAP.each do |element, attribute|
-              child_node = node.first_element_child.at_css("> #{element}[#{attribute}]:only-of-type")
+              child_node = node.at_css("> #{element}[#{attribute}]:only-of-type")
 
-              return child_node if child_node && !Item.item_node?(child_node) && element == child_node.name && child_node[attribute]
+              if child_node && !Item.item_node?(child_node) && element == child_node.name && child_node[attribute]
+                return child_node
+              end
             end
-          end
 
-          nil
-        end
+            if node.element_children.one? && !Item.item_node?(node.first_element_child)
+              HTML_ELEMENTS_MAP.each do |element, attribute|
+                child_node = node.first_element_child.at_css("> #{element}[#{attribute}]:only-of-type")
+
+                if child_node && !Item.item_node?(child_node) && element == child_node.name && child_node[attribute]
+                  return child_node
+                end
+              end
+            end
+
+            nil
+          end
       end
     end
   end

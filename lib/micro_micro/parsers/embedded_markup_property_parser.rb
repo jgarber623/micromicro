@@ -7,12 +7,11 @@ module MicroMicro
       #
       # @return [Hash{Symbol => String}]
       def value
-        @value ||= begin
+        @value ||=
           {
             html: node.inner_html.strip,
             value: super
           }
-        end
       end
     end
   end

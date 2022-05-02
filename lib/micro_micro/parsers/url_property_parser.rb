@@ -20,14 +20,15 @@ module MicroMicro
       #
       # @return [String, Hash{Symbol => String}]
       def value
-        @value ||= begin
-          return resolved_value unless node.matches?('img[alt]')
-
-          {
-            value: resolved_value,
-            alt: node['alt'].strip
-          }
-        end
+        @value ||=
+          if node.matches?('img[alt]')
+            {
+              value: resolved_value,
+              alt: node['alt'].strip
+            }
+          else
+            resolved_value
+          end
       end
 
       private

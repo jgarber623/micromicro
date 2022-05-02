@@ -14,11 +14,10 @@ module MicroMicro
       #
       # @return [String]
       def value
-        @value ||= begin
+        @value ||=
           Document.text_content_from(node) do |context|
             context.css('img').each { |img| img.content = " #{img['alt'] || img['src']} " }
           end
-        end
       end
 
       # @param node [Nokogiri::XML::Element]
