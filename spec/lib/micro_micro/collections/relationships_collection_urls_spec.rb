@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe MicroMicro::Collections::RelationshipsCollection, '#urls' do
   subject(:urls) { MicroMicro.parse(markup, base_url).relationships.urls }
 

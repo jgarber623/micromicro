@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe MicroMicro::Collections::PropertiesCollection, '#values' do
   subject(:values) { MicroMicro.parse(markup, base_url).items.first.properties.values }
 

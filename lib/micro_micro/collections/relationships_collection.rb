@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module MicroMicro
   module Collections
     class RelationshipsCollection < BaseCollection

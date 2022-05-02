@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module MicroMicro
   class Property
     PROPERTY_PARSERS_MAP = {

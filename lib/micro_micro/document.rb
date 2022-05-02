@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module MicroMicro
   class Document
     # A map of HTML `srcset` attributes and their associated element names

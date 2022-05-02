@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 formatters = SimpleCov::Formatter.from_env(ENV)
 
 if RSpec.configuration.files_to_run.length > 1

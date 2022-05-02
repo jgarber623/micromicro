@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe MicroMicro::Item, '#url_properties' do
   subject(:url_properties) { MicroMicro.parse(markup, base_url).items.first.url_properties }
 

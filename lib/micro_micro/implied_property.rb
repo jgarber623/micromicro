@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module MicroMicro
   class ImpliedProperty < Property
     IMPLIED_PROPERTY_PARSERS_MAP = {

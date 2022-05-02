@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe MicroMicro::Document, '#to_h' do
   let(:base_url) { 'http://example.com' }
 

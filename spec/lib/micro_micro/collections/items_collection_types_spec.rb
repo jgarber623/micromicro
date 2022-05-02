@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe MicroMicro::Collections::ItemsCollection, '#types' do
   subject(:types) { MicroMicro.parse(markup, base_url).items.types }
 
