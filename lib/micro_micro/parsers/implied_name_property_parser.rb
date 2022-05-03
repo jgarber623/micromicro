@@ -24,7 +24,10 @@ module MicroMicro
 
       # @return [Array]
       def child_nodes
-        [node.at_css('> :only-child'), node.at_css('> :only-child > :only-child')].compact.reject { |child_node| Item.item_node?(child_node) }
+        [
+          node.at_css('> :only-child'),
+          node.at_css('> :only-child > :only-child')
+        ].compact.reject { |child_node| Item.item_node?(child_node) }
       end
 
       # @return [String, nil]
@@ -34,7 +37,10 @@ module MicroMicro
 
       # @return [String]
       def text_content
-        @text_content ||= Document.text_content_from(node) { |context| context.css('img').each { |img| img.content = img['alt'] } }
+        @text_content ||=
+          Document.text_content_from(node) do |context|
+            context.css('img').each { |img| img.content = img['alt'] }
+          end
       end
     end
   end

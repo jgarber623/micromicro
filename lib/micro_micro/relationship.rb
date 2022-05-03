@@ -67,7 +67,9 @@ module MicroMicro
     # @param context [Nokogiri::HTML::Document, Nokogiri::XML::Element]
     # @return [Nokogiri::XML::NodeSet]
     def self.nodes_from(context)
-      context.css('[href][rel]:not([rel=""])').reject { |node| (node.ancestors.map(&:name) & Document.ignored_node_names).any? }
+      context.css('[href][rel]:not([rel=""])').reject do |node|
+        (node.ancestors.map(&:name) & Document.ignored_node_names).any?
+      end
     end
 
     # @param context [Nokogiri::HTML::Document, Nokogiri::XML::Element]

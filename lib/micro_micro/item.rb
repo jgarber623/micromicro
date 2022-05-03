@@ -21,7 +21,8 @@ module MicroMicro
     #
     # @return [MicroMicro::Collections::ItemsCollection]
     def children
-      @children ||= Collections::ItemsCollection.new(Item.items_from(node.element_children))
+      @children ||=
+        Collections::ItemsCollection.new(Item.items_from(node.element_children))
     end
 
     # The value of the node's `id` attribute, if present.
@@ -43,14 +44,16 @@ module MicroMicro
     #
     # @return [MicroMicro::Collections::PropertiesCollection]
     def plain_text_properties
-      @plain_text_properties ||= Collections::PropertiesCollection.new(properties.select { |property| property.prefix == 'p' })
+      @plain_text_properties ||=
+        Collections::PropertiesCollection.new(properties.select { |property| property.prefix == 'p' })
     end
 
     # A collection of properties parsed from the node.
     #
     # @return [MicroMicro::Collections::PropertiesCollection]
     def properties
-      @properties ||= Collections::PropertiesCollection.new(Property.properties_from(node.element_children))
+      @properties ||=
+        Collections::PropertiesCollection.new(Property.properties_from(node.element_children))
     end
 
     # Return the parsed item as a Hash.
@@ -81,7 +84,8 @@ module MicroMicro
     #
     # @return [MicroMicro::Collections::PropertiesCollection]
     def url_properties
-      @url_properties ||= Collections::PropertiesCollection.new(properties.select { |property| property.prefix == 'u' })
+      @url_properties ||=
+        Collections::PropertiesCollection.new(properties.select { |property| property.prefix == 'u' })
     end
 
     # Does this node's `class` attribute contain root class names?
@@ -168,17 +172,25 @@ module MicroMicro
 
     # @return [Boolean]
     def imply_name?
-      properties.none? { |prop| prop.name == 'name' } && properties.none? { |prop| %w[e p].include?(prop.prefix) } && !nested_items?
+      prefixes = %w[e p]
+
+      properties.none? { |prop| prop.name == 'name' } &&
+        properties.none? { |prop| prefixes.include?(prop.prefix) } &&
+        !nested_items?
     end
 
     # @return [Boolean]
     def imply_photo?
-      properties.none? { |prop| prop.name == 'photo' } && properties.reject(&:implied?).none? { |prop| prop.prefix == 'u' } && !nested_items?
+      properties.none? { |prop| prop.name == 'photo' } &&
+        properties.reject(&:implied?).none? { |prop| prop.prefix == 'u' } &&
+        !nested_items?
     end
 
     # @return [Boolean]
     def imply_url?
-      properties.none? { |prop| prop.name == 'url' } && properties.reject(&:implied?).none? { |prop| prop.prefix == 'u' } && !nested_items?
+      properties.none? { |prop| prop.name == 'url' } &&
+        properties.reject(&:implied?).none? { |prop| prop.prefix == 'u' } &&
+        !nested_items?
     end
 
     # @return [Boolean]

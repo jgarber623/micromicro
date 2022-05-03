@@ -132,9 +132,14 @@ module MicroMicro
 
       HTML_IMAGE_CANDIDATE_STRINGS_ATTRIBUTES_MAP.each do |attribute, names|
         document.xpath(*names.map { |name| "//#{name}[@#{attribute}]" }).each do |node|
-          candidates = node[attribute].split(',').map(&:strip).map { |candidate| candidate.match(/^(?<url>.+?)(?<descriptor>\s+.+)?$/) }
+          candidates = node[attribute].split(',')
+                                      .map(&:strip)
+                                      .map { |candidate| candidate.match(/^(?<url>.+?)(?<descriptor>\s+.+)?$/) }
 
-          node[attribute] = candidates.map { |candidate| "#{Addressable::URI.join(resolved_base_url, candidate[:url]).normalize}#{candidate[:descriptor]}" }.join(', ')
+          node[attribute] =
+            candidates.map do |candidate|
+              "#{Addressable::URI.join(resolved_base_url, candidate[:url]).normalize}#{candidate[:descriptor]}"
+            end.join(', ')
         end
       end
 
