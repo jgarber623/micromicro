@@ -16,7 +16,9 @@ module MicroMicro
 
       # @return [String]
       def inspect
-        format(%(#<#{self.class.name}:%#0x count: #{count}, members: #{members.inspect}>), object_id)
+        "#<#{self.class.name}:#{format('%#0x', object_id)} " \
+          "count: #{count}, " \
+          "members: #{members.inspect}>"
       end
 
       # @param member [MicroMicro::Item, MicroMicro::Property, MicroMicro::Relationship]

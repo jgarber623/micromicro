@@ -21,7 +21,9 @@ module MicroMicro
 
     # @return [String]
     def inspect
-      format(%(#<#{self.class.name}:%#0x href: #{href.inspect}, rels: #{rels.inspect}>), object_id)
+      "#<#{self.class.name}:#{format('%#0x', object_id)} " \
+        "href: #{href.inspect}, " \
+        "rels: #{rels.inspect}>"
     end
 
     # @return [String, nil]

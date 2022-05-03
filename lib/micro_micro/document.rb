@@ -48,7 +48,9 @@ module MicroMicro
 
     # @return [String]
     def inspect
-      format(%(#<#{self.class.name}:%#0x items: #{items.inspect}, relationships: #{relationships.inspect}>), object_id)
+      "#<#{self.class.name}:#{format('%#0x', object_id)} " \
+        "items: #{items.inspect}, " \
+        "relationships: #{relationships.inspect}>"
     end
 
     # A collection of items parsed from the provided markup.

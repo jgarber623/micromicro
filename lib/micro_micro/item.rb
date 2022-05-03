@@ -33,7 +33,10 @@ module MicroMicro
 
     # @return [String]
     def inspect
-      format(%(#<#{self.class.name}:%#0x types: #{types.inspect}, properties: #{properties.count}, children: #{children.count}>), object_id)
+      "#<#{self.class.name}:#{format('%#0x', object_id)} " \
+        "types: #{types.inspect}, " \
+        "properties: #{properties.count}, " \
+        "children: #{children.count}>"
     end
 
     # A collection of plain text properties parsed from the node.

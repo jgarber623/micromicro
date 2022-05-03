@@ -29,7 +29,10 @@ module MicroMicro
 
     # @return [String]
     def inspect
-      format(%(#<#{self.class.name}:%#0x name: #{name.inspect}, prefix: #{prefix.inspect}, value: #{value.inspect}>), object_id)
+      "#<#{self.class.name}:#{format('%#0x', object_id)} " \
+        "name: #{name.inspect}, " \
+        "prefix: #{prefix.inspect}, " \
+        "value: #{value.inspect}>"
     end
 
     # @return [MicroMicro::Item, nil]
