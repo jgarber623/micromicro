@@ -2,14 +2,14 @@
 
 module MicroMicro
   class Property
+    include Collectible
+
     PROPERTY_PARSERS_MAP = {
       'dt' => Parsers::DateTimePropertyParser,
       'e'  => Parsers::EmbeddedMarkupPropertyParser,
       'p'  => Parsers::PlainTextPropertyParser,
       'u'  => Parsers::UrlPropertyParser
     }.freeze
-
-    include Collectible
 
     attr_reader :name, :node, :prefix
 
