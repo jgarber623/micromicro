@@ -35,11 +35,11 @@ module FixturesHelpers
       end
 
       def input
-        @input ||= IO.read(input_file_path)
+        @input ||= File.read(input_file_path)
       end
 
       def output
-        @output ||= JSON.parse(IO.read(output_file_path), symbolize_names: true)
+        @output ||= JSON.parse(File.read(output_file_path), symbolize_names: true)
       end
 
       private
