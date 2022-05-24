@@ -27,13 +27,15 @@ module MicroMicro
       false
     end
 
+    # :nocov:
     # @return [String]
     def inspect
-      "#<#{self.class.name}:#{format('%#0x', object_id)} " \
+      "#<#{self.class}:#{format('%#0x', object_id)} " \
         "name: #{name.inspect}, " \
         "prefix: #{prefix.inspect}, " \
         "value: #{value.inspect}>"
     end
+    # :nocov:
 
     # @return [MicroMicro::Item, nil]
     def item

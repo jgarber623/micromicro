@@ -19,12 +19,14 @@ module MicroMicro
       @hreflang ||= node['hreflang']&.strip
     end
 
+    # :nocov:
     # @return [String]
     def inspect
-      "#<#{self.class.name}:#{format('%#0x', object_id)} " \
+      "#<#{self.class}:#{format('%#0x', object_id)} " \
         "href: #{href.inspect}, " \
         "rels: #{rels.inspect}>"
     end
+    # :nocov:
 
     # @return [String, nil]
     def media

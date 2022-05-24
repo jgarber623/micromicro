@@ -32,13 +32,15 @@ module MicroMicro
       @id ||= node['id']&.strip
     end
 
+    # :nocov:
     # @return [String]
     def inspect
-      "#<#{self.class.name}:#{format('%#0x', object_id)} " \
+      "#<#{self.class}:#{format('%#0x', object_id)} " \
         "types: #{types.inspect}, " \
         "properties: #{properties.count}, " \
         "children: #{children.count}>"
     end
+    # :nocov:
 
     # A collection of plain text properties parsed from the node.
     #

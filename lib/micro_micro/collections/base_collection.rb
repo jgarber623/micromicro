@@ -14,12 +14,14 @@ module MicroMicro
         members.each { |member| push(member) }
       end
 
+      # :nocov:
       # @return [String]
       def inspect
-        "#<#{self.class.name}:#{format('%#0x', object_id)} " \
+        "#<#{self.class}:#{format('%#0x', object_id)} " \
           "count: #{count}, " \
           "members: #{members.inspect}>"
       end
+      # :nocov:
 
       # @param member [MicroMicro::Item, MicroMicro::Property, MicroMicro::Relationship]
       def push(member)
