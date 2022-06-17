@@ -105,7 +105,9 @@ module MicroMicro
     #   node = Nokogiri::HTML('<a href="https://sixtwothree.org" class="p-name u-url">Jason Garber</a>').at_css('a')
     #   MicroMicro::Property.types_from(node) #=> [['p', 'name'], ['u', 'url']]
     def self.types_from(node)
-      node.classes.select { |token| token.match?(/^(?:dt|e|p|u)(?:-[0-9a-z]+)?(?:-[a-z]+)+$/) }.map { |token| token.split(/-/, 2) }.uniq
+      node.classes.filter_map do |token|
+        token.split(/-/, 2) if token.match?(/^(?:dt|e|p|u)(?:-[0-9a-z]+)?(?:-[a-z]+)+$/)
+      end.uniq
     end
 
     private
