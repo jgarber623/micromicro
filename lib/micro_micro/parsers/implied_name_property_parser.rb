@@ -32,7 +32,7 @@ module MicroMicro
 
       # @return [String, nil]
       def attribute_value
-        candidate_nodes.map { |node| self.class.attribute_value_from(node, HTML_ATTRIBUTES_MAP) }.compact.first
+        candidate_nodes.filter_map { |node| self.class.attribute_value_from(node, HTML_ATTRIBUTES_MAP) }.first
       end
 
       # @return [String]

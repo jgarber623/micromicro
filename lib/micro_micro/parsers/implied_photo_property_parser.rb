@@ -29,9 +29,9 @@ module MicroMicro
       # @return [Array<String>]
       def attribute_values
         @attribute_values ||=
-          HTML_ELEMENTS_MAP.map do |element, attribute|
+          HTML_ELEMENTS_MAP.filter_map do |element, attribute|
             node if node.matches?("#{element}[#{attribute}]")
-          end.compact
+          end
       end
 
       # @return [String, nil]
