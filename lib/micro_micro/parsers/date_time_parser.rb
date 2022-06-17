@@ -12,14 +12,19 @@ module MicroMicro
       # Regexp pattern matching +/-(XX:YY|XXYY|XX) or the literal string Z
       TIMEZONE_REGEXP_PATTERN = '(?<zulu>Z)|(?<offset>(?:\+|-)(?:1[0-2]|0?\d)(?::?[0-5]\d)?)'
 
-      CAPTURE_NAMES = [:year, :ordinal, :month, :day, :hours, :minutes, :seconds, :abbreviation, :zulu, :offset].freeze
+      DATE_TIME_TIMEZONE_REGEXP = /^(?:#{DATE_REGEXP_PATTERN})?(?:\s?#{TIME_REGEXP_PATTERN}(?:#{TIMEZONE_REGEXP_PATTERN})?)?$/.freeze
 
       # @param string [String]
       def initialize(string)
         @string = string
       end
 
-      CAPTURE_NAMES.each do |name|
+      # Define methods for each named capture from DATE_TIME_TIMEZONE_REGEXP.
+      [
+        :year, :ordinal, :month, :day,
+        :hours, :minutes, :seconds,
+        :abbreviation, :zulu, :offset
+      ].each do |name|
         define_method(name) { values[name] }
         define_method("#{name}?") { public_send(name).present? }
       end
@@ -73,7 +78,7 @@ module MicroMicro
       # @param string [String]
       # @return [Hash{Symbol => String, nil}]
       def self.values_from(string)
-        string&.match(/^(?:#{DATE_REGEXP_PATTERN})?(?:\s?#{TIME_REGEXP_PATTERN}(?:#{TIMEZONE_REGEXP_PATTERN})?)?$/)&.named_captures.to_h.symbolize_keys
+        string&.match(DATE_TIME_TIMEZONE_REGEXP)&.named_captures.to_h.symbolize_keys
       end
 
       private
