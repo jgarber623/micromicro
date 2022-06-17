@@ -8,9 +8,9 @@ There are a couple ways you can help improve MicroMicro:
 
 ## Getting Started
 
-MicroMicro is developed using Ruby 2.6.10 and is additionally tested against Ruby 2.6, 2.7, and 3.0 using [GitHub Actions](https://github.com/jgarber623/micromicro/actions).
+MicroMicro is developed using Ruby 2.7.6 and is additionally tested against Ruby 3.0 and 3.1 using [GitHub Actions](https://github.com/jgarber623/micromicro/actions).
 
-Before making changes to MicroMicro, you'll want to install Ruby 2.6.10. It's recommended that you use a Ruby version managment tool like [rbenv](https://github.com/rbenv/rbenv), [chruby](https://github.com/postmodern/chruby), or [rvm](https://github.com/rvm/rvm). Once you've installed Ruby 2.6.10 using your method of choice, install the project's gems by running:
+Before making changes to MicroMicro, you'll want to install Ruby 2.7.6. It's recommended that you use a Ruby version managment tool like [rbenv](https://github.com/rbenv/rbenv), [chruby](https://github.com/postmodern/chruby), or [rvm](https://github.com/rvm/rvm). Once you've installed Ruby 2.7.6 using your method of choice, install the project's gems by running:
 
 ```sh
 bundle install
