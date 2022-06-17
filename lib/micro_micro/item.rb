@@ -135,7 +135,7 @@ module MicroMicro
     # @param node [Nokogiri::XML::Element]
     # @return [Array<String>]
     def self.types_from(node)
-      node.classes.select { |token| token.match?(/^h(?:-[0-9a-z]+)?(?:-[a-z]+)+$/) }.uniq.sort
+      node.classes.grep(/^h(?:-[0-9a-z]+)?(?:-[a-z]+)+$/).uniq.sort
     end
 
     private
