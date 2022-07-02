@@ -2,7 +2,6 @@
 
 require 'forwardable'
 
-require 'addressable/uri'
 require 'active_support/core_ext/array/grouping'
 require 'active_support/core_ext/hash/deep_transform_values'
 require 'active_support/core_ext/hash/keys'
