@@ -2,30 +2,6 @@
 
 module MicroMicro
   class Document
-    # A map of HTML `srcset` attributes and their associated element names
-    #
-    # @see https://html.spec.whatwg.org/#srcset-attributes
-    # @see https://html.spec.whatwg.org/#attributes-3
-    HTML_IMAGE_CANDIDATE_STRINGS_ATTRIBUTES_MAP = {
-      'imagesrcset' => %w[link],
-      'srcset'      => %w[img source]
-    }.freeze
-
-    # A map of HTML URL attributes and their associated element names
-    #
-    # @see https://html.spec.whatwg.org/#attributes-3
-    HTML_URL_ATTRIBUTES_MAP = {
-      'action'     => %w[form],
-      'cite'       => %w[blockquote del ins q],
-      'data'       => %w[object],
-      'formaction' => %w[button input],
-      'href'       => %w[a area base link],
-      'manifest'   => %w[html],
-      'ping'       => %w[a area],
-      'poster'     => %w[video],
-      'src'        => %w[audio embed iframe img input script source track video]
-    }.freeze
-
     # Parse a string of HTML for microformats2-encoded data.
     #
     #   MicroMicro::Document.new('<a href="/" class="h-card" rel="me">Jason Garber</a>', 'https://sixtwothree.org')
@@ -40,10 +16,7 @@ module MicroMicro
     # @param markup [String] The HTML to parse for microformats2-encoded data.
     # @param base_url [String] The URL associated with markup. Used for relative URL resolution.
     def initialize(markup, base_url)
-      @markup = markup
-      @base_url = base_url
-
-      resolve_relative_urls
+      @document = Nokogiri::HTML(markup, base_url).resolve_relative_urls!
     end
 
     # :nocov:
@@ -113,49 +86,7 @@ module MicroMicro
 
     private
 
-    attr_reader :base_url, :markup
-
-    # @return [Nokogiri::XML::Element, nil]
-    def base_element
-      @base_element ||= Nokogiri::HTML(markup).at('//base[@href]')
-    end
-
     # @return [Nokogiri::HTML::Document]
-    def document
-      @document ||= Nokogiri::HTML(markup, resolved_base_url)
-    end
-
-    def resolve_relative_urls
-      HTML_URL_ATTRIBUTES_MAP.each do |attribute, names|
-        document.xpath(*names.map { |name| "//#{name}[@#{attribute}]" }).each do |node|
-          node[attribute] = Addressable::URI.join(resolved_base_url, node[attribute].strip).normalize.to_s
-        end
-      end
-
-      HTML_IMAGE_CANDIDATE_STRINGS_ATTRIBUTES_MAP.each do |attribute, names|
-        document.xpath(*names.map { |name| "//#{name}[@#{attribute}]" }).each do |node|
-          candidates = node[attribute].split(',')
-                                      .map(&:strip)
-                                      .map { |candidate| candidate.match(/^(?<url>.+?)(?<descriptor>\s+.+)?$/) }
-
-          node[attribute] =
-            candidates.map do |candidate|
-              "#{Addressable::URI.join(resolved_base_url, candidate[:url]).normalize}#{candidate[:descriptor]}"
-            end.join(', ')
-        end
-      end
-
-      self
-    end
-
-    # @return [String]
-    def resolved_base_url
-      @resolved_base_url ||=
-        if base_element
-          Addressable::URI.join(base_url, base_element['href'].strip).normalize.to_s
-        else
-          base_url
-        end
-    end
+    attr_reader :document
   end
 end
