@@ -9,6 +9,7 @@ require 'active_support/core_ext/hash/keys'
 require 'active_support/core_ext/hash/slice'
 require 'active_support/core_ext/object/blank'
 require 'nokogiri'
+require 'nokogiri/html-ext'
 
 require_relative 'micro_micro/version'
 require_relative 'micro_micro/collectible'
