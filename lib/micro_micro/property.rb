@@ -23,6 +23,16 @@ module MicroMicro
     end
 
     # @return [Boolean]
+    def date_time_property?
+      prefix == 'dt'
+    end
+
+    # @return [Boolean]
+    def embedded_markup_property?
+      prefix == 'e'
+    end
+
+    # @return [Boolean]
     def implied?
       false
     end
@@ -47,16 +57,26 @@ module MicroMicro
       @item_node ||= Item.item_node?(node)
     end
 
+    # @return [Boolean]
+    def plain_text_property?
+      prefix == 'p'
+    end
+
+    # @return [Boolean]
+    def url_property?
+      prefix == 'u'
+    end
+
     # @return [String, Hash]
     def value
       @value ||=
         if item_node?
           hash = item.to_h
 
-          return hash.merge(parser.value) if prefix == 'e'
+          return hash.merge(parser.value) if embedded_markup_property?
 
-          p_property = item.properties.find { |property| property.name == 'name' } if prefix == 'p'
-          u_property = item.properties.find { |property| property.name == 'url' } if prefix == 'u'
+          p_property = item.properties.find { |property| property.name == 'name' } if plain_text_property?
+          u_property = item.properties.find { |property| property.name == 'url' } if url_property?
 
           hash.merge(value: (p_property || u_property || parser).value)
         else

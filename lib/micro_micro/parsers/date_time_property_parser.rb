@@ -22,11 +22,10 @@ module MicroMicro
       #
       # @return [MicroMicro::Parsers::DateTimeParser, nil]
       def adopted_date_time_parser
-        @adopted_date_time_parser ||= begin
-          date_time_siblings = (property.prev_all.reverse + property.next_all).select { |prop| prop.prefix == 'dt' }
-
-          date_time_siblings.map { |prop| DateTimeParser.new(prop.value) }.find(&:normalized_date)
-        end
+        @adopted_date_time_parser ||=
+          (property.prev_all.reverse + property.next_all).filter_map do |prop|
+            DateTimeParser.new(prop.value) if prop.date_time_property?
+          end.find(&:normalized_date)
       end
 
       # @return [String, nil]
