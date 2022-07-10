@@ -22,7 +22,7 @@ module MicroMicro
     # @return [MicroMicro::Collections::ItemsCollection]
     def children
       @children ||=
-        Collections::ItemsCollection.new(Item.items_from(node.element_children))
+        Collections::ItemsCollection.new(self.class.items_from(node.element_children))
     end
 
     # The value of the node's `id` attribute, if present.
