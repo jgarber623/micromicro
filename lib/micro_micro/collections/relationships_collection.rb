@@ -21,7 +21,7 @@ module MicroMicro
 
       # @return [Array<String>]
       def rels
-        @rels ||= map(&:rels).flatten.uniq.sort
+        @rels ||= flat_map(&:rels).uniq.sort
       end
 
       # @return [Array<String>]

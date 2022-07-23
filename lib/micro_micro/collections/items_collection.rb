@@ -10,7 +10,7 @@ module MicroMicro
 
       # @return [Array<String>]
       def types
-        @types ||= map(&:types).flatten.uniq.sort
+        @types ||= flat_map(&:types).uniq.sort
       end
     end
   end
