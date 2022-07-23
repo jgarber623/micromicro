@@ -25,7 +25,9 @@ module FixturesHelpers
     end
 
     def self.test_case_file_paths
-      TEST_CASE_TYPES.map { |test_case_type| Dir[File.join(test_case_base_path, test_case_type, '*.json')] }.flatten
+      TEST_CASE_TYPES.flat_map do |test_case_type|
+        Dir[File.join(test_case_base_path, test_case_type, '*.json')]
+      end
     end
 
     class TestCase
