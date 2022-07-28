@@ -26,7 +26,11 @@ module MicroMicro
 
       # @return [Array<String>]
       def values
-        @values ||= value_nodes.map { |value_node| self.class.value_from(value_node) }.select(&:present?)
+        @values ||=
+          self.class
+              .nodes_from(node)
+              .map { |value_node| self.class.value_from(value_node) }
+              .select(&:present?)
       end
 
       # @param context [Nokogiri::XML::NodeSet, Nokogiri::XML::Element]
@@ -35,8 +39,8 @@ module MicroMicro
       def self.nodes_from(context, node_set = Nokogiri::XML::NodeSet.new(context.document, []))
         context.each { |node| nodes_from(node, node_set) } if context.is_a?(Nokogiri::XML::NodeSet)
 
-        if context.is_a?(Nokogiri::XML::Element) && !Document.ignore_node?(context)
-          if value_class_node?(context) || value_title_node?(context)
+        if context.is_a?(Nokogiri::XML::Element) && !Helpers.ignore_node?(context)
+          if Helpers.value_class_node?(context) || Helpers.value_title_node?(context)
             node_set << context
           else
             nodes_from(context.element_children, node_set)
@@ -47,37 +51,16 @@ module MicroMicro
       end
 
       # @param node [Nokogiri::XML::Element]
-      # @return [Boolean]
-      def self.value_class_node?(node)
-        node.classes.include?('value')
-      end
-
-      # @param node [Nokogiri::XML::Element]
       # @return [String, nil]
       def self.value_from(node)
-        return node['title'] if value_title_node?(node)
+        return node['title'] if Helpers.value_title_node?(node)
 
-        HTML_ATTRIBUTES_MAP.each do |attribute, names|
-          return node[attribute] if names.include?(node.name) && node[attribute]
-        end
-
-        node.text
-      end
-
-      # @param node [Nokogiri::XML::Element]
-      # @return [Boolean]
-      def self.value_title_node?(node)
-        node.classes.include?('value-title')
+        Helpers.attribute_value_from(node, HTML_ATTRIBUTES_MAP) || node.text
       end
 
       private
 
       attr_reader :node, :separator
-
-      # @return [Nokogiri::XML::NodeSet]
-      def value_nodes
-        @value_nodes ||= self.class.nodes_from(node)
-      end
     end
   end
 end

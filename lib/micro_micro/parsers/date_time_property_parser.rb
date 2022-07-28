@@ -30,7 +30,7 @@ module MicroMicro
 
       # @return [String, nil]
       def attribute_value
-        self.class.attribute_value_from(node, HTML_ATTRIBUTES_MAP)
+        Helpers.attribute_value_from(node, HTML_ATTRIBUTES_MAP)
       end
 
       # @return [MicroMicro::Parsers::DateTimeParser]

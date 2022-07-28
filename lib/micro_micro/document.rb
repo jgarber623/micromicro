@@ -55,35 +55,6 @@ module MicroMicro
       }
     end
 
-    # Ignore this node?
-    #
-    # @param node [Nokogiri::XML::Element]
-    # @return [Boolean]
-    def self.ignore_node?(node)
-      ignored_node_names.include?(node.name)
-    end
-
-    # A list of HTML element names the parser should ignore.
-    #
-    # @return [Array<String>]
-    def self.ignored_node_names
-      %w[script style template]
-    end
-
-    # @see https://microformats.org/wiki/microformats2-parsing#parse_an_element_for_properties
-    # @see https://microformats.org/wiki/microformats2-parsing#parsing_for_implied_properties
-    #
-    # @param context [Nokogiri::HTML::Document, Nokogiri::XML::NodeSet, Nokogiri::XML::Element]
-    # @yield [context]
-    # @return [String]
-    def self.text_content_from(context)
-      context.css(*ignored_node_names).unlink
-
-      yield(context) if block_given?
-
-      context.text.strip
-    end
-
     private
 
     # @return [Nokogiri::HTML::Document]

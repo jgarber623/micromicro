@@ -15,18 +15,9 @@ module MicroMicro
       # @return [String]
       def value
         @value ||=
-          Document.text_content_from(node) do |context|
+          Helpers.text_content_from(node) do |context|
             context.css('img').each { |img| img.content = " #{img['alt'] || img['src']} " }
           end
-      end
-
-      # @param node [Nokogiri::XML::Element]
-      # @param attributes_map [Hash{String => Array}]
-      # @return [Array]
-      def self.attribute_value_from(node, attributes_map)
-        attributes_map.filter_map do |attribute, names|
-          node[attribute] if names.include?(node.name) && node[attribute]
-        end.first
       end
 
       private

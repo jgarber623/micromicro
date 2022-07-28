@@ -35,12 +35,12 @@ module MicroMicro
 
       # @return [String, nil]
       def attribute_value
-        self.class.attribute_value_from(node, HTML_ATTRIBUTES_MAP)
+        Helpers.attribute_value_from(node, HTML_ATTRIBUTES_MAP)
       end
 
       # @return [String, nil]
       def extended_attribute_value
-        self.class.attribute_value_from(node, EXTENDED_HTML_ATTRIBUTES_MAP)
+        Helpers.attribute_value_from(node, EXTENDED_HTML_ATTRIBUTES_MAP)
       end
 
       # @return [String]
@@ -49,8 +49,13 @@ module MicroMicro
       end
 
       # @return [String]
+      def text_content
+        Helpers.text_content_from(node)
+      end
+
+      # @return [String]
       def unresolved_value
-        attribute_value || value_class_pattern_value || extended_attribute_value || Document.text_content_from(node)
+        attribute_value || value_class_pattern_value || extended_attribute_value || text_content
       end
 
       # @return [String, nil]

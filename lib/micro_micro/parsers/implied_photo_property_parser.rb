@@ -26,7 +26,7 @@ module MicroMicro
 
       private
 
-      # @return [Array<String>]
+      # @return [Array<Nokogiri::XML::Element>]
       def attribute_values
         @attribute_values ||=
           HTML_ELEMENTS_MAP.filter_map do |element, attribute|
@@ -48,16 +48,16 @@ module MicroMicro
             HTML_ELEMENTS_MAP.each do |element, attribute|
               child_node = node.at_css("> #{element}[#{attribute}]:only-of-type")
 
-              if child_node && !Item.item_node?(child_node) && element == child_node.name && child_node[attribute]
+              if child_node && !Helpers.item_node?(child_node) && element == child_node.name && child_node[attribute]
                 return child_node
               end
             end
 
-            if node.element_children.one? && !Item.item_node?(node.first_element_child)
+            if node.element_children.one? && !Helpers.item_node?(node.first_element_child)
               HTML_ELEMENTS_MAP.each do |element, attribute|
                 child_node = node.first_element_child.at_css("> #{element}[#{attribute}]:only-of-type")
 
-                if child_node && !Item.item_node?(child_node) && element == child_node.name && child_node[attribute]
+                if child_node && !Helpers.item_node?(child_node) && element == child_node.name && child_node[attribute]
                   return child_node
                 end
               end

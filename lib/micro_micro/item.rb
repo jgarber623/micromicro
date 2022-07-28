@@ -76,7 +76,7 @@ module MicroMicro
     #
     # @return [Array<String>]
     def types
-      @types ||= self.class.types_from(node)
+      @types ||= Helpers.root_class_names_from(node)
     end
 
     # A collection of url properties parsed from the node.
@@ -84,14 +84,6 @@ module MicroMicro
     # @return [MicroMicro::Collections::PropertiesCollection]
     def url_properties
       @url_properties ||= properties.url_properties
-    end
-
-    # Does this node's `class` attribute contain root class names?
-    #
-    # @param node [Nokogiri::XML::Element]
-    # @return [Boolean]
-    def self.item_node?(node)
-      types_from(node).any?
     end
 
     # Extract items from a context.
@@ -112,9 +104,9 @@ module MicroMicro
 
       context.each { |node| nodes_from(node, node_set) } if context.is_a?(Nokogiri::XML::NodeSet)
 
-      if context.is_a?(Nokogiri::XML::Element) && !Document.ignore_node?(context)
-        if item_node?(context)
-          node_set << context unless Property.property_node?(context)
+      if context.is_a?(Nokogiri::XML::Element) && !Helpers.ignore_node?(context)
+        if Helpers.item_node?(context)
+          node_set << context unless Helpers.property_node?(context)
         else
           nodes_from(context.element_children, node_set)
         end
@@ -123,24 +115,13 @@ module MicroMicro
       node_set
     end
 
-    # Extract root class names from a node.
-    #
-    #   node = Nokogiri::HTML('<div class="h-card">Jason Garber</div>').at_css('div')
-    #   MicroMicro::Item.types_from(node) #=> ['h-card']
-    #
-    # @param node [Nokogiri::XML::Element]
-    # @return [Array<String>]
-    def self.types_from(node)
-      node.classes.grep(/^h(?:-[0-9a-z]+)?(?:-[a-z]+)+$/).uniq.sort
-    end
-
     private
 
     attr_reader :node
 
     # @return [MicroMicro::ImpliedProperty]
     def implied_name
-      @implied_name ||= ImpliedProperty.new(node, name: 'name', prefix: 'p')
+      @implied_name ||= ImpliedProperty.new(node, 'p-name')
     end
 
     # @return [Boolean]
@@ -150,7 +131,7 @@ module MicroMicro
 
     # @return [MicroMicro::ImpliedProperty]
     def implied_photo
-      @implied_photo ||= ImpliedProperty.new(node, name: 'photo', prefix: 'u')
+      @implied_photo ||= ImpliedProperty.new(node, 'u-photo')
     end
 
     # @return [Boolean]
@@ -160,7 +141,7 @@ module MicroMicro
 
     # @return [MicroMicro::ImpliedProperty]
     def implied_url
-      @implied_url ||= ImpliedProperty.new(node, name: 'url', prefix: 'u')
+      @implied_url ||= ImpliedProperty.new(node, 'u-url')
     end
 
     # @return [Boolean]
