@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-RSpec.describe MicroMicro, '.parse' do
-  subject(:document) { described_class.parse(markup, base_url) }
+RSpec.describe MicroMicro::Collections::ItemsCollection do
+  subject(:items_collection) { MicroMicro.parse(markup, base_url).items }
 
   let(:base_url) { 'http://example.com' }
 
@@ -13,5 +13,5 @@ RSpec.describe MicroMicro, '.parse' do
     HTML
   end
 
-  it { is_expected.to be_a(MicroMicro::Document) }
+  its(:types) { is_expected.to eq(['h-entry']) }
 end
