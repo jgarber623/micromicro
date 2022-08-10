@@ -2,7 +2,9 @@
 
 module MicroMicro
   module Parsers
-    class ImpliedUrlPropertyParser < BasePropertyParser
+    class ImpliedUrlPropertyParser < BaseImpliedPropertyParser
+      CSS_SELECTORS_ARRAY = ['> a[href]:only-of-type', '> area[href]:only-of-type'].freeze
+
       HTML_ELEMENTS_MAP = {
         'a'    => 'href',
         'area' => 'href'
@@ -12,45 +14,18 @@ module MicroMicro
       #
       # @return [String, nil]
       def value
-        @value ||= value_node[HTML_ELEMENTS_MAP[value_node.name]] if value_node
+        @value ||= attribute_value
       end
 
       private
 
-      # @return [Array<Nokogiri::XML::Element>]
-      def attribute_values
-        @attribute_values ||=
-          HTML_ELEMENTS_MAP.filter_map do |element, attribute|
-            node if node.matches?("#{element}[#{attribute}]")
-          end
-      end
+      # @return [Array]
+      def child_nodes
+        nodes = [node.at_css(*CSS_SELECTORS_ARRAY)]
 
-      # @return [Nokogiri::XML::Element, nil]
-      def value_node
-        @value_node ||=
-          if attribute_values.any?
-            attribute_values.first
-          else
-            HTML_ELEMENTS_MAP.each do |element, attribute|
-              child_node = node.at_css("> #{element}[#{attribute}]:only-of-type")
+        nodes << node.first_element_child.at_css(*CSS_SELECTORS_ARRAY) if node.element_children.one?
 
-              if child_node && !Helpers.item_node?(child_node) && element == child_node.name && child_node[attribute]
-                return child_node
-              end
-            end
-
-            if node.element_children.one? && !Helpers.item_node?(node.first_element_child)
-              HTML_ELEMENTS_MAP.each do |element, attribute|
-                child_node = node.first_element_child.at_css("> #{element}[#{attribute}]:only-of-type")
-
-                if child_node && !Helpers.item_node?(child_node) && element == child_node.name && child_node[attribute]
-                  return child_node
-                end
-              end
-            end
-
-            nil
-          end
+        nodes.compact.reject { |child_node| Helpers.item_node?(child_node) }
       end
     end
   end

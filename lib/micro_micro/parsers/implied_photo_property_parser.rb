@@ -2,7 +2,9 @@
 
 module MicroMicro
   module Parsers
-    class ImpliedPhotoPropertyParser < BasePropertyParser
+    class ImpliedPhotoPropertyParser < BaseImpliedPropertyParser
+      CSS_SELECTORS_ARRAY = ['> img[src]:only-of-type', '> object[data]:only-of-type'].freeze
+
       HTML_ELEMENTS_MAP = {
         'img'    => 'src',
         'object' => 'data'
@@ -14,57 +16,25 @@ module MicroMicro
       # @return [String, Hash{Symbol => String}, nil]
       def value
         @value ||=
-          if resolved_value
-            return resolved_value unless value_node.matches?('img[alt]')
+          if attribute_value
+            return attribute_value unless candidate_node.matches?('img[alt]')
 
             {
-              value: resolved_value,
-              alt: value_node['alt'].strip
+              value: attribute_value,
+              alt: candidate_node['alt'].strip
             }
           end
       end
 
       private
 
-      # @return [Array<Nokogiri::XML::Element>]
-      def attribute_values
-        @attribute_values ||=
-          HTML_ELEMENTS_MAP.filter_map do |element, attribute|
-            node if node.matches?("#{element}[#{attribute}]")
-          end
-      end
+      # @return [Array]
+      def child_nodes
+        nodes = [node.at_css(*CSS_SELECTORS_ARRAY)]
 
-      # @return [String, nil]
-      def resolved_value
-        @resolved_value ||= value_node[HTML_ELEMENTS_MAP[value_node.name]] if value_node
-      end
+        nodes << node.first_element_child.at_css(*CSS_SELECTORS_ARRAY) if node.element_children.one?
 
-      # @return [Nokogiri::XML::Element, nil]
-      def value_node
-        @value_node ||=
-          if attribute_values.any?
-            attribute_values.first
-          else
-            HTML_ELEMENTS_MAP.each do |element, attribute|
-              child_node = node.at_css("> #{element}[#{attribute}]:only-of-type")
-
-              if child_node && !Helpers.item_node?(child_node) && element == child_node.name && child_node[attribute]
-                return child_node
-              end
-            end
-
-            if node.element_children.one? && !Helpers.item_node?(node.first_element_child)
-              HTML_ELEMENTS_MAP.each do |element, attribute|
-                child_node = node.first_element_child.at_css("> #{element}[#{attribute}]:only-of-type")
-
-                if child_node && !Helpers.item_node?(child_node) && element == child_node.name && child_node[attribute]
-                  return child_node
-                end
-              end
-            end
-
-            nil
-          end
+        nodes.compact.reject { |child_node| Helpers.item_node?(child_node) }
       end
     end
   end
