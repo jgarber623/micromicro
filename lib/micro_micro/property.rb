@@ -89,6 +89,7 @@ module MicroMicro
     end
 
     # @return [String, Hash]
+    # rubocop:disable Metrics
     def value
       @value ||=
         if item_node?
@@ -104,6 +105,7 @@ module MicroMicro
           parser.value
         end
     end
+    # rubocop:enable Metrics
 
     # @return [Boolean]
     def value?
