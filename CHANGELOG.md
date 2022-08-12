@@ -1,10 +1,31 @@
 # Changelog
 
+## 2.0.0 / 2022-08-12
+
+- Refactor implied property parsers (203fec9)
+- Add `Helpers` module (caa1c02)
+- New `PropertiesCollection` and `Property` instance methods (e9bb38b):
+  - `PropertiesCollection#plain_text_properties`
+  - `PropertiesCollection#url_properties`
+  - `Property#date_time_property?`
+  - `Property#embedded_markup_property?`
+  - `Property#plain_text_property?`
+  - `Property#url_property?`
+- Remove Addressable (66c2bb4)
+- Refactor classes to use nokogiri-html-ext (33fdf4a)
+- Update activesupport (563bf56)
+- **Breaking change:** Set minimum supported Ruby to 2.7 (ba17d05)
+- Update development Ruby to 2.7.6 (ba17d05)
+- Remove Reek (c1e76c5)
+- Update runtime dependency version constraints (f83f26a)
+- ~~**Breaking change:** Set minimum supported Ruby to 2.6~~ (fc588cd)
+- ~~Update development Ruby to 2.6.10~~ (d05a2ac)
+
 ## 1.1.0 / 2021-06-10
 
 - Replace Absolutely dependency with Addressable (e93721b)
 - Add support for Ruby 3.0 (d897c54)
-- Update development Ruby version to 2.5.9 (051c9ad)
+- Update development Ruby version to 2.6.10 (051c9ad)
 
 ## 1.0.0 / 2020-11-08
 
