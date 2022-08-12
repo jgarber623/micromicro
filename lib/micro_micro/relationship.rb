@@ -4,6 +4,14 @@ module MicroMicro
   class Relationship
     include Collectible
 
+    # @param context [Nokogiri::HTML::Document, Nokogiri::XML::Element]
+    # @return [Array<MicroMicro::Relationship>]
+    def self.relationships_from(context)
+      context.css('[href][rel]:not([rel=""])')
+             .reject { |node| Helpers.ignore_nodes?(node.ancestors) }
+             .map { |node| new(node) }
+    end
+
     # @param node [Nokogiri::XML::Element]
     def initialize(node)
       @node = node
@@ -64,14 +72,6 @@ module MicroMicro
     # @return [String, nil]
     def type
       @type ||= node['type']&.strip
-    end
-
-    # @param context [Nokogiri::HTML::Document, Nokogiri::XML::Element]
-    # @return [Array<MicroMicro::Relationship>]
-    def self.relationships_from(context)
-      context.css('[href][rel]:not([rel=""])')
-             .reject { |node| Helpers.ignore_nodes?(node.ancestors) }
-             .map { |node| new(node) }
     end
 
     private

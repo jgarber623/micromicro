@@ -12,27 +12,6 @@ module MicroMicro
         'datetime' => %w[del ins time]
       }.freeze
 
-      # @param context [Nokogiri::XML::Element]
-      # @param separator [String]
-      def initialize(node, separator = '')
-        @node = node
-        @separator = separator
-      end
-
-      # @return [String, nil]
-      def value
-        @value ||= values.join(separator).strip if values.any?
-      end
-
-      # @return [Array<String>]
-      def values
-        @values ||=
-          self.class
-              .nodes_from(node)
-              .map { |value_node| self.class.value_from(value_node) }
-              .select(&:present?)
-      end
-
       # @param context [Nokogiri::XML::NodeSet, Nokogiri::XML::Element]
       # @param node_set [Nokogiri::XML::NodeSet]
       # @return [Nokogiri::XML::NodeSet]
@@ -56,6 +35,27 @@ module MicroMicro
         return node['title'] if Helpers.value_title_node?(node)
 
         Helpers.attribute_value_from(node, HTML_ATTRIBUTES_MAP) || node.text
+      end
+
+      # @param context [Nokogiri::XML::Element]
+      # @param separator [String]
+      def initialize(node, separator = '')
+        @node = node
+        @separator = separator
+      end
+
+      # @return [String, nil]
+      def value
+        @value ||= values.join(separator).strip if values.any?
+      end
+
+      # @return [Array<String>]
+      def values
+        @values ||=
+          self.class
+              .nodes_from(node)
+              .map { |value_node| self.class.value_from(value_node) }
+              .select(&:present?)
       end
 
       private

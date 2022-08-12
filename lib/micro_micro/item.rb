@@ -4,6 +4,35 @@ module MicroMicro
   class Item
     include Collectible
 
+    # Extract items from a context.
+    #
+    # @param context [Nokogiri::HTML::Document, Nokogiri::XML::NodeSet, Nokogiri::XML::Element]
+    # @return [Array<MicroMicro::Item>]
+    def self.items_from(context)
+      nodes_from(context).map { |node| new(node) }
+    end
+
+    # Extract item nodes from a context.
+    #
+    # @param context [Nokogiri::HTML::Document, Nokogiri::XML::NodeSet, Nokogiri::XML::Element]
+    # @param node_set [Nokogiri::XML::NodeSet]
+    # @return [Nokogiri::XML::NodeSet]
+    def self.nodes_from(context, node_set = Nokogiri::XML::NodeSet.new(context.document, []))
+      return nodes_from(context.element_children, node_set) if context.is_a?(Nokogiri::HTML::Document)
+
+      context.each { |node| nodes_from(node, node_set) } if context.is_a?(Nokogiri::XML::NodeSet)
+
+      if context.is_a?(Nokogiri::XML::Element) && !Helpers.ignore_node?(context)
+        if Helpers.item_node?(context)
+          node_set << context unless Helpers.property_node?(context)
+        else
+          nodes_from(context.element_children, node_set)
+        end
+      end
+
+      node_set
+    end
+
     # Parse a node for microformats2-encoded data.
     #
     # @param node [Nokogiri::XML::Element]
@@ -84,35 +113,6 @@ module MicroMicro
     # @return [MicroMicro::Collections::PropertiesCollection]
     def url_properties
       @url_properties ||= properties.url_properties
-    end
-
-    # Extract items from a context.
-    #
-    # @param context [Nokogiri::HTML::Document, Nokogiri::XML::NodeSet, Nokogiri::XML::Element]
-    # @return [Array<MicroMicro::Item>]
-    def self.items_from(context)
-      nodes_from(context).map { |node| new(node) }
-    end
-
-    # Extract item nodes from a context.
-    #
-    # @param context [Nokogiri::HTML::Document, Nokogiri::XML::NodeSet, Nokogiri::XML::Element]
-    # @param node_set [Nokogiri::XML::NodeSet]
-    # @return [Nokogiri::XML::NodeSet]
-    def self.nodes_from(context, node_set = Nokogiri::XML::NodeSet.new(context.document, []))
-      return nodes_from(context.element_children, node_set) if context.is_a?(Nokogiri::HTML::Document)
-
-      context.each { |node| nodes_from(node, node_set) } if context.is_a?(Nokogiri::XML::NodeSet)
-
-      if context.is_a?(Nokogiri::XML::Element) && !Helpers.ignore_node?(context)
-        if Helpers.item_node?(context)
-          node_set << context unless Helpers.property_node?(context)
-        else
-          nodes_from(context.element_children, node_set)
-        end
-      end
-
-      node_set
     end
 
     private
