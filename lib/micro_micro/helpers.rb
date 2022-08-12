@@ -34,9 +34,7 @@ module MicroMicro
     # @param node [Nokogiri::XML::Element]
     # @return [Array<String>]
     def self.property_class_names_from(node)
-      node.classes.filter_map do |token|
-        token if token.match?(/^(?:dt|e|p|u)(?:-[0-9a-z]+)?(?:-[a-z]+)+$/)
-      end.uniq
+      node.classes.grep(/^(?:dt|e|p|u)(?:-[0-9a-z]+)?(?:-[a-z]+)+$/).uniq
     end
 
     # @param node [Nokogiri::XML::Element]
@@ -65,7 +63,7 @@ module MicroMicro
       context.text.strip
     end
 
-    # # @see https://microformats.org/wiki/value-class-pattern#Basic_Parsing
+    # @see https://microformats.org/wiki/value-class-pattern#Basic_Parsing
     #
     # @param node [Nokogiri::XML::Element]
     # @return [Boolean]
