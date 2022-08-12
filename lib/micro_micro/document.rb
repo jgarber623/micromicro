@@ -32,7 +32,7 @@ module MicroMicro
     #
     # @return [MicroMicro::Collections::ItemsCollection]
     def items
-      @items ||= Collections::ItemsCollection.new(Item.items_from(document))
+      @items ||= Collections::ItemsCollection.new(Item.items_from(document.element_children))
     end
 
     # A collection of relationships parsed from the provided markup.

@@ -14,12 +14,10 @@ module MicroMicro
 
     # Extract item nodes from a context.
     #
-    # @param context [Nokogiri::HTML::Document, Nokogiri::XML::NodeSet, Nokogiri::XML::Element]
+    # @param context [Nokogiri::XML::NodeSet, Nokogiri::XML::Element]
     # @param node_set [Nokogiri::XML::NodeSet]
     # @return [Nokogiri::XML::NodeSet]
     def self.nodes_from(context, node_set = Nokogiri::XML::NodeSet.new(context.document, []))
-      return nodes_from(context.element_children, node_set) if context.is_a?(Nokogiri::HTML::Document)
-
       context.each { |node| nodes_from(node, node_set) } if context.is_a?(Nokogiri::XML::NodeSet)
 
       if context.is_a?(Nokogiri::XML::Element) && !Helpers.ignore_node?(context)
