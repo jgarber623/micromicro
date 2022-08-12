@@ -8,8 +8,8 @@ module MicroMicro
     #
     # @param context [Nokogiri::HTML::Document, Nokogiri::XML::NodeSet, Nokogiri::XML::Element]
     # @return [Array<MicroMicro::Item>]
-    def self.items_from(context)
-      nodes_from(context).map { |node| new(node) }
+    def self.from_context(context)
+      node_set_from(context).map { |node| new(node) }
     end
 
     # Extract item nodes from a context.
@@ -17,14 +17,14 @@ module MicroMicro
     # @param context [Nokogiri::XML::NodeSet, Nokogiri::XML::Element]
     # @param node_set [Nokogiri::XML::NodeSet]
     # @return [Nokogiri::XML::NodeSet]
-    def self.nodes_from(context, node_set = Nokogiri::XML::NodeSet.new(context.document, []))
-      context.each { |node| nodes_from(node, node_set) } if context.is_a?(Nokogiri::XML::NodeSet)
+    def self.node_set_from(context, node_set = Nokogiri::XML::NodeSet.new(context.document, []))
+      context.each { |node| node_set_from(node, node_set) } if context.is_a?(Nokogiri::XML::NodeSet)
 
       if context.is_a?(Nokogiri::XML::Element) && !Helpers.ignore_node?(context)
         if Helpers.item_node?(context)
           node_set << context unless Helpers.property_node?(context)
         else
-          nodes_from(context.element_children, node_set)
+          node_set_from(context.element_children, node_set)
         end
       end
 
@@ -48,7 +48,7 @@ module MicroMicro
     #
     # @return [MicroMicro::Collections::ItemsCollection]
     def children
-      @children ||= Collections::ItemsCollection.new(self.class.items_from(node.element_children))
+      @children ||= Collections::ItemsCollection.new(self.class.from_context(node.element_children))
     end
 
     # The value of the node's `id` attribute, if present.
@@ -79,7 +79,7 @@ module MicroMicro
     #
     # @return [MicroMicro::Collections::PropertiesCollection]
     def properties
-      @properties ||= Collections::PropertiesCollection.new(Property.properties_from(node.element_children))
+      @properties ||= Collections::PropertiesCollection.new(Property.from_context(node.element_children))
     end
 
     # Return the parsed item as a Hash.

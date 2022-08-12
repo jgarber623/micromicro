@@ -15,14 +15,14 @@ module MicroMicro
       # @param context [Nokogiri::XML::NodeSet, Nokogiri::XML::Element]
       # @param node_set [Nokogiri::XML::NodeSet]
       # @return [Nokogiri::XML::NodeSet]
-      def self.nodes_from(context, node_set = Nokogiri::XML::NodeSet.new(context.document, []))
-        context.each { |node| nodes_from(node, node_set) } if context.is_a?(Nokogiri::XML::NodeSet)
+      def self.node_set_from(context, node_set = Nokogiri::XML::NodeSet.new(context.document, []))
+        context.each { |node| node_set_from(node, node_set) } if context.is_a?(Nokogiri::XML::NodeSet)
 
         if context.is_a?(Nokogiri::XML::Element) && !Helpers.ignore_node?(context)
           if Helpers.value_class_node?(context) || Helpers.value_title_node?(context)
             node_set << context
           else
-            nodes_from(context.element_children, node_set)
+            node_set_from(context.element_children, node_set)
           end
         end
 
@@ -53,7 +53,7 @@ module MicroMicro
       def values
         @values ||=
           self.class
-              .nodes_from(node)
+              .node_set_from(node)
               .map { |value_node| self.class.value_from(value_node) }
               .select(&:present?)
       end

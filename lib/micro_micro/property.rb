@@ -14,26 +14,26 @@ module MicroMicro
     attr_reader :name, :node, :prefix
 
     # @param context [Nokogiri::XML::NodeSet, Nokogiri::XML::Element]
+    # @return [Array<MicroMicro::Property>]
+    def self.from_context(context)
+      node_set_from(context).flat_map do |node|
+        Helpers.property_class_names_from(node).map { |token| new(node, token) }
+      end
+    end
+
+    # @param context [Nokogiri::XML::NodeSet, Nokogiri::XML::Element]
     # @param node_set [Nokogiri::XML::NodeSet]
     # @return [Nokogiri::XML::NodeSet]
-    def self.nodes_from(context, node_set = Nokogiri::XML::NodeSet.new(context.document, []))
-      context.each { |node| nodes_from(node, node_set) } if context.is_a?(Nokogiri::XML::NodeSet)
+    def self.node_set_from(context, node_set = Nokogiri::XML::NodeSet.new(context.document, []))
+      context.each { |node| node_set_from(node, node_set) } if context.is_a?(Nokogiri::XML::NodeSet)
 
       if context.is_a?(Nokogiri::XML::Element) && !Helpers.ignore_node?(context)
         node_set << context if Helpers.property_node?(context)
 
-        nodes_from(context.element_children, node_set) unless Helpers.item_node?(context)
+        node_set_from(context.element_children, node_set) unless Helpers.item_node?(context)
       end
 
       node_set
-    end
-
-    # @param context [Nokogiri::XML::NodeSet, Nokogiri::XML::Element]
-    # @return [Array<MicroMicro::Property>]
-    def self.properties_from(context)
-      nodes_from(context).flat_map do |node|
-        Helpers.property_class_names_from(node).map { |token| new(node, token) }
-      end
     end
 
     # @param node [Nokogiri::XML::Element]
