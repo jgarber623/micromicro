@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.0.1 / 2022-08-20
+
+- Use ruby/debug instead of pry-byebug (2965b2e)
+- Update nokogiri-html-ext to v0.2.2 (921c486)
+- Include root items with property class names (dd14212)
+
 ## 2.0.0 / 2022-08-12
 
 - Refactor implied property parsers (203fec9)
