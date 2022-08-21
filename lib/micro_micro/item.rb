@@ -22,7 +22,7 @@ module MicroMicro
 
       if context.is_a?(Nokogiri::XML::Element) && !Helpers.ignore_node?(context)
         if Helpers.item_node?(context)
-          node_set << context unless Helpers.property_node?(context)
+          node_set << context unless Helpers.item_nodes?(context.ancestors) && Helpers.property_node?(context)
         else
           node_set_from(context.element_children, node_set)
         end

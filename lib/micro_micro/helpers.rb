@@ -31,6 +31,12 @@ module MicroMicro
       root_class_names_from(node).any?
     end
 
+    # @param nodes [Nokogiri::XML::NodeSet]
+    # @return [Boolean]
+    def self.item_nodes?(nodes)
+      nodes.filter_map { |node| item_node?(node) }.any?
+    end
+
     # @param node [Nokogiri::XML::Element]
     # @return [Array<String>]
     def self.property_class_names_from(node)
