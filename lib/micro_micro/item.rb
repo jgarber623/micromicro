@@ -17,6 +17,7 @@ module MicroMicro
     # @param context [Nokogiri::XML::NodeSet, Nokogiri::XML::Element]
     # @param node_set [Nokogiri::XML::NodeSet]
     # @return [Nokogiri::XML::NodeSet]
+    # rubocop:disable Metrics
     def self.node_set_from(context, node_set = Nokogiri::XML::NodeSet.new(context.document, []))
       context.each { |node| node_set_from(node, node_set) } if context.is_a?(Nokogiri::XML::NodeSet)
 
@@ -30,6 +31,7 @@ module MicroMicro
 
       node_set
     end
+    # rubocop:enable Metrics
 
     # Parse a node for microformats2-encoded data.
     #
