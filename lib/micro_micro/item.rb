@@ -4,7 +4,7 @@ module MicroMicro
   class Item
     include Collectible
 
-    # Extract items from a context.
+    # Extract {MicroMicro::Item}s from a context.
     #
     # @param context [Nokogiri::HTML::Document, Nokogiri::XML::NodeSet, Nokogiri::XML::Element]
     # @return [Array<MicroMicro::Item>]
@@ -12,11 +12,12 @@ module MicroMicro
       node_set_from(context).map { |node| new(node) }
     end
 
-    # Extract item nodes from a context.
+    # Extract {MicroMicro::Item} nodes from a context.
     #
     # @param context [Nokogiri::XML::NodeSet, Nokogiri::XML::Element]
     # @param node_set [Nokogiri::XML::NodeSet]
     # @return [Nokogiri::XML::NodeSet]
+    #
     # rubocop:disable Metrics
     def self.node_set_from(context, node_set = Nokogiri::XML::NodeSet.new(context.document, []))
       context.each { |node| node_set_from(node, node_set) } if context.is_a?(Nokogiri::XML::NodeSet)
@@ -36,6 +37,7 @@ module MicroMicro
     # Parse a node for microformats2-encoded data.
     #
     # @param node [Nokogiri::XML::Element]
+    # @return [MicroMicro::Item]
     def initialize(node)
       @node = node
 
@@ -44,24 +46,25 @@ module MicroMicro
       properties << implied_url if implied_url?
     end
 
-    # A collection of child items parsed from the node.
+    # A collection of child {MicroMicro::Item}s parsed from the node.
     #
-    # @see https://microformats.org/wiki/microformats2-parsing#parse_an_element_for_class_microformats
+    # @see https://microformats.org/wiki/microformats2-parsing#parse_an_element_for_class_microformats Parse an element for class microformats
     #
     # @return [MicroMicro::Collections::ItemsCollection]
     def children
       @children ||= Collections::ItemsCollection.new(self.class.from_context(node.element_children))
     end
 
-    # The value of the node's `id` attribute, if present.
+    # The value of the node's +id+ attribute, if present.
     #
     # @return [String, nil]
     def id
       @id ||= node['id']&.strip
     end
 
-    # :nocov:
     # @return [String]
+    #
+    # :nocov:
     def inspect
       "#<#{self.class}:#{format('%#0x', object_id)} " \
         "types: #{types.inspect}, " \
@@ -70,23 +73,31 @@ module MicroMicro
     end
     # :nocov:
 
-    # A collection of plain text properties parsed from the node.
+    # A collection of plain text {MicroMicro::Property}s parsed from the node.
     #
-    # @return [MicroMicro::Collections::PropertiesCollection]
+    # @see MicroMicro::Collections::PropertiesCollection#plain_text_properties
+    #
+    # @return (see MicroMicro::Collections::PropertiesCollection#plain_text_properties)
     def plain_text_properties
       @plain_text_properties ||= properties.plain_text_properties
     end
 
-    # A collection of properties parsed from the node.
+    # A collection of {MicroMicro::Property}s parsed from the node.
     #
     # @return [MicroMicro::Collections::PropertiesCollection]
     def properties
       @properties ||= Collections::PropertiesCollection.new(Property.from_context(node.element_children))
     end
 
-    # Return the parsed item as a Hash.
+    # Return the parsed {MicroMicro::Item} as a Hash.
     #
-    # @see https://microformats.org/wiki/microformats2-parsing#parse_an_element_for_class_microformats
+    # @see https://microformats.org/wiki/microformats2-parsing#parse_an_element_for_class_microformats Parse an element for class microformats
+    #
+    # @see MicroMicro::Item#children
+    # @see MicroMicro::Item#id
+    # @see MicroMicro::Item#properties
+    # @see MicroMicro::Item#types
+    # @see MicroMicro::Collections::PropertiesCollection#to_h
     #
     # @return [Hash]
     def to_h
@@ -101,16 +112,18 @@ module MicroMicro
       hash
     end
 
-    # An array of root class names parsed from the node's `class` attribute.
+    # An Array of root class names parsed from the node's +class+ attribute.
     #
     # @return [Array<String>]
     def types
       @types ||= Helpers.root_class_names_from(node)
     end
 
-    # A collection of url properties parsed from the node.
+    # A collection of url {MicroMicro::Property}s parsed from the node.
     #
-    # @return [MicroMicro::Collections::PropertiesCollection]
+    # @see MicroMicro::Collections::PropertiesCollection#url_properties
+    #
+    # @return (see MicroMicro::Collections::PropertiesCollection#url_properties)
     def url_properties
       @url_properties ||= properties.url_properties
     end
