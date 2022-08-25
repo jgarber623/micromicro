@@ -4,10 +4,10 @@ module MicroMicro
   class Document
     # Parse a string of HTML for microformats2-encoded data.
     #
+    # @example Parse a String of markup
     #   MicroMicro::Document.new('<a href="/" class="h-card" rel="me">Jason Garber</a>', 'https://sixtwothree.org')
     #
-    # Or, pull the source HTML of a page on the Web:
-    #
+    # @example Parse a String of markup from a URL
     #   url = 'https://tantek.com'
     #   markup = Net::HTTP.get(URI.parse(url))
     #
@@ -28,14 +28,14 @@ module MicroMicro
     end
     # :nocov:
 
-    # A collection of items parsed from the provided markup.
+    # A collection of {MicroMicro::Item}s parsed from the provided markup.
     #
     # @return [MicroMicro::Collections::ItemsCollection]
     def items
       @items ||= Collections::ItemsCollection.new(Item.from_context(document.element_children))
     end
 
-    # A collection of relationships parsed from the provided markup.
+    # A collection of {MicroMicro::Relationship}s parsed from the provided markup.
     #
     # @return [MicroMicro::Collections::RelationshipsCollection]
     def relationships
@@ -44,7 +44,11 @@ module MicroMicro
 
     # Return the parsed document as a Hash.
     #
-    # @see https://microformats.org/wiki/microformats2-parsing#parse_a_document_for_microformats
+    # @see https://microformats.org/wiki/microformats2-parsing#parse_a_document_for_microformats Parse a document for microformats
+    #
+    # @see MicroMicro::Collections::ItemsCollection#to_a
+    # @see MicroMicro::Collections::RelationshipsCollection#group_by_rel
+    # @see MicroMicro::Collections::RelationshipsCollection#group_by_url
     #
     # @return [Hash{Symbol => Array, Hash}]
     def to_h
