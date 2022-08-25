@@ -19,8 +19,9 @@ module MicroMicro
       @document = Nokogiri::HTML(markup, base_url).resolve_relative_urls!
     end
 
-    # :nocov:
     # @return [String]
+    #
+    # :nocov:
     def inspect
       "#<#{self.class}:#{format('%#0x', object_id)} " \
         "items: #{items.inspect}, " \
