@@ -37,7 +37,7 @@ module MicroMicro
         Helpers.attribute_value_from(node, HTML_ATTRIBUTES_MAP) || node.text
       end
 
-      # @param context [Nokogiri::XML::Element]
+      # @param node [Nokogiri::XML::Element]
       # @param separator [String]
       def initialize(node, separator = '')
         @node = node
