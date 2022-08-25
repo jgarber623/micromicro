@@ -4,6 +4,8 @@ module MicroMicro
   class Relationship
     include Collectible
 
+    # Extract {MicroMicro::Relationship}s from a context.
+    #
     # @param context [Nokogiri::HTML::Document, Nokogiri::XML::Element]
     # @return [Array<MicroMicro::Relationship>]
     def self.relationships_from(context)
@@ -12,23 +14,31 @@ module MicroMicro
              .map { |node| new(node) }
     end
 
+    # Parse a node for relationship data.
+    #
     # @param node [Nokogiri::XML::Element]
+    # @return [MicroMicro::Relationship]
     def initialize(node)
       @node = node
     end
 
+    # The value of the node's +href+ attribute.
+    #
     # @return [String]
     def href
       @href ||= node['href']
     end
 
+    # The value of the node's +hreflang+ attribute, if present.
+    #
     # @return [String, nil]
     def hreflang
       @hreflang ||= node['hreflang']&.strip
     end
 
-    # :nocov:
     # @return [String]
+    #
+    # :nocov:
     def inspect
       "#<#{self.class}:#{format('%#0x', object_id)} " \
         "href: #{href.inspect}, " \
@@ -36,11 +46,15 @@ module MicroMicro
     end
     # :nocov:
 
+    # The value of the node's +media+ attribute, if present.
+    #
     # @return [String, nil]
     def media
       @media ||= node['media']&.strip
     end
 
+    # Return the parsed {MicroMicro::Relationship} as a Hash.
+    #
     # @return [Hash{Symbol => String}]
     def to_h
       {
@@ -54,21 +68,29 @@ module MicroMicro
       }.select { |_, value| value.present? }
     end
 
+    # An Array of unique values from node's +rel+ attribute.
+    #
     # @return [Array<String>]
     def rels
       @rels ||= node['rel'].split.uniq.sort
     end
 
+    # The node's text content.
+    #
     # @return [String]
     def text
       @text ||= node.text
     end
 
+    # The value of the node's +title+ attribute, if present.
+    #
     # @return [String, nil]
     def title
       @title ||= node['title']&.strip
     end
 
+    # The value of the node's +type+ attribute, if present.
+    #
     # @return [String, nil]
     def type
       @type ||= node['type']&.strip
@@ -76,6 +98,7 @@ module MicroMicro
 
     private
 
+    # @return [Nokogiri::XML::Element]
     attr_reader :node
   end
 end
