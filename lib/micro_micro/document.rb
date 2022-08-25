@@ -45,7 +45,8 @@ module MicroMicro
 
     # Return the parsed document as a Hash.
     #
-    # @see https://microformats.org/wiki/microformats2-parsing#parse_a_document_for_microformats Parse a document for microformats
+    # @see https://microformats.org/wiki/microformats2-parsing#parse_a_document_for_microformats
+    #   microformats.org: Parse a document for microformats
     #
     # @see MicroMicro::Collections::ItemsCollection#to_a
     # @see MicroMicro::Collections::RelationshipsCollection#group_by_rel

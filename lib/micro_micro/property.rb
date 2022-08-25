@@ -11,8 +11,25 @@ module MicroMicro
       'u'  => Parsers::UrlPropertyParser
     }.freeze
 
-    attr_reader :name, :node, :prefix
+    private_constant :PROPERTY_PARSERS_MAP
 
+    # This {MicroMicro::Property}'s +name+ value.
+    #
+    # @return [String]
+    attr_reader :name
+
+    # This {MicroMicro::Property}'s node.
+    #
+    # @return [Nokogiri::XML::Element]
+    attr_reader :node
+
+    # This {MicroMicro::Property}'s +prefix+ value.
+    #
+    # @return [String] One of +dt+, +e+, +p+, or +u+.
+    attr_reader :prefix
+
+    # Extract {MicroMicro::Property}s from a context.
+    #
     # @param context [Nokogiri::XML::NodeSet, Nokogiri::XML::Element]
     # @return [Array<MicroMicro::Property>]
     def self.from_context(context)
@@ -21,6 +38,8 @@ module MicroMicro
       end
     end
 
+    # Extract {MicroMicro::Property} nodes from a context.
+    #
     # @param context [Nokogiri::XML::NodeSet, Nokogiri::XML::Element]
     # @param node_set [Nokogiri::XML::NodeSet]
     # @return [Nokogiri::XML::NodeSet]
@@ -36,30 +55,43 @@ module MicroMicro
       node_set
     end
 
+    # Parse a node for property data.
+    #
     # @param node [Nokogiri::XML::Element]
-    # @param token [String]
+    # @param token [String] A hyphen-separated token representing a microformats2
+    #   property value (e.g. +p-name+, +u-url+).
     def initialize(node, token)
       @node = node
       @prefix, @name = token.split(/-/, 2)
     end
 
+    # Is this {MicroMicro::Property} a datetime property?
+    #
     # @return [Boolean]
     def date_time_property?
       prefix == 'dt'
     end
 
+    # Is this {MicroMicro::Property} an embedded markup property?
+    #
     # @return [Boolean]
     def embedded_markup_property?
       prefix == 'e'
     end
 
+    # Always return +false+ when asked if this {MicroMicro::Property} is an
+    # implied property.
+    #
+    # @see MicroMicro::ImpliedProperty#implied?
+    #
     # @return [Boolean]
     def implied?
       false
     end
 
-    # :nocov:
     # @return [String]
+    #
+    # :nocov:
     def inspect
       "#<#{self.class}:#{format('%#0x', object_id)} " \
         "name: #{name.inspect}, " \
@@ -68,27 +100,42 @@ module MicroMicro
     end
     # :nocov:
 
+    # Parse this {MicroMicro::Property}'s node as a {MicroMicro::Item}, if
+    # applicable.
+    #
     # @return [MicroMicro::Item, nil]
     def item
       @item ||= Item.new(node) if item_node?
     end
 
+    # Should this {MicroMicro::Property}'s node be parsed as a
+    # {MicroMicro::Item}?
+    #
+    # @see MicroMicro::Helpers.item_node?
+    #
     # @return [Boolean]
     def item_node?
       @item_node ||= Helpers.item_node?(node)
     end
 
+    # Is this {MicroMicro::Property} a plain text property?
+    #
     # @return [Boolean]
     def plain_text_property?
       prefix == 'p'
     end
 
+    # Is this {MicroMicro::Property} a url property?
+    #
     # @return [Boolean]
     def url_property?
       prefix == 'u'
     end
 
+    # Return this {MicroMicro::Property}'s parsed value.
+    #
     # @return [String, Hash]
+    #
     # rubocop:disable Metrics
     def value
       @value ||=
@@ -107,6 +154,9 @@ module MicroMicro
     end
     # rubocop:enable Metrics
 
+    # Returns +true+ if this {MicroMicro::Property}'s +value+ is anything other
+    # than blank or +nil+.
+    #
     # @return [Boolean]
     def value?
       value.present?

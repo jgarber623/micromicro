@@ -6,7 +6,8 @@ module MicroMicro
       # Return a Hash of this collection's {MicroMicro::Relationship}s grouped
       # by their +rel+ attribute value.
       #
-      # @see https://microformats.org/wiki/microformats2-parsing#parse_a_hyperlink_element_for_rel_microformats Parse a hyperlink element for rel microformats
+      # @see https://microformats.org/wiki/microformats2-parsing#parse_a_hyperlink_element_for_rel_microformats
+      #   microformats.org: Parse a hyperlink element for rel microformats
       #
       # @return [Hash{Symbol => Array<String>}]
       def group_by_rel
@@ -18,7 +19,8 @@ module MicroMicro
       # Return a Hash of this collection's {MicroMicro::Relationship}s grouped
       # by their +href+ attribute value.
       #
-      # @see https://microformats.org/wiki/microformats2-parsing#parse_a_hyperlink_element_for_rel_microformats Parse a hyperlink element for rel microformats
+      # @see https://microformats.org/wiki/microformats2-parsing#parse_a_hyperlink_element_for_rel_microformats
+      #   microformats.org: Parse a hyperlink element for rel microformats
       #
       # @return [Hash{Symbol => Hash{Symbol => Array, String}}]
       def group_by_url
