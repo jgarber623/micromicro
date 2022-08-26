@@ -48,11 +48,19 @@ module MicroMicro
 
     # A collection of child {MicroMicro::Item}s parsed from the node.
     #
-    # @see https://microformats.org/wiki/microformats2-parsing#parse_an_element_for_class_microformats Parse an element for class microformats
+    # @see https://microformats.org/wiki/microformats2-parsing#parse_an_element_for_class_microformats
+    #   microformats.org: Parse an element for class microformats
     #
     # @return [MicroMicro::Collections::ItemsCollection]
     def children
       @children ||= Collections::ItemsCollection.new(self.class.from_context(node.element_children))
+    end
+
+    # Does this {MicroMicro::Item} contain any child {MicroMicro::Item}s?
+    #
+    # @return [Boolean]
+    def children?
+      children.any?
     end
 
     # The value of the node's +id+ attribute, if present.
@@ -60,6 +68,13 @@ module MicroMicro
     # @return [String, nil]
     def id
       @id ||= node['id']&.strip
+    end
+
+    # Does this {MicroMicro::Item} have an +id+ attribute value?
+    #
+    # @return [Boolean]
+    def id?
+      id.present?
     end
 
     # @return [String]
@@ -82,6 +97,14 @@ module MicroMicro
       @plain_text_properties ||= properties.plain_text_properties
     end
 
+    # Does this {MicroMicro::Item}'s {MicroMicro::Collections::PropertiesCollection}
+    # include any plain text {MicroMicro::Property}s?
+    #
+    # @return [Boolean]
+    def plain_text_properties?
+      plain_text_properties.any?
+    end
+
     # A collection of {MicroMicro::Property}s parsed from the node.
     #
     # @return [MicroMicro::Collections::PropertiesCollection]
@@ -91,7 +114,8 @@ module MicroMicro
 
     # Return the parsed {MicroMicro::Item} as a Hash.
     #
-    # @see https://microformats.org/wiki/microformats2-parsing#parse_an_element_for_class_microformats Parse an element for class microformats
+    # @see https://microformats.org/wiki/microformats2-parsing#parse_an_element_for_class_microformats
+    #   microformats.org: Parse an element for class microformats
     #
     # @see MicroMicro::Item#children
     # @see MicroMicro::Item#id
@@ -106,8 +130,8 @@ module MicroMicro
         properties: properties.to_h
       }
 
-      hash[:id] = id if id.present?
-      hash[:children] = children.to_a if children.any?
+      hash[:id] = id if id?
+      hash[:children] = children.to_a if children?
 
       hash
     end
@@ -128,8 +152,17 @@ module MicroMicro
       @url_properties ||= properties.url_properties
     end
 
+    # Does this {MicroMicro::Item}'s {MicroMicro::Collections::PropertiesCollection}
+    # include any url {MicroMicro::Property}s?
+    #
+    # @return [Boolean]
+    def url_properties?
+      url_properties.any?
+    end
+
     private
 
+    # @return [Nokogiri::XML::Element]
     attr_reader :node
 
     # @return [MicroMicro::ImpliedProperty]
@@ -186,7 +219,7 @@ module MicroMicro
 
     # @return [Boolean]
     def nested_items?
-      @nested_items ||= properties.find(&:item_node?) || children.any?
+      @nested_items ||= properties.find(&:item_node?) || children?
     end
   end
 end
