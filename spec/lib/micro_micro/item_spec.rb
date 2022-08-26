@@ -10,10 +10,10 @@ RSpec.describe MicroMicro::Item do
   its(:plain_text_properties) { is_expected.to be_a(MicroMicro::Collections::PropertiesCollection) }
   its('plain_text_properties.first.name') { is_expected.to eq('name') }
 
-  its(:plain_text_properties?) { is_expected.to eq(true) }
+  its(:plain_text_properties?) { is_expected.to be(true) }
 
   its(:url_properties) { is_expected.to be_a(MicroMicro::Collections::PropertiesCollection) }
   its('url_properties.first.name') { is_expected.to eq('url') }
 
-  its(:url_properties?) { is_expected.to eq(true) }
+  its(:url_properties?) { is_expected.to be(true) }
 end
