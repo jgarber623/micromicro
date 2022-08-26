@@ -19,7 +19,15 @@ module MicroMicro
       #
       # @return [MicroMicro::Collections::PropertiesCollection]
       def plain_text_properties
-        self.class.new(select(&:plain_text_property?))
+        @plain_text_properties ||= self.class.new(select(&:plain_text_property?))
+      end
+
+      # Does this {MicroMicro::Collections::PropertiesCollection} include any
+      # plain text {MicroMicro::Property}s?
+      #
+      # @return [Boolean]
+      def plain_text_properties?
+        plain_text_properties.any?
       end
 
       # Return a Hash of this collection's {MicroMicro::Property}s as Arrays.
@@ -38,7 +46,15 @@ module MicroMicro
       #
       # @return [MicroMicro::Collections::PropertiesCollection]
       def url_properties
-        self.class.new(select(&:url_property?))
+        @url_properties ||= self.class.new(select(&:url_property?))
+      end
+
+      # Does this {MicroMicro::Collections::PropertiesCollection} include any
+      # url {MicroMicro::Property}s?
+      #
+      # @return [Boolean]
+      def url_properties?
+        url_properties.any?
       end
 
       # Return an Array of this collection's unique {MicroMicro::Property}
