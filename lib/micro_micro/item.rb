@@ -88,23 +88,6 @@ module MicroMicro
     end
     # :nocov:
 
-    # A collection of plain text {MicroMicro::Property}s parsed from the node.
-    #
-    # @see MicroMicro::Collections::PropertiesCollection#plain_text_properties
-    #
-    # @return (see MicroMicro::Collections::PropertiesCollection#plain_text_properties)
-    def plain_text_properties
-      @plain_text_properties ||= properties.plain_text_properties
-    end
-
-    # Does this {MicroMicro::Item}'s {MicroMicro::Collections::PropertiesCollection}
-    # include any plain text {MicroMicro::Property}s?
-    #
-    # @return [Boolean]
-    def plain_text_properties?
-      plain_text_properties.any?
-    end
-
     # A collection of {MicroMicro::Property}s parsed from the node.
     #
     # @return [MicroMicro::Collections::PropertiesCollection]
@@ -141,23 +124,6 @@ module MicroMicro
     # @return [Array<String>]
     def types
       @types ||= Helpers.root_class_names_from(node)
-    end
-
-    # A collection of url {MicroMicro::Property}s parsed from the node.
-    #
-    # @see MicroMicro::Collections::PropertiesCollection#url_properties
-    #
-    # @return (see MicroMicro::Collections::PropertiesCollection#url_properties)
-    def url_properties
-      @url_properties ||= properties.url_properties
-    end
-
-    # Does this {MicroMicro::Item}'s {MicroMicro::Collections::PropertiesCollection}
-    # include any url {MicroMicro::Property}s?
-    #
-    # @return [Boolean]
-    def url_properties?
-      url_properties.any?
     end
 
     private
