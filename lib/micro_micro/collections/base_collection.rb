@@ -14,8 +14,9 @@ module MicroMicro
         members.each { |member| push(member) }
       end
 
-      # :nocov:
       # @return [String]
+      #
+      # :nocov:
       def inspect
         "#<#{self.class}:#{format('%#0x', object_id)} " \
           "count: #{count}, " \
