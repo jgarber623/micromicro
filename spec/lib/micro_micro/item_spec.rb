@@ -7,15 +7,13 @@ RSpec.describe MicroMicro::Item do
 
   let(:markup) { '<a href="http://example.com" class="h-card">Jason Garber</a>' }
 
-  describe '#plain_text_properties' do
-    its(:plain_text_properties) { is_expected.to be_a(MicroMicro::Collections::PropertiesCollection) }
+  its(:plain_text_properties) { is_expected.to be_a(MicroMicro::Collections::PropertiesCollection) }
+  its('plain_text_properties.first.name') { is_expected.to eq('name') }
 
-    its('plain_text_properties.first.name') { is_expected.to eq('name') }
-  end
+  its(:plain_text_properties?) { is_expected.to eq(true) }
 
-  describe '#url_properties' do
-    its(:url_properties) { is_expected.to be_a(MicroMicro::Collections::PropertiesCollection) }
+  its(:url_properties) { is_expected.to be_a(MicroMicro::Collections::PropertiesCollection) }
+  its('url_properties.first.name') { is_expected.to eq('url') }
 
-    its('url_properties.first.name') { is_expected.to eq('url') }
-  end
+  its(:url_properties?) { is_expected.to eq(true) }
 end
