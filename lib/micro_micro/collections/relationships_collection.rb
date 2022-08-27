@@ -92,8 +92,6 @@ module MicroMicro
       end
 
       class RelationshipsCollectionSearch
-        attr_reader :results
-
         def search(relationships, **args, &block)
           relationships.select { |relationship| relationship_matches_conditions?(relationship, **args, &block) }
         end
