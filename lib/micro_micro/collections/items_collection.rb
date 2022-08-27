@@ -3,6 +3,35 @@
 module MicroMicro
   module Collections
     class ItemsCollection < BaseCollection
+      class ItemsCollectionSearch
+        attr_reader :results
+
+        def initialize
+          @results = []
+        end
+
+        def search(items, **args, &block)
+          items.each do |item|
+            results << item if item_matches_conditions?(item, **args, &block)
+
+            search(item.properties.filter_map { |property| property.item if property.item_node? }, **args, &block)
+            search(item.children, **args, &block)
+          end
+
+          results
+        end
+
+        private
+
+        def item_matches_conditions?(item, **args)
+          return yield(item) if args.none?
+
+          args.all? { |key, value| (Array(item.public_send(key.to_sym)) & Array(value)).any? }
+        end
+      end
+
+      private_constant :ItemsCollectionSearch
+
       # Return the first {MicroMicro::Item} from a search.
       #
       # @see #where
@@ -64,35 +93,6 @@ module MicroMicro
 
         self.class.new(ItemsCollectionSearch.new.search(self, **args, &block))
       end
-
-      class ItemsCollectionSearch
-        attr_reader :results
-
-        def initialize
-          @results = []
-        end
-
-        def search(items, **args, &block)
-          items.each do |item|
-            results << item if item_matches_conditions?(item, **args, &block)
-
-            search(item.properties.filter_map { |property| property.item if property.item_node? }, **args, &block)
-            search(item.children, **args, &block)
-          end
-
-          results
-        end
-
-        private
-
-        def item_matches_conditions?(item, **args)
-          return yield(item) if args.none?
-
-          args.all? { |key, value| (Array(item.public_send(key.to_sym)) & Array(value)).any? }
-        end
-      end
-
-      private_constant :ItemsCollectionSearch
     end
   end
 end

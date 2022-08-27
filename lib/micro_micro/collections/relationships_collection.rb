@@ -3,6 +3,22 @@
 module MicroMicro
   module Collections
     class RelationshipsCollection < BaseCollection
+      class RelationshipsCollectionSearch
+        def search(relationships, **args, &block)
+          relationships.select { |relationship| relationship_matches_conditions?(relationship, **args, &block) }
+        end
+
+        private
+
+        def relationship_matches_conditions?(relationship, **args)
+          return yield(relationship) if args.none?
+
+          args.all? { |key, value| (Array(relationship.public_send(key.to_sym)) & Array(value)).any? }
+        end
+      end
+
+      private_constant :RelationshipsCollectionSearch
+
       # Return the first {MicroMicro::Relationship} from a search.
       #
       # @see #where
@@ -90,22 +106,6 @@ module MicroMicro
 
         self.class.new(RelationshipsCollectionSearch.new.search(self, **args, &block))
       end
-
-      class RelationshipsCollectionSearch
-        def search(relationships, **args, &block)
-          relationships.select { |relationship| relationship_matches_conditions?(relationship, **args, &block) }
-        end
-
-        private
-
-        def relationship_matches_conditions?(relationship, **args)
-          return yield(relationship) if args.none?
-
-          args.all? { |key, value| (Array(relationship.public_send(key.to_sym)) & Array(value)).any? }
-        end
-      end
-
-      private_constant :RelationshipsCollectionSearch
     end
   end
 end

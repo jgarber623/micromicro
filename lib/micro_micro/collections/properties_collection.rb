@@ -3,6 +3,22 @@
 module MicroMicro
   module Collections
     class PropertiesCollection < BaseCollection
+      class PropertiesCollectionSearch
+        def search(properties, **args, &block)
+          properties.select { |property| property_matches_conditions?(property, **args, &block) }
+        end
+
+        private
+
+        def property_matches_conditions?(property, **args)
+          return yield(property) if args.none?
+
+          args.all? { |key, value| (Array(property.public_send(key.to_sym)) & Array(value)).any? }
+        end
+      end
+
+      private_constant :PropertiesCollectionSearch
+
       # Return the first {MicroMicro::Property} from a search.
       #
       # @see #where
@@ -110,22 +126,6 @@ module MicroMicro
 
         self.class.new(PropertiesCollectionSearch.new.search(self, **args, &block))
       end
-
-      class PropertiesCollectionSearch
-        def search(properties, **args, &block)
-          properties.select { |property| property_matches_conditions?(property, **args, &block) }
-        end
-
-        private
-
-        def property_matches_conditions?(property, **args)
-          return yield(property) if args.none?
-
-          args.all? { |key, value| (Array(property.public_send(key.to_sym)) & Array(value)).any? }
-        end
-      end
-
-      private_constant :PropertiesCollectionSearch
     end
   end
 end
