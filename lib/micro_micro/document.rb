@@ -40,7 +40,7 @@ module MicroMicro
     #
     # @return [MicroMicro::Collections::RelationshipsCollection]
     def relationships
-      @relationships ||= Collections::RelationshipsCollection.new(Relationship.relationships_from(document))
+      @relationships ||= Collections::RelationshipsCollection.new(Relationship.from_context(document))
     end
 
     # Return the parsed document as a Hash.
