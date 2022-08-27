@@ -112,8 +112,6 @@ module MicroMicro
       end
 
       class PropertiesCollectionSearch
-        attr_reader :results
-
         def search(properties, **args, &block)
           properties.select { |property| property_matches_conditions?(property, **args, &block) }
         end
