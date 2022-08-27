@@ -13,6 +13,28 @@ module MicroMicro
 
     private_constant :PROPERTY_PARSERS_MAP
 
+    class PropertyNodeSearch
+      attr_reader :node_set
+
+      def initialize(document)
+        @node_set = Nokogiri::XML::NodeSet.new(document, [])
+      end
+
+      def search(context)
+        context.each { |node| search(node) } if context.is_a?(Nokogiri::XML::NodeSet)
+
+        if context.is_a?(Nokogiri::XML::Element) && !Helpers.ignore_node?(context)
+          node_set << context if Helpers.property_node?(context)
+
+          search(context.element_children) unless Helpers.item_node?(context)
+        end
+
+        node_set
+      end
+    end
+
+    private_constant :PropertyNodeSearch
+
     # This {MicroMicro::Property}'s +name+ value.
     #
     # @return [String]
@@ -33,26 +55,12 @@ module MicroMicro
     # @param context [Nokogiri::XML::NodeSet, Nokogiri::XML::Element]
     # @return [Array<MicroMicro::Property>]
     def self.from_context(context)
-      node_set_from(context).flat_map do |node|
-        Helpers.property_class_names_from(node).map { |token| new(node, token) }
-      end
-    end
-
-    # Extract {MicroMicro::Property} nodes from a context.
-    #
-    # @param context [Nokogiri::XML::NodeSet, Nokogiri::XML::Element]
-    # @param node_set [Nokogiri::XML::NodeSet]
-    # @return [Nokogiri::XML::NodeSet]
-    def self.node_set_from(context, node_set = Nokogiri::XML::NodeSet.new(context.document, []))
-      context.each { |node| node_set_from(node, node_set) } if context.is_a?(Nokogiri::XML::NodeSet)
-
-      if context.is_a?(Nokogiri::XML::Element) && !Helpers.ignore_node?(context)
-        node_set << context if Helpers.property_node?(context)
-
-        node_set_from(context.element_children, node_set) unless Helpers.item_node?(context)
-      end
-
-      node_set
+      PropertyNodeSearch
+        .new(context.document)
+        .search(context)
+        .flat_map do |node|
+          Helpers.property_class_names_from(node).map { |token| new(node, token) }
+        end
     end
 
     # Parse a node for property data.

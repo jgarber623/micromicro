@@ -4,35 +4,42 @@ module MicroMicro
   class Item
     include Collectible
 
+    class ItemNodeSearch
+      attr_reader :node_set
+
+      def initialize(document)
+        @node_set = Nokogiri::XML::NodeSet.new(document, [])
+      end
+
+      # rubocop:disable Metrics
+      def search(context)
+        context.each { |node| search(node) } if context.is_a?(Nokogiri::XML::NodeSet)
+
+        if context.is_a?(Nokogiri::XML::Element) && !Helpers.ignore_node?(context)
+          if Helpers.item_node?(context)
+            node_set << context unless Helpers.item_nodes?(context.ancestors) && Helpers.property_node?(context)
+          else
+            search(context.element_children)
+          end
+        end
+
+        node_set
+      end
+      # rubocop:enable Metrics
+    end
+
+    private_constant :ItemNodeSearch
+
     # Extract {MicroMicro::Item}s from a context.
     #
     # @param context [Nokogiri::HTML::Document, Nokogiri::XML::NodeSet, Nokogiri::XML::Element]
     # @return [Array<MicroMicro::Item>]
     def self.from_context(context)
-      node_set_from(context).map { |node| new(node) }
+      ItemNodeSearch
+        .new(context.document)
+        .search(context)
+        .map { |node| new(node) }
     end
-
-    # Extract {MicroMicro::Item} nodes from a context.
-    #
-    # @param context [Nokogiri::XML::NodeSet, Nokogiri::XML::Element]
-    # @param node_set [Nokogiri::XML::NodeSet]
-    # @return [Nokogiri::XML::NodeSet]
-    #
-    # rubocop:disable Metrics
-    def self.node_set_from(context, node_set = Nokogiri::XML::NodeSet.new(context.document, []))
-      context.each { |node| node_set_from(node, node_set) } if context.is_a?(Nokogiri::XML::NodeSet)
-
-      if context.is_a?(Nokogiri::XML::Element) && !Helpers.ignore_node?(context)
-        if Helpers.item_node?(context)
-          node_set << context unless Helpers.item_nodes?(context.ancestors) && Helpers.property_node?(context)
-        else
-          node_set_from(context.element_children, node_set)
-        end
-      end
-
-      node_set
-    end
-    # rubocop:enable Metrics
 
     # Parse a node for microformats2-encoded data.
     #
