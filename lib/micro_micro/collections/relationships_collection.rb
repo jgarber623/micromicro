@@ -3,6 +3,17 @@
 module MicroMicro
   module Collections
     class RelationshipsCollection < BaseCollection
+      # Return the first {MicroMicro::Relationship} from a search.
+      #
+      # @see #where
+      #
+      # @param (see #where)
+      # @yieldparam (see #where))
+      # @return [MicroMicro::Relationship, nil]
+      def find_by(**args, &block)
+        where(**args, &block).first
+      end
+
       # Return a Hash of this collection's {MicroMicro::Relationship}s grouped
       # by their +rel+ attribute value.
       #
@@ -46,6 +57,57 @@ module MicroMicro
       def urls
         @urls ||= map(&:href).uniq.sort
       end
+
+      # Search this collection for {MicroMicro::Relationship}s matching the
+      # given conditions.
+      #
+      # If a Hash is supplied, the returned collection will include
+      # {MicroMicro::Relationship}s matching _all_ conditions. Keys must be
+      # Symbols matching an instance method on {MicroMicro::Relationship} and
+      # values may be either a String or an Array of Strings.
+      #
+      # @example Search using a Hash with a String value
+      #   MicroMicro.parse(markup, url).relationships.where(rels: 'webmention')
+      #
+      # @example Search using a Hash with an Array value
+      #   MicroMicro.parse(markup, url).relationships.where(rels: ['me', 'webmention'])
+      #
+      # When passing a block, each {MicroMicro::Relationship} in this collection
+      # is yielded to the block and the returned collection will include
+      # {MicroMicro::Relationship}s that cause the block to return a value other
+      # than +false+ or +nil+.
+      #
+      # @example Search using a block
+      #   MicroMicro.parse(markup, url).relationships.where do |relationship|
+      #     relationship.href.match?(%r{https://webmention.io/.+})
+      #   end
+      #
+      # @param args [Hash{Symbol => String, Array<String>}]
+      # @yieldparam relationship [MicroMicro::Relationship]
+      # @return [MicroMicro::Collections::RelationshipsCollection]
+      def where(**args, &block)
+        return self if args.none? && !block
+
+        self.class.new(RelationshipsCollectionSearch.new.search(self, **args, &block))
+      end
+
+      class RelationshipsCollectionSearch
+        attr_reader :results
+
+        def search(relationships, **args, &block)
+          relationships.select { |relationship| relationship_matches_conditions?(relationship, **args, &block) }
+        end
+
+        private
+
+        def relationship_matches_conditions?(relationship, **args)
+          return yield(relationship) if args.none?
+
+          args.all? { |key, value| (Array(relationship.public_send(key.to_sym)) & Array(value)).any? }
+        end
+      end
+
+      private_constant :RelationshipsCollectionSearch
     end
   end
 end

@@ -3,6 +3,17 @@
 module MicroMicro
   module Collections
     class PropertiesCollection < BaseCollection
+      # Return the first {MicroMicro::Property} from a search.
+      #
+      # @see #where
+      #
+      # @param (see #where)
+      # @yieldparam (see #where))
+      # @return [MicroMicro::Property, nil]
+      def find_by(**args, &block)
+        where(**args, &block).first
+      end
+
       # Retrieve an Array of this collection's unique {MicroMicro::Property}
       # names.
       #
@@ -66,6 +77,57 @@ module MicroMicro
       def values
         @values ||= map(&:value).uniq
       end
+
+      # Search this collection for {MicroMicro::Property}s matching the given
+      # conditions.
+      #
+      # If a Hash is supplied, the returned collection will include
+      # {MicroMicro::Property}s matching _all_ conditions. Keys must be Symbols
+      # matching an instance method on {MicroMicro::Property} and values may be
+      # either a String or an Array of Strings.
+      #
+      # @example Search using a Hash with a String value
+      #   MicroMicro.parse(markup, url).properties.where(name: 'url')
+      #
+      # @example Search using a Hash with an Array value
+      #   MicroMicro.parse(markup, url).properties.where(name: ['name', 'url'])
+      #
+      # When passing a block, each {MicroMicro::Property} in this collection
+      # is yielded to the block and the returned collection will include
+      # {MicroMicro::Property}s that cause the block to return a value other
+      # than +false+ or +nil+.
+      #
+      # @example Search using a block
+      #   MicroMicro.parse(markup, url).properties.where do |property|
+      #     property.value.is_a?(Hash)
+      #   end
+      #
+      # @param args [Hash{Symbol => String, Array<String>}]
+      # @yieldparam property [MicroMicro::Property]
+      # @return [MicroMicro::Collections::PropertiesCollection]
+      def where(**args, &block)
+        return self if args.none? && !block
+
+        self.class.new(PropertiesCollectionSearch.new.search(self, **args, &block))
+      end
+
+      class PropertiesCollectionSearch
+        attr_reader :results
+
+        def search(properties, **args, &block)
+          properties.select { |property| property_matches_conditions?(property, **args, &block) }
+        end
+
+        private
+
+        def property_matches_conditions?(property, **args)
+          return yield(property) if args.none?
+
+          args.all? { |key, value| (Array(property.public_send(key.to_sym)) & Array(value)).any? }
+        end
+      end
+
+      private_constant :PropertiesCollectionSearch
     end
   end
 end
