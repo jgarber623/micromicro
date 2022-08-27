@@ -34,7 +34,7 @@ module MicroMicro
       # by their +rel+ attribute value.
       #
       # @see https://microformats.org/wiki/microformats2-parsing#parse_a_hyperlink_element_for_rel_microformats
-      #   microformats.org: Parse a hyperlink element for rel microformats
+      #   microformats.org: microformats2 parsing specification § Parse a hyperlink element for rel microformats
       #
       # @return [Hash{Symbol => Array<String>}]
       def group_by_rel
@@ -47,7 +47,7 @@ module MicroMicro
       # by their +href+ attribute value.
       #
       # @see https://microformats.org/wiki/microformats2-parsing#parse_a_hyperlink_element_for_rel_microformats
-      #   microformats.org: Parse a hyperlink element for rel microformats
+      #   microformats.org: microformats2 parsing specification § Parse a hyperlink element for rel microformats
       #
       # @return [Hash{Symbol => Hash{Symbol => Array, String}}]
       def group_by_url

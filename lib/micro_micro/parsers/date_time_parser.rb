@@ -30,6 +30,7 @@ module MicroMicro
       # Value Class Pattern date and time parsing specification.
       #
       # @see https://microformats.org/wiki/value-class-pattern#Date_and_time_parsing
+      #   microformats.org: Value Class Pattern § Date and time parsing
       #
       # @param string [String, #to_s]
       def initialize(string)

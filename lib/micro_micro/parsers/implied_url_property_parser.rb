@@ -11,6 +11,7 @@ module MicroMicro
       }.freeze
 
       # @see https://microformats.org/wiki/microformats2-parsing#parsing_for_implied_properties
+      #   microformats.org: microformats2 parsing specification § Parsing for implied properties
       #
       # @return [String, nil]
       def value

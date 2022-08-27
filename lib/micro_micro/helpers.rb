@@ -4,6 +4,8 @@ module MicroMicro
   module Helpers
     IGNORED_NODE_NAMES = %w[script style template].freeze
 
+    private_constant :IGNORED_NODE_NAMES
+
     # @param node [Nokogiri::XML::Element]
     # @param attributes_map [Hash{String => Array}]
     # @return [String, nil]
@@ -56,7 +58,9 @@ module MicroMicro
     end
 
     # @see https://microformats.org/wiki/microformats2-parsing#parse_an_element_for_properties
+    #   microformats.org: microformats2 parsing specification § Parse an element for properties
     # @see https://microformats.org/wiki/microformats2-parsing#parsing_for_implied_properties
+    #   microformats.org: microformats2 parsing specification § Parsing for implied properties
     #
     # @param context [Nokogiri::HTML::Document, Nokogiri::XML::NodeSet, Nokogiri::XML::Element]
     # @yield [context]
@@ -70,6 +74,7 @@ module MicroMicro
     end
 
     # @see https://microformats.org/wiki/value-class-pattern#Basic_Parsing
+    #   microformats.org: Value Class Pattern § Basic Parsing
     #
     # @param node [Nokogiri::XML::Element]
     # @return [Boolean]
@@ -78,6 +83,7 @@ module MicroMicro
     end
 
     # @see https://microformats.org/wiki/value-class-pattern#Parsing_value_from_a_title_attribute
+    #   microformats.org: Value Class Pattern § Parsing value from a title attribute
     #
     # @param node [Nokogiri::XML::Element]
     # @return [Boolean]

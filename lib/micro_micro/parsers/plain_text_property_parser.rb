@@ -10,6 +10,7 @@ module MicroMicro
       }.freeze
 
       # @see https://microformats.org/wiki/microformats2-parsing#parsing_a_p-_property
+      #   microformats.org: microformats2 parsing specification § Parsing a +p-+ property
       #
       # @return [String]
       def value

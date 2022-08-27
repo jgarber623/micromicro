@@ -16,7 +16,9 @@ module MicroMicro
       }.freeze
 
       # @see https://microformats.org/wiki/microformats2-parsing#parsing_a_u-_property
+      #   microformats.org: microformats2 parsing specification § Parsing a +u-+ property
       # @see https://microformats.org/wiki/microformats2-parsing#parse_an_img_element_for_src_and_alt
+      #   microformats.org: microformats2 parsing specification § Parse an img element for src and alt
       #
       # @return [String, Hash{Symbol => String}]
       def value
