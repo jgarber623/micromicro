@@ -1,5 +1,20 @@
 # Changelog
 
+## v3.0.0 / 2022-08-28
+
+- Improved YARD documentation
+- New `Item` instance methods (8105d6f):
+  - `MicroMicro::Item#children?`
+  - `MicroMicro::Item#id?`
+- **Breaking change:** Remove property-centric methods from `MicroMicro::Item` (926dedb):
+  - `MicroMicro::Item#plain_text_properties`
+  - `MicroMicro::Item#url_properties`
+- Add predicate methods to `MicroMicro::Collections::PropertiesCollection` (82e91c8):
+  - `MicroMicro::Collections::PropertiesCollection#plain_text_properties?`
+  - `MicroMicro::Collections::PropertiesCollection#url_properties?`
+- Add collections search methods `#where` and `#find_by` (847cb77)
+- **Breaking change:** Refactor `.node_set_from` class methods into private classes (b18a714)
+
 ## 2.0.1 / 2022-08-20
 
 - Use ruby/debug instead of pry-byebug (2965b2e)
