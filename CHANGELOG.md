@@ -1,6 +1,6 @@
 # Changelog
 
-## v3.0.0 / 2022-08-28
+## 3.0.0 / 2022-08-28
 
 - Improved YARD documentation
 - New `Item` instance methods (8105d6f):
