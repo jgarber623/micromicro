@@ -38,9 +38,9 @@ module MicroMicro
       #
       # @return [Hash{Symbol => Array<String>}]
       def group_by_rel
-        each_with_object(Hash.new { |hash, key| hash[key] = [] }) do |member, hash|
-          member.rels.each { |rel| hash[rel] << member.href }
-        end.symbolize_keys.transform_values(&:uniq)
+        each_with_object(Hash.new { |hash, key| hash[key] = Set.new }) do |member, hash|
+          member.rels.each { |rel| hash[rel.to_sym] << member.href }
+        end.transform_values(&:to_a)
       end
 
       # Return a Hash of this collection's {MicroMicro::Relationship}s grouped
@@ -51,7 +51,7 @@ module MicroMicro
       #
       # @return [Hash{Symbol => Hash{Symbol => Array, String}}]
       def group_by_url
-        group_by(&:href).symbolize_keys.transform_values { |relationships| relationships.first.to_h.slice!(:href) }
+        group_by(&:href).to_h { |k, v| [k.to_sym, v.first.to_h.except(:href)] }
       end
 
       # Retrieve an Array of this collection's unique {MicroMicro::Relationship}

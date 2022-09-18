@@ -57,7 +57,7 @@ module MicroMicro
           self.class
               .node_set_from(node)
               .map { |value_node| self.class.value_from(value_node) }
-              .select(&:present?)
+              .compact_blank!
       end
 
       private

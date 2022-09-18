@@ -152,8 +152,8 @@ module MicroMicro
 
           return hash.merge(parser.value) if embedded_markup_property?
 
-          p_property = item.properties.find { |property| property.name == 'name' } if plain_text_property?
-          u_property = item.properties.find { |property| property.name == 'url' } if url_property?
+          p_property = item.properties.find_by(name: 'name') if plain_text_property?
+          u_property = item.properties.find_by(name: 'url') if url_property?
 
           hash.merge(value: (p_property || u_property || parser).value)
         else

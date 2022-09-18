@@ -64,7 +64,7 @@ module MicroMicro
       #
       # @return [Hash{Symbol => Array<String, Hash>}]
       def to_h
-        group_by(&:name).symbolize_keys.deep_transform_values(&:value)
+        group_by(&:name).transform_keys(&:to_sym).deep_transform_values(&:value)
       end
 
       # A collection of url {MicroMicro::Property}s parsed from the node.

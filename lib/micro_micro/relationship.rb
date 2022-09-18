@@ -65,7 +65,7 @@ module MicroMicro
         title: title,
         type: type,
         text: text
-      }.select { |_, value| value.present? }
+      }.compact_blank!
     end
 
     # An Array of unique values from node's +rel+ attribute.

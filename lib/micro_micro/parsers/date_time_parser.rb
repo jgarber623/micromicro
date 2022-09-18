@@ -90,17 +90,14 @@ module MicroMicro
 
       # @return [String, nil]
       def value
-        @value ||=
-          if normalized_date || normalized_time || normalized_timezone
-            "#{normalized_date} #{normalized_time}#{normalized_timezone}".strip
-          end
+        @value ||= "#{normalized_date} #{normalized_time}#{normalized_timezone}".strip.presence
       end
 
       # @return [Hash{Symbol => String, nil}]
       def values
         @values ||=
           if string.match?(DATE_TIME_TIMEZONE_REGEXP)
-            string.match(DATE_TIME_TIMEZONE_REGEXP).named_captures.symbolize_keys
+            string.match(DATE_TIME_TIMEZONE_REGEXP).named_captures.transform_keys(&:to_sym)
           else
             {}
           end
