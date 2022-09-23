@@ -1,0 +1,51 @@
+{
+  "items": [
+    {
+      "type": ["h-card"],
+      "properties": {
+        "name": ["Elva"],
+        "photo": [
+          {
+            "alt": "Elva",
+            "value": "http://example.com/elva-fairy-800w.jpg"
+          }
+        ]
+      }
+    },
+    {
+      "type": ["h-card"],
+      "properties": {
+        "name": ["Elva"],
+        "photo": [
+          {
+            "alt": "Elva",
+            "srcset": {
+              "480w": "http://example.com/elva-fairy-480w.jpg",
+              "800w": "http://example.com/elva-fairy-800w.jpg"
+            },
+            "value": "http://example.com/elva-fairy-800w.jpg"
+          }
+        ]
+      }
+    },
+    {
+      "type": ["h-card"],
+      "properties": {
+        "name": ["Elva"],
+        "photo": [
+          {
+            "alt": "Elva",
+            "srcset": {
+              "1x": "http://example.com/elva-fairy-320w.jpg",
+              "1.5x": "http://example.com/elva-fairy-480w.jpg",
+              "2x": "http://example.com/elva-fairy-640w.jpg"
+            },
+            "value": "http://example.com/elva-fairy-640w.jpg"
+          }
+        ]
+      }
+    }
+  ],
+  "rels": {},
+  "rel-urls": {}
+}

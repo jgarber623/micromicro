@@ -29,24 +29,41 @@ module FixturesHelpers
         Dir[File.join(test_case_base_path, test_case_type, '*.json')]
       end
     end
+  end
 
-    class TestCase
-      def initialize(output_file_path)
-        @input_file_path = output_file_path.sub('.json', '.html')
-        @output_file_path = output_file_path
-      end
+  module MicroMicroTestSuite
+    TEST_CASE_TYPES = %w[
+      h-card
+      h-entry
+    ].freeze
 
-      def input
-        @input ||= File.read(input_file_path)
-      end
-
-      def output
-        @output ||= JSON.parse(File.read(output_file_path), symbolize_names: true)
-      end
-
-      private
-
-      attr_reader :input_file_path, :output_file_path
+    def self.test_case_base_path
+      File.expand_path('fixtures/micromicro_test_suite', __dir__)
     end
+
+    def self.test_case_file_paths
+      TEST_CASE_TYPES.flat_map do |test_case_type|
+        Dir[File.join(test_case_base_path, test_case_type, '*.json')]
+      end
+    end
+  end
+
+  class TestCase
+    def initialize(output_file_path)
+      @input_file_path = output_file_path.sub('.json', '.html')
+      @output_file_path = output_file_path
+    end
+
+    def input
+      @input ||= File.read(input_file_path)
+    end
+
+    def output
+      @output ||= JSON.parse(File.read(output_file_path), symbolize_names: true)
+    end
+
+    private
+
+    attr_reader :input_file_path, :output_file_path
   end
 end

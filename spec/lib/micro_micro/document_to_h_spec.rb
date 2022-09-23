@@ -5,11 +5,21 @@ RSpec.describe MicroMicro::Document, '#to_h' do
 
   FixturesHelpers::MicroformatsTestSuite.test_case_file_paths.each do |test_case_file_path|
     context "when parsing #{test_case_file_path.match(%r{((?:[^/]+/){2}[^/]+)\.json$})[1]}.html" do
-      subject(:document_hash) { described_class.new(test_case.input, base_url).to_h }
+      subject(:document) { described_class.new(test_case.input, base_url) }
 
-      let(:test_case) { FixturesHelpers::MicroformatsTestSuite::TestCase.new(test_case_file_path) }
+      let(:test_case) { FixturesHelpers::TestCase.new(test_case_file_path) }
 
-      it { is_expected.to eq(test_case.output) }
+      its(:to_h) { is_expected.to eq(test_case.output) }
+    end
+  end
+
+  FixturesHelpers::MicroMicroTestSuite.test_case_file_paths.each do |test_case_file_path|
+    context "when parsing #{test_case_file_path.match(%r{((?:[^/]+/){2}[^/]+)\.json$})[1]}.html" do
+      subject(:document) { described_class.new(test_case.input, base_url) }
+
+      let(:test_case) { FixturesHelpers::TestCase.new(test_case_file_path) }
+
+      its(:to_h) { is_expected.to eq(test_case.output) }
     end
   end
 end

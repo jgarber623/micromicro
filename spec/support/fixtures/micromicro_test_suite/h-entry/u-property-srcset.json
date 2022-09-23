@@ -1,0 +1,34 @@
+{
+  "items": [
+    {
+      "type": ["h-entry"],
+      "properties": {
+        "name": ["Elva dressed as a fairy"],
+        "photo": [
+          {
+            "alt": "Elva dressed as a fairy",
+            "value": "http://example.com/elva-fairy-800w.jpg"
+          },
+          {
+            "srcset": {
+              "480w": "http://example.com/elva-fairy-480w.jpg",
+              "800w": "http://example.com/elva-fairy-800w.jpg"
+            },
+            "value": "http://example.com/elva-fairy-800w.jpg"
+          },
+          {
+            "alt": "Elva dressed as a fairy",
+            "srcset": {
+              "1x": "http://example.com/elva-fairy-320w.jpg",
+              "1.5x": "http://example.com/elva-fairy-480w.jpg",
+              "2x": "http://example.com/elva-fairy-640w.jpg"
+            },
+            "value": "http://example.com/elva-fairy-640w.jpg"
+          }
+        ]
+      }
+    }
+  ],
+  "rels": {},
+  "rel-urls": {}
+}
