@@ -23,11 +23,8 @@ module MicroMicro
       # @return [String, Hash{Symbol => String}]
       def value
         @value ||=
-          if node.matches?('img[alt]')
-            {
-              value: resolved_value,
-              alt: node['alt'].strip
-            }
+          if node.matches?('img[alt], img[srcset]')
+            ImageElementParser.new(node, resolved_value).to_h
           else
             resolved_value
           end

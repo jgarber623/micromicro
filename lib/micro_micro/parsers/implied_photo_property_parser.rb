@@ -19,12 +19,11 @@ module MicroMicro
       def value
         @value ||=
           if attribute_value
-            return attribute_value unless candidate_node.matches?('img[alt]')
-
-            {
-              value: attribute_value,
-              alt: candidate_node['alt'].strip
-            }
+            if candidate_node.matches?('img[alt], img[srcset]')
+              ImageElementParser.new(candidate_node, attribute_value).to_h
+            else
+              attribute_value
+            end
           end
       end
 

@@ -15,6 +15,7 @@ require_relative 'micro_micro/collectible'
 require_relative 'micro_micro/helpers'
 
 require_relative 'micro_micro/parsers/date_time_parser'
+require_relative 'micro_micro/parsers/image_element_parser'
 require_relative 'micro_micro/parsers/value_class_pattern_parser'
 
 require_relative 'micro_micro/parsers/base_property_parser'
