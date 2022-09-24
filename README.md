@@ -48,7 +48,7 @@ doc.to_h
 #=> { :items => [{ :type => ["h-card"], :properties => { :name => ["Jason Garber"] } }], :rels => {}, :"rel-urls" => {} }
 ```
 
-See [USAGE.md](https://github.com/jgarber623/micromicro/blob/main/USAGE.md) for detailed examples of MicroMicro's features.
+See [USAGE.md](https://github.com/jgarber623/micromicro/blob/main/USAGE.md) for detailed examples of MicroMicro's features. Additional structured documentation is available on [RubyDoc.info](https://rubydoc.info/gems/micromicro).
 
 ## Contributing
 
