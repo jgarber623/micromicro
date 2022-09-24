@@ -24,6 +24,13 @@
               "2x": "http://example.com/elva-fairy-640w.jpg"
             },
             "value": "http://example.com/elva-fairy-640w.jpg"
+          },
+          {
+            "alt": "Elva dressed as a fairy",
+            "srcset": {
+              "480w": "http://example.com/elva-fairy-480w.jpg"
+            },
+            "value": "http://example.com/elva-fairy-640w.jpg"
           }
         ]
       }
