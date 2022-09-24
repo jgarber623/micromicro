@@ -25,7 +25,7 @@ module MicroMicro
 
       # @return [Hash{Symbol => String}, nil]
       def srcset
-        @srcset ||= parsed_srcset if node['srcset']
+        @srcset ||= image_candidates if node['srcset']
       end
 
       # @return [Boolean]
@@ -49,15 +49,20 @@ module MicroMicro
       attr_reader :node
 
       # @return [Hash{Symbol => String}]
-      def parsed_srcset
+      #
+      # rubocop:disable Style/PerlBackrefs
+      def image_candidates
         node['srcset']
           .split(',')
-          .to_h do |candidate|
+          .each_with_object({}) do |candidate, hash|
             candidate.strip.match(/^(.+?)(\s+.+)?$/) do
-              [(Regexp.last_match(2) || '1x').strip.to_sym, Regexp.last_match(1)]
+              key = ($2 || '1x').strip.to_sym
+
+              hash[key] = $1 unless hash[key]
             end
           end
       end
+      # rubocop:enable Style/PerlBackrefs
     end
   end
 end
