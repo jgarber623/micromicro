@@ -1,5 +1,10 @@
 # Changelog
 
+## 3.1.0 / 2022-09-24
+
+- **New feature:** parse `img[srcset]` (microformats/microformats2-parsing#7) (cdda328)
+- Improve usage of activesupport extensions (5ed120c)
+
 ## 3.0.0 / 2022-08-28
 
 - Improved YARD documentation
