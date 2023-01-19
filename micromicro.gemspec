@@ -29,5 +29,5 @@ Gem::Specification.new do |spec|
 
   spec.add_runtime_dependency 'activesupport', '~> 7.0'
   spec.add_runtime_dependency 'nokogiri', '>= 1.14'
-  spec.add_runtime_dependency 'nokogiri-html-ext', '~> 0.3.0'
+  spec.add_runtime_dependency 'nokogiri-html-ext', '~> 0.3.1'
 end
