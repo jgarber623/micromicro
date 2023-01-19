@@ -5,11 +5,9 @@ source 'https://rubygems.org'
 # Specify your gem's dependencies in micromicro.gemspec
 gemspec
 
-gem 'code-scanning-rubocop'
 gem 'debug'
 gem 'rake'
 gem 'rspec'
-gem 'rspec-github'
 gem 'rspec-its'
 gem 'rubocop'
 gem 'rubocop-packaging'
