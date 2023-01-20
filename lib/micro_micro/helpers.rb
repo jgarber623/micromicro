@@ -62,7 +62,7 @@ module MicroMicro
     # @see https://microformats.org/wiki/microformats2-parsing#parsing_for_implied_properties
     #   microformats.org: microformats2 parsing specification § Parsing for implied properties
     #
-    # @param context [Nokogiri::HTML::Document, Nokogiri::XML::NodeSet, Nokogiri::XML::Element]
+    # @param context [Nokogiri::HTML5::Document, Nokogiri::XML::NodeSet, Nokogiri::XML::Element]
     # @yield [context]
     # @return [String]
     def self.text_content_from(context)

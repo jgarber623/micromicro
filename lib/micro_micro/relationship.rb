@@ -6,7 +6,7 @@ module MicroMicro
 
     # Extract {MicroMicro::Relationship}s from a context.
     #
-    # @param context [Nokogiri::HTML::Document, Nokogiri::XML::Element]
+    # @param context [Nokogiri::HTML5::Document, Nokogiri::XML::Element]
     # @return [Array<MicroMicro::Relationship>]
     def self.from_context(context)
       context.css('[href][rel]:not([rel=""])')

@@ -32,7 +32,7 @@ module MicroMicro
 
     # Extract {MicroMicro::Item}s from a context.
     #
-    # @param context [Nokogiri::HTML::Document, Nokogiri::XML::NodeSet, Nokogiri::XML::Element]
+    # @param context [Nokogiri::HTML5::Document, Nokogiri::XML::NodeSet, Nokogiri::XML::Element]
     # @return [Array<MicroMicro::Item>]
     def self.from_context(context)
       ItemNodeSearch
