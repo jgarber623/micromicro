@@ -16,7 +16,7 @@ module MicroMicro
     # @param markup [String] The HTML to parse for microformats2-encoded data.
     # @param base_url [String] The URL associated with markup. Used for relative URL resolution.
     def initialize(markup, base_url)
-      @document = Nokogiri.HTML5(markup, base_url).resolve_relative_urls!
+      @document = Nokogiri::HTML5::Document.parse(markup, base_url).resolve_relative_urls!
     end
 
     # @return [String]
