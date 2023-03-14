@@ -1,5 +1,12 @@
 # Changelog
 
+## 4.0.0 / unreleased
+
+- Parse HTML with `Nokogiri::HTML5::Document.parse` (330a2d1, 0de40d7)
+- Update Nokogiri and nokogiri-html-ext constraints (e038606, cb6e499, 9793b17)
+- Remove code-scanning-rubocop and rspec-github gems (2fbb9c5)
+- Update development Ruby to v2.7.7 (a333103)
+
 ## 3.1.0 / 2022-09-24
 
 - **New feature:** parse `img[srcset]` (microformats/microformats2-parsing#7) (cdda328)
