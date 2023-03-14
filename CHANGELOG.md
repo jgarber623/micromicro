@@ -1,6 +1,6 @@
 # Changelog
 
-## 4.0.0 / unreleased
+## 4.0.0 / 2023-03-14
 
 - Parse HTML with `Nokogiri::HTML5::Document.parse` (330a2d1, 0de40d7)
 - Update Nokogiri and nokogiri-html-ext constraints (e038606, cb6e499, 9793b17)
