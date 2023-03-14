@@ -8,7 +8,7 @@ RSpec.describe MicroMicro::Collections::RelationshipsCollection, '#find_by' do
   let(:relationships) { document.relationships }
 
   let(:markup) do
-    <<~'HTML'.chomp
+    <<~HTML.chomp
       <link href="https://jgarber.example/webmention" rel="webmention" >
       <a href="https://jgarber.example/home" rel="home">Back home</a>
       <a href="https://jgarber.example" class="h-card" rel="me">Jason Garber</a>

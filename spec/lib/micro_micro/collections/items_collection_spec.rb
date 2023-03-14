@@ -6,7 +6,7 @@ RSpec.describe MicroMicro::Collections::ItemsCollection do
   let(:base_url) { 'http://example.com' }
 
   let(:markup) do
-    <<~'HTML'.chomp
+    <<~HTML.chomp
       <article class="h-entry">
         <h1 class="p-name">Hello, world!</h1>
       </article>

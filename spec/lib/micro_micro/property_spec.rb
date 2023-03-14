@@ -7,7 +7,7 @@ RSpec.describe MicroMicro::Property do
 
   describe '#item' do
     let(:markup) do
-      <<~'HTML'.chomp
+      <<~HTML.chomp
         <article class="h-entry">
           <div class="e-content">
             <p>Hello, world!</p>
@@ -21,7 +21,7 @@ RSpec.describe MicroMicro::Property do
 
   describe '#value' do
     let(:markup) do
-      <<~'HTML'.chomp
+      <<~HTML.chomp
         <article class="h-entry">
           <div class="e-content h-card">
             <p>Hello, world!</p>

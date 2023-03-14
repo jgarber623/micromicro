@@ -8,7 +8,7 @@ RSpec.describe MicroMicro::Collections::PropertiesCollection, '#find_by' do
   let(:properties) { document.items.first.properties }
 
   let(:markup) do
-    <<~'HTML'.chomp
+    <<~HTML.chomp
       <article class="h-entry">
         <h1 class="p-name">
           <a href="https://jgarber.example/posts/hello-world" class="u-url">Hello, world!</a>
