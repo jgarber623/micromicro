@@ -12,7 +12,7 @@
 
 - Parses microformats2-encoded HTML documents according to the [microformats2 parsing specification](https://microformats.org/wiki/microformats2-parsing)
 - Passes all microformats2 tests from [the official test suite](https://github.com/microformats/tests)¹
-- Supports Ruby 2.7 and newer
+- Supports Ruby 3.0 and newer
 
 **Note:** MicroMicro **does not** parse [Classic Microformats](https://microformats.org/wiki/Main_Page#Classic_Microformats) (referred to in [the parsing specification](https://microformats.org/wiki/microformats2-parsing#note_backward_compatibility_details) as "backcompat root classes" and "backcompat properties" and in vocabulary specifications in the "Parser Compatibility" sections [e.g. [h-entry](https://microformats.org/wiki/h-entry#Parser_Compatibility)]). To parse documents marked up with Classic Microformats, consider using [the official microformats-ruby parser](https://github.com/microformats/microformats-ruby).
 
@@ -20,7 +20,7 @@
 
 ## Installation
 
-Before installing and using MicroMicro, you'll want to have [Ruby](https://www.ruby-lang.org) 2.7 (or newer) installed. If you're using [Bundler](https://bundler.io) to manage gem dependencies, add MicroMicro to your project's Gemfile:
+Before installing and using MicroMicro, you'll want to have [Ruby](https://www.ruby-lang.org) 3.0 (or newer) installed. If you're using [Bundler](https://bundler.io) to manage gem dependencies, add MicroMicro to your project's Gemfile:
 
 ```ruby
 gem 'micromicro'
