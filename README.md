@@ -50,10 +50,6 @@ doc.to_h
 
 See [USAGE.md](https://github.com/jgarber623/micromicro/blob/main/USAGE.md) for detailed examples of MicroMicro's features. Additional structured documentation is available on [RubyDoc.info](https://rubydoc.info/gems/micromicro).
 
-## Contributing
-
-Interested in helping improve MicroMicro? Awesome! Your help is greatly appreciated. See [CONTRIBUTING.md](https://github.com/jgarber623/micromicro/blob/main/CONTRIBUTING.md) for details.
-
 ## Acknowledgments
 
 MicroMicro wouldn't exist without the hard work of everyone involved in the [microformats](https://microformats.org) community. Additionally, the comprehensive [microformats test suite](https://github.com/microformats/tests) was invaluable in the development of this Ruby gem.
