@@ -6,7 +6,7 @@ require 'simplecov'
 
 require 'micromicro'
 
-Dir[File.expand_path('../spec/support/*.rb', __dir__)].sort.each { |f| require f }
+Dir[File.expand_path('../spec/support/*.rb', __dir__)].each { |f| require f }
 
 RSpec.configure do |config|
   config.include FixturesHelpers
