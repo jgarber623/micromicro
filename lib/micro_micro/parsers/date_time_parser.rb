@@ -24,7 +24,7 @@ module MicroMicro
         (?:#{DATE_REGEXP_PATTERN})?
         (?:\s?#{TIME_REGEXP_PATTERN}(?:#{TIMEZONE_REGEXP_PATTERN})?)?
         \z
-      /x.freeze
+      /x
 
       # Parse a string for date and/or time values according to the Microformats
       # Value Class Pattern date and time parsing specification.
