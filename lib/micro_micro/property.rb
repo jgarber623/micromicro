@@ -70,7 +70,7 @@ module MicroMicro
     #   property value (e.g. +p-name+, +u-url+).
     def initialize(node, token)
       @node = node
-      @prefix, @name = token.split(/-/, 2)
+      @prefix, @name = token.split('-', 2)
     end
 
     # Is this {MicroMicro::Property} a datetime property?
