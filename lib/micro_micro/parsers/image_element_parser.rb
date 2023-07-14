@@ -49,20 +49,17 @@ module MicroMicro
       attr_reader :node
 
       # @return [Hash{Symbol => String}]
-      #
-      # rubocop:disable Style/PerlBackrefs
       def image_candidates
         node['srcset']
           .split(',')
           .each_with_object({}) do |candidate, hash|
             candidate.strip.match(/^(.+?)(\s+.+)?$/) do
-              key = ($2 || '1x').strip.to_sym
+              key = (Regexp.last_match(2) || '1x').strip.to_sym
 
-              hash[key] = $1 unless hash[key]
+              hash[key] = Regexp.last_match(1) unless hash[key]
             end
           end
       end
-      # rubocop:enable Style/PerlBackrefs
     end
   end
 end
