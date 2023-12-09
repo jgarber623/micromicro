@@ -54,10 +54,11 @@ module MicroMicro
       # @return [Array<String>]
       def values
         @values ||=
-          self.class
-              .node_set_from(node)
-              .map { |value_node| self.class.value_from(value_node) }
-              .compact_blank!
+          self
+            .class
+            .node_set_from(node)
+            .map { |value_node| self.class.value_from(value_node) }
+            .compact_blank!
       end
 
       private

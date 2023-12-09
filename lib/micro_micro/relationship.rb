@@ -9,9 +9,10 @@ module MicroMicro
     # @param context [Nokogiri::HTML5::Document, Nokogiri::XML::Element]
     # @return [Array<MicroMicro::Relationship>]
     def self.from_context(context)
-      context.css(%([href][rel]:not([rel=""])))
-             .reject { |node| Helpers.ignore_nodes?(node.ancestors) }
-             .map { |node| new(node) }
+      context
+        .css(%([href][rel]:not([rel=""])))
+        .reject { |node| Helpers.ignore_nodes?(node.ancestors) }
+        .map { |node| new(node) }
     end
 
     # Parse a node for relationship data.
