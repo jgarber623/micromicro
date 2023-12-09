@@ -30,8 +30,6 @@ jobs:
   test:
     name: Test
     runs-on: ubuntu-latest
-    env:
-      CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
     strategy:
       fail-fast: false
       matrix:
@@ -46,4 +44,3 @@ jobs:
           bundler-cache: true
           ruby-version: ${{ matrix.ruby }}
       - run: bundle exec rspec
-      - uses: paambaati/codeclimate-action@v5.0.0
