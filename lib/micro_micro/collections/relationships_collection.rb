@@ -38,9 +38,10 @@ module MicroMicro
       #
       # @return [Hash{Symbol => Array<String>}]
       def group_by_rel
-        each_with_object(Hash.new { |hash, key| hash[key] = Set.new }) do |member, hash|
-          member.rels.each { |rel| hash[rel.to_sym] << member.href }
-        end.transform_values(&:to_a)
+        obj = Hash.new { |hash, key| hash[key] = Set.new }
+
+        each_with_object(obj) { |member, hash| member.rels.each { |rel| hash[rel.to_sym] << member.href } }
+          .transform_values(&:to_a)
       end
 
       # Return a Hash of this collection's {MicroMicro::Relationship}s grouped

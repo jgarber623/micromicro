@@ -14,9 +14,10 @@ module MicroMicro
       def candidate_node
         @candidate_node ||=
           candidate_nodes.find do |node|
-            self.class::HTML_ELEMENTS_MAP.filter_map do |name, attribute|
-              node if name == node.name && node[attribute]
-            end.any?
+            self
+              .class::HTML_ELEMENTS_MAP
+              .filter_map { |name, attribute| node if name == node.name && node[attribute] }
+              .any?
           end
       end
 
