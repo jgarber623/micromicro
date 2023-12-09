@@ -10,9 +10,9 @@ module MicroMicro
     # @param attributes_map [Hash{String => Array}]
     # @return [String, nil]
     def self.attribute_value_from(node, attributes_map)
-      attributes_map.filter_map do |attribute, names|
-        node[attribute] if names.include?(node.name) && node[attribute]
-      end.first
+      attributes_map
+        .filter_map { |attribute, names| node[attribute] if names.include?(node.name) && node[attribute] }
+        .first
     end
 
     # @param node [Nokogiri::XML::Element]

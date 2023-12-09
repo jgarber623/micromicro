@@ -25,9 +25,9 @@ module MicroMicro
       # @return [MicroMicro::Parsers::DateTimeParser, nil]
       def adopted_date_time_parser
         @adopted_date_time_parser ||=
-          (property.prev_all.reverse + property.next_all).filter_map do |prop|
-            DateTimeParser.new(prop.value) if prop.date_time_property?
-          end.find(&:normalized_date)
+          (property.prev_all.reverse + property.next_all)
+            .filter_map { |prop| DateTimeParser.new(prop.value) if prop.date_time_property? }
+            .find(&:normalized_date)
       end
 
       # @return [String, nil]
