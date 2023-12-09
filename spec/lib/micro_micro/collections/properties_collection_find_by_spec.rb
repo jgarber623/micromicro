@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-RSpec.describe MicroMicro::Collections::PropertiesCollection, '#find_by' do
-  let(:base_url) { 'https://jgarber.example' }
+RSpec.describe MicroMicro::Collections::PropertiesCollection, "#find_by" do
+  let(:base_url) { "https://jgarber.example" }
 
   let(:document) { MicroMicro.parse(markup, base_url) }
 
@@ -18,43 +18,43 @@ RSpec.describe MicroMicro::Collections::PropertiesCollection, '#find_by' do
     HTML
   end
 
-  context 'when given neither params nor a block' do
+  context "when given neither params nor a block" do
     subject(:property) { properties.find_by }
 
     it { is_expected.to eq(property) }
   end
 
-  context 'when no match' do
-    subject(:property) { properties.find_by(name: ['foo']) }
+  context "when no match" do
+    subject(:property) { properties.find_by(name: ["foo"]) }
 
     it { is_expected.to be_nil }
   end
 
-  context 'when given Hash params' do
-    context 'when value is a String' do
-      subject(:property) { properties.find_by(name: 'url') }
+  context "when given Hash params" do
+    context "when value is a String" do
+      subject(:property) { properties.find_by(name: "url") }
 
-      its(:value) { is_expected.to eq('https://jgarber.example/posts/hello-world') }
+      its(:value) { is_expected.to eq("https://jgarber.example/posts/hello-world") }
     end
 
-    context 'when value is an Array' do
+    context "when value is an Array" do
       subject(:property) { properties.find_by(name: %w[author name]) }
 
-      its(:value) { is_expected.to eq('Hello, world!') }
+      its(:value) { is_expected.to eq("Hello, world!") }
     end
   end
 
-  context 'when given a block' do
+  context "when given a block" do
     subject(:property) { properties.find_by { |property| property.value.is_a?(Hash) } }
 
     let(:matched_value) do
       {
         properties: {
-          name: ['Jason Garber'],
-          url: ['https://jgarber.example/']
+          name: ["Jason Garber"],
+          url: ["https://jgarber.example/"]
         },
-        type: ['h-card'],
-        value: 'Jason Garber'
+        type: ["h-card"],
+        value: "Jason Garber"
       }
     end
 

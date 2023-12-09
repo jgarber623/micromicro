@@ -3,7 +3,7 @@
 RSpec.describe MicroMicro::Collections::PropertiesCollection do
   subject(:collection) { MicroMicro.parse(markup, base_url).items.first.properties }
 
-  let(:base_url) { 'http://example.com' }
+  let(:base_url) { "http://example.com" }
 
   let(:markup) do
     <<~HTML.chomp
@@ -21,20 +21,20 @@ RSpec.describe MicroMicro::Collections::PropertiesCollection do
   its(:values) do
     is_expected.to eq(
       [
-        'Hello, world!',
-        'https://jgarber.example/posts/hello-world',
-        { properties: { name: ['Jason Garber'], url: ['https://jgarber.example/'] }, type: ['h-card'], value: 'Jason Garber' }
+        "Hello, world!",
+        "https://jgarber.example/posts/hello-world",
+        { properties: { name: ["Jason Garber"], url: ["https://jgarber.example/"] }, type: ["h-card"], value: "Jason Garber" }
       ]
     )
   end
 
   its(:plain_text_properties) { is_expected.to be_a(described_class) }
-  its('plain_text_properties.first.name') { is_expected.to eq('name') }
+  its("plain_text_properties.first.name") { is_expected.to eq("name") }
 
   its(:plain_text_properties?) { is_expected.to be(true) }
 
   its(:url_properties) { is_expected.to be_a(described_class) }
-  its('url_properties.first.name') { is_expected.to eq('url') }
+  its("url_properties.first.name") { is_expected.to eq("url") }
 
   its(:url_properties?) { is_expected.to be(true) }
 end
