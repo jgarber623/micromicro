@@ -9,7 +9,7 @@ module MicroMicro
     # @param context [Nokogiri::HTML5::Document, Nokogiri::XML::Element]
     # @return [Array<MicroMicro::Relationship>]
     def self.from_context(context)
-      context.css('[href][rel]:not([rel=""])')
+      context.css(%([href][rel]:not([rel=""])))
              .reject { |node| Helpers.ignore_nodes?(node.ancestors) }
              .map { |node| new(node) }
     end
@@ -26,14 +26,14 @@ module MicroMicro
     #
     # @return [String]
     def href
-      @href ||= node['href']
+      @href ||= node["href"]
     end
 
     # The value of the node's +hreflang+ attribute, if present.
     #
     # @return [String, nil]
     def hreflang
-      @hreflang ||= node['hreflang']&.strip
+      @hreflang ||= node["hreflang"]&.strip
     end
 
     # @return [String]
@@ -50,7 +50,7 @@ module MicroMicro
     #
     # @return [String, nil]
     def media
-      @media ||= node['media']&.strip
+      @media ||= node["media"]&.strip
     end
 
     # Return the parsed {MicroMicro::Relationship} as a Hash.
@@ -72,7 +72,7 @@ module MicroMicro
     #
     # @return [Array<String>]
     def rels
-      @rels ||= node['rel'].split.uniq.sort
+      @rels ||= node["rel"].split.uniq.sort
     end
 
     # The node's text content.
@@ -86,14 +86,14 @@ module MicroMicro
     #
     # @return [String, nil]
     def title
-      @title ||= node['title']&.strip
+      @title ||= node["title"]&.strip
     end
 
     # The value of the node's +type+ attribute, if present.
     #
     # @return [String, nil]
     def type
-      @type ||= node['type']&.strip
+      @type ||= node["type"]&.strip
     end
 
     private

@@ -3,11 +3,11 @@
 module MicroMicro
   module Parsers
     class ImpliedPhotoPropertyParser < BaseImpliedPropertyParser
-      CSS_SELECTORS_ARRAY = ['> img[src]:only-of-type', '> object[data]:only-of-type'].freeze
+      CSS_SELECTORS_ARRAY = ["> img[src]:only-of-type", "> object[data]:only-of-type"].freeze
 
       HTML_ELEMENTS_MAP = {
-        'img'    => 'src',
-        'object' => 'data'
+        "img"    => "src",
+        "object" => "data"
       }.freeze
 
       # @see https://microformats.org/wiki/microformats2-parsing#parsing_for_implied_properties
@@ -19,7 +19,7 @@ module MicroMicro
       def value
         @value ||=
           if attribute_value
-            if candidate_node.matches?('img[alt], img[srcset]')
+            if candidate_node.matches?("img[alt], img[srcset]")
               ImageElementParser.new(candidate_node, attribute_value).to_h
             else
               attribute_value

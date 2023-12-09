@@ -3,9 +3,9 @@
 module MicroMicro
   class ImpliedProperty < Property
     IMPLIED_PROPERTY_PARSERS_MAP = {
-      'name'  => Parsers::ImpliedNamePropertyParser,
-      'photo' => Parsers::ImpliedPhotoPropertyParser,
-      'url'   => Parsers::ImpliedUrlPropertyParser
+      "name"  => Parsers::ImpliedNamePropertyParser,
+      "photo" => Parsers::ImpliedPhotoPropertyParser,
+      "url"   => Parsers::ImpliedUrlPropertyParser
     }.freeze
 
     private_constant :IMPLIED_PROPERTY_PARSERS_MAP

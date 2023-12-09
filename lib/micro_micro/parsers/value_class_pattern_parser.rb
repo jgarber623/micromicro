@@ -8,10 +8,10 @@ module MicroMicro
       # @see https://microformats.org/wiki/value-class-pattern#Date_and_time_values
       #   microformats.org: Value Class Pattern § Date and time values
       HTML_ATTRIBUTES_MAP = {
-        'alt'      => %w[area img],
-        'value'    => %w[data],
-        'title'    => %w[abbr],
-        'datetime' => %w[del ins time]
+        "alt"      => %w[area img],
+        "value"    => %w[data],
+        "title"    => %w[abbr],
+        "datetime" => %w[del ins time]
       }.freeze
 
       # @param context [Nokogiri::XML::NodeSet, Nokogiri::XML::Element]
@@ -34,14 +34,14 @@ module MicroMicro
       # @param node [Nokogiri::XML::Element]
       # @return [String, nil]
       def self.value_from(node)
-        return node['title'] if Helpers.value_title_node?(node)
+        return node["title"] if Helpers.value_title_node?(node)
 
         Helpers.attribute_value_from(node, HTML_ATTRIBUTES_MAP) || node.text
       end
 
       # @param node [Nokogiri::XML::Element]
       # @param separator [String]
-      def initialize(node, separator = '')
+      def initialize(node, separator = "")
         @node = node
         @separator = separator
       end

@@ -5,10 +5,10 @@ module MicroMicro
     include Collectible
 
     PROPERTY_PARSERS_MAP = {
-      'dt' => Parsers::DateTimePropertyParser,
-      'e'  => Parsers::EmbeddedMarkupPropertyParser,
-      'p'  => Parsers::PlainTextPropertyParser,
-      'u'  => Parsers::UrlPropertyParser
+      "dt" => Parsers::DateTimePropertyParser,
+      "e"  => Parsers::EmbeddedMarkupPropertyParser,
+      "p"  => Parsers::PlainTextPropertyParser,
+      "u"  => Parsers::UrlPropertyParser
     }.freeze
 
     private_constant :PROPERTY_PARSERS_MAP
@@ -70,21 +70,21 @@ module MicroMicro
     #   property value (e.g. +p-name+, +u-url+).
     def initialize(node, token)
       @node = node
-      @prefix, @name = token.split('-', 2)
+      @prefix, @name = token.split("-", 2)
     end
 
     # Is this {MicroMicro::Property} a datetime property?
     #
     # @return [Boolean]
     def date_time_property?
-      prefix == 'dt'
+      prefix == "dt"
     end
 
     # Is this {MicroMicro::Property} an embedded markup property?
     #
     # @return [Boolean]
     def embedded_markup_property?
-      prefix == 'e'
+      prefix == "e"
     end
 
     # Always return +false+ when asked if this {MicroMicro::Property} is an
@@ -130,14 +130,14 @@ module MicroMicro
     #
     # @return [Boolean]
     def plain_text_property?
-      prefix == 'p'
+      prefix == "p"
     end
 
     # Is this {MicroMicro::Property} a url property?
     #
     # @return [Boolean]
     def url_property?
-      prefix == 'u'
+      prefix == "u"
     end
 
     # Return this {MicroMicro::Property}'s parsed value.
@@ -152,8 +152,8 @@ module MicroMicro
 
           return hash.merge(parser.value) if embedded_markup_property?
 
-          p_property = item.properties.find_by(name: 'name') if plain_text_property?
-          u_property = item.properties.find_by(name: 'url') if url_property?
+          p_property = item.properties.find_by(name: "name") if plain_text_property?
+          u_property = item.properties.find_by(name: "url") if url_property?
 
           hash.merge(value: (p_property || u_property || parser).value)
         else

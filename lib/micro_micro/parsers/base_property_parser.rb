@@ -18,7 +18,7 @@ module MicroMicro
       def value
         @value ||=
           Helpers.text_content_from(node) do |context|
-            context.css('img').each { |img| img.content = " #{img['alt'] || img['src']} " }
+            context.css("img").each { |img| img.content = %( #{img["alt"] || img["src"]} ) }
           end
       end
 

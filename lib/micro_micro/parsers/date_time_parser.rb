@@ -62,15 +62,15 @@ module MicroMicro
       def normalized_hours
         @normalized_hours ||=
           if hours?
-            return (hours.to_i + 12).to_s if abbreviation&.tr('.', '')&.downcase == 'pm'
+            return (hours.to_i + 12).to_s if abbreviation&.tr(".", "")&.downcase == "pm"
 
-            format('%<hours>02d', hours: hours)
+            format("%<hours>02d", hours: hours)
           end
       end
 
       # @return [String]
       def normalized_minutes
-        @normalized_minutes ||= minutes || '00'
+        @normalized_minutes ||= minutes || "00"
       end
 
       # @return [String, nil]
@@ -80,12 +80,12 @@ module MicroMicro
 
       # @return [String, nil]
       def normalized_time
-        @normalized_time ||= [normalized_hours, normalized_minutes, seconds].compact.join(':') if normalized_hours
+        @normalized_time ||= [normalized_hours, normalized_minutes, seconds].compact.join(":") if normalized_hours
       end
 
       # @return [String, nil]
       def normalized_timezone
-        @normalized_timezone ||= zulu || offset&.tr(':', '')
+        @normalized_timezone ||= zulu || offset&.tr(":", "")
       end
 
       # @return [String, nil]

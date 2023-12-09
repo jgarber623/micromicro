@@ -15,7 +15,7 @@ module MicroMicro
 
       # @return [String, nil]
       def alt
-        @alt ||= node['alt']&.strip
+        @alt ||= node["alt"]&.strip
       end
 
       # @return [Boolean]
@@ -25,7 +25,7 @@ module MicroMicro
 
       # @return [Hash{Symbol => String}, nil]
       def srcset
-        @srcset ||= image_candidates if node['srcset']
+        @srcset ||= image_candidates if node["srcset"]
       end
 
       # @return [Boolean]
@@ -50,11 +50,11 @@ module MicroMicro
 
       # @return [Hash{Symbol => String}]
       def image_candidates
-        node['srcset']
-          .split(',')
+        node["srcset"]
+          .split(",")
           .each_with_object({}) do |candidate, hash|
             candidate.strip.match(/^(.+?)(\s+.+)?$/) do
-              key = (Regexp.last_match(2) || '1x').strip.to_sym
+              key = (Regexp.last_match(2) || "1x").strip.to_sym
 
               hash[key] = Regexp.last_match(1) unless hash[key]
             end

@@ -4,15 +4,15 @@ module MicroMicro
   module Parsers
     class UrlPropertyParser < BasePropertyParser
       HTML_ATTRIBUTES_MAP = {
-        'href'   => %w[a area link],
-        'src'    => %w[audio iframe img source video],
-        'poster' => %w[video],
-        'data'   => %w[object]
+        "href"   => %w[a area link],
+        "src"    => %w[audio iframe img source video],
+        "poster" => %w[video],
+        "data"   => %w[object]
       }.freeze
 
       EXTENDED_HTML_ATTRIBUTES_MAP = {
-        'title' => %w[abbr],
-        'value' => %w[data input]
+        "title" => %w[abbr],
+        "value" => %w[data input]
       }.freeze
 
       # @see https://microformats.org/wiki/microformats2-parsing#parsing_a_u-_property
@@ -23,7 +23,7 @@ module MicroMicro
       # @return [String, Hash{Symbol => String}]
       def value
         @value ||=
-          if node.matches?('img[alt], img[srcset]')
+          if node.matches?("img[alt], img[srcset]")
             ImageElementParser.new(node, resolved_value).to_h
           else
             resolved_value

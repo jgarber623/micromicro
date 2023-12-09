@@ -5,10 +5,10 @@ module MicroMicro
     # Parse a string of HTML for microformats2-encoded data.
     #
     # @example Parse a String of markup
-    #   MicroMicro::Document.new('<a href="/" class="h-card" rel="me">Jason Garber</a>', 'https://sixtwothree.org')
+    #   MicroMicro::Document.new(%(<a href="/" class="h-card" rel="me">Jason Garber</a>), "https://sixtwothree.org")
     #
     # @example Parse a String of markup from a URL
-    #   url = 'https://tantek.com'
+    #   url = "https://tantek.com"
     #   markup = Net::HTTP.get(URI.parse(url))
     #
     #   doc = MicroMicro::Document.new(markup, url)
@@ -57,7 +57,7 @@ module MicroMicro
       {
         items: items.to_a,
         rels: relationships.group_by_rel,
-        'rel-urls': relationships.group_by_url
+        "rel-urls": relationships.group_by_url
       }
     end
 
