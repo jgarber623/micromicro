@@ -91,7 +91,7 @@ module MicroMicro
       #
       # @return [Array<String, Hash>]
       def values
-        @values ||= map(&:value).uniq
+        @values ||= Set[*map(&:value)].to_a
       end
 
       # Search this collection for {MicroMicro::Property}s matching the given
