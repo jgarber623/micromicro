@@ -3,9 +3,9 @@
 RSpec.describe MicroMicro::Property do
   subject(:property) { MicroMicro.parse(markup, base_url).items.first.properties.first }
 
-  let(:base_url) { 'http://example.com' }
+  let(:base_url) { "http://example.com" }
 
-  describe '#item' do
+  describe "#item" do
     let(:markup) do
       <<~HTML.chomp
         <article class="h-entry">
@@ -19,7 +19,7 @@ RSpec.describe MicroMicro::Property do
     its(:item) { is_expected.to be_nil }
   end
 
-  describe '#value' do
+  describe "#value" do
     let(:markup) do
       <<~HTML.chomp
         <article class="h-entry">
@@ -38,10 +38,10 @@ RSpec.describe MicroMicro::Property do
           html: %(<p>Hello, world!</p>\n    <p>by <a href="https://sixtwothree.org/" class="p-name u-url">Jason Garber</a></p>),
           # rubocop:enable Layout/LineLength
           properties: {
-            name: ['Jason Garber'],
-            url: ['https://sixtwothree.org/']
+            name: ["Jason Garber"],
+            url: ["https://sixtwothree.org/"]
           },
-          type: ['h-card'],
+          type: ["h-card"],
           value: %(Hello, world!\n    by Jason Garber)
         }
       )

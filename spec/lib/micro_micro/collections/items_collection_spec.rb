@@ -3,7 +3,7 @@
 RSpec.describe MicroMicro::Collections::ItemsCollection do
   subject(:items_collection) { MicroMicro.parse(markup, base_url).items }
 
-  let(:base_url) { 'http://example.com' }
+  let(:base_url) { "http://example.com" }
 
   let(:markup) do
     <<~HTML.chomp
@@ -13,5 +13,5 @@ RSpec.describe MicroMicro::Collections::ItemsCollection do
     HTML
   end
 
-  its(:types) { is_expected.to eq(['h-entry']) }
+  its(:types) { is_expected.to eq(["h-entry"]) }
 end

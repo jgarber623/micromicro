@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-RSpec.describe MicroMicro::Collections::RelationshipsCollection, '#find_by' do
-  let(:base_url) { 'https://jgarber.example' }
+RSpec.describe MicroMicro::Collections::RelationshipsCollection, "#find_by" do
+  let(:base_url) { "https://jgarber.example" }
 
   let(:document) { MicroMicro.parse(markup, base_url) }
 
@@ -15,35 +15,35 @@ RSpec.describe MicroMicro::Collections::RelationshipsCollection, '#find_by' do
     HTML
   end
 
-  context 'when given neither params nor a block' do
+  context "when given neither params nor a block" do
     subject(:relationship) { relationships.find_by }
 
     it { is_expected.to eq(relationship) }
   end
 
-  context 'when no match' do
-    subject(:relationship) { relationships.find_by(rels: ['foo']) }
+  context "when no match" do
+    subject(:relationship) { relationships.find_by(rels: ["foo"]) }
 
     it { is_expected.to be_nil }
   end
 
-  context 'when given Hash params' do
-    context 'when value is a String' do
-      subject(:relationship) { relationships.find_by(rels: 'home') }
+  context "when given Hash params" do
+    context "when value is a String" do
+      subject(:relationship) { relationships.find_by(rels: "home") }
 
-      its(:rels) { is_expected.to eq(['home']) }
+      its(:rels) { is_expected.to eq(["home"]) }
     end
 
-    context 'when value is an Array' do
+    context "when value is an Array" do
       subject(:relationship) { relationships.find_by(rels: %w[me webmention]) }
 
-      its(:rels) { is_expected.to eq(['webmention']) }
+      its(:rels) { is_expected.to eq(["webmention"]) }
     end
   end
 
-  context 'when given a block' do
+  context "when given a block" do
     subject(:relationship) { relationships.find_by { |rel| rel.text.match?(/\sGarber\Z/) } }
 
-    its(:rels) { is_expected.to eq(['me']) }
+    its(:rels) { is_expected.to eq(["me"]) }
   end
 end
