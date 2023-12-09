@@ -39,10 +39,10 @@ module MicroMicro
 
       # Define getter and predicate methods for all possible named captures
       # returned by the DATE_TIME_TIMEZONE_REGEXP regular expression.
-      [
-        :year, :ordinal, :month, :day,
-        :hours, :minutes, :seconds,
-        :abbreviation, :zulu, :offset
+      %i[
+        year ordinal month day
+        hours minutes seconds
+        abbreviation zulu offset
       ].each do |name|
         define_method(name) { values[name] }
         define_method("#{name}?") { public_send(name).present? }
