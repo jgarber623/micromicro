@@ -73,7 +73,7 @@ module MicroMicro
     #
     # @return [Array<String>]
     def rels
-      @rels ||= node["rel"].split.uniq.sort
+      @rels ||= Set[*node["rel"].split].to_a.sort
     end
 
     # The node's text content.

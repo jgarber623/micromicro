@@ -58,7 +58,7 @@ module MicroMicro
       #
       # @return [Array<String>]
       def types
-        @types ||= flat_map(&:types).uniq.sort
+        @types ||= Set[*flat_map(&:types)].to_a.sort
       end
 
       # Recursively search this collection for {MicroMicro::Item}s matching the

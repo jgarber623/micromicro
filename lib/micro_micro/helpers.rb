@@ -54,7 +54,7 @@ module MicroMicro
     # @param node [Nokogiri::XML::Element]
     # @return [Array<String>]
     def self.root_class_names_from(node)
-      node.classes.grep(/^h(?:-[0-9a-z]+)?(?:-[a-z]+)+$/).uniq.sort
+      Set[*node.classes.grep(/^h(?:-[0-9a-z]+)?(?:-[a-z]+)+$/)].to_a.sort
     end
 
     # @see https://microformats.org/wiki/microformats2-parsing#parse_an_element_for_properties

@@ -37,7 +37,7 @@ module MicroMicro
       #
       # @return [Array<String>]
       def names
-        @names ||= map(&:name).uniq.sort
+        @names ||= Set[*map(&:name)].to_a.sort
       end
 
       # A collection of plain text {MicroMicro::Property}s parsed from the node.
