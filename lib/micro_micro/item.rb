@@ -74,7 +74,7 @@ module MicroMicro
     #
     # @return [String, nil]
     def id
-      @id ||= node['id']&.strip
+      @id ||= node["id"]&.strip
     end
 
     # Does this {MicroMicro::Item} have an +id+ attribute value?
@@ -140,7 +140,7 @@ module MicroMicro
 
     # @return [MicroMicro::ImpliedProperty]
     def implied_name
-      @implied_name ||= ImpliedProperty.new(node, 'p-name')
+      @implied_name ||= ImpliedProperty.new(node, "p-name")
     end
 
     # @return [Boolean]
@@ -150,7 +150,7 @@ module MicroMicro
 
     # @return [MicroMicro::ImpliedProperty]
     def implied_photo
-      @implied_photo ||= ImpliedProperty.new(node, 'u-photo')
+      @implied_photo ||= ImpliedProperty.new(node, "u-photo")
     end
 
     # @return [Boolean]
@@ -160,7 +160,7 @@ module MicroMicro
 
     # @return [MicroMicro::ImpliedProperty]
     def implied_url
-      @implied_url ||= ImpliedProperty.new(node, 'u-url')
+      @implied_url ||= ImpliedProperty.new(node, "u-url")
     end
 
     # @return [Boolean]
@@ -170,7 +170,7 @@ module MicroMicro
 
     # @return [Boolean]
     def imply_name?
-      properties.names.none?('name') &&
+      properties.names.none?("name") &&
         properties.none?(&:embedded_markup_property?) &&
         properties.none?(&:plain_text_property?) &&
         !nested_items?
@@ -178,14 +178,14 @@ module MicroMicro
 
     # @return [Boolean]
     def imply_photo?
-      properties.names.none?('photo') &&
+      properties.names.none?("photo") &&
         properties.reject(&:implied?).none?(&:url_property?) &&
         !nested_items?
     end
 
     # @return [Boolean]
     def imply_url?
-      properties.names.none?('url') &&
+      properties.names.none?("url") &&
         properties.reject(&:implied?).none?(&:url_property?) &&
         !nested_items?
     end

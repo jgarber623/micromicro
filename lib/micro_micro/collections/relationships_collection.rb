@@ -83,10 +83,10 @@ module MicroMicro
       # values may be either a String or an Array of Strings.
       #
       # @example Search using a Hash with a String value
-      #   MicroMicro.parse(markup, url).relationships.where(rels: 'webmention')
+      #   MicroMicro.parse(markup, url).relationships.where(rels: "webmention")
       #
       # @example Search using a Hash with an Array value
-      #   MicroMicro.parse(markup, url).relationships.where(rels: ['me', 'webmention'])
+      #   MicroMicro.parse(markup, url).relationships.where(rels: ["me", "webmention"])
       #
       # When passing a block, each {MicroMicro::Relationship} in this collection
       # is yielded to the block and the returned collection will include

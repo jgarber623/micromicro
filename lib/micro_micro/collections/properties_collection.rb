@@ -103,10 +103,10 @@ module MicroMicro
       # either a String or an Array of Strings.
       #
       # @example Search using a Hash with a String value
-      #   MicroMicro.parse(markup, url).properties.where(name: 'url')
+      #   MicroMicro.parse(markup, url).properties.where(name: "url")
       #
       # @example Search using a Hash with an Array value
-      #   MicroMicro.parse(markup, url).properties.where(name: ['name', 'url'])
+      #   MicroMicro.parse(markup, url).properties.where(name: ["name", "url"])
       #
       # When passing a block, each {MicroMicro::Property} in this collection
       # is yielded to the block and the returned collection will include

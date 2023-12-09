@@ -79,7 +79,7 @@ module MicroMicro
     # @param node [Nokogiri::XML::Element]
     # @return [Boolean]
     def self.value_class_node?(node)
-      node.classes.include?('value')
+      node.classes.include?("value")
     end
 
     # @see https://microformats.org/wiki/value-class-pattern#Parsing_value_from_a_title_attribute
@@ -88,7 +88,7 @@ module MicroMicro
     # @param node [Nokogiri::XML::Element]
     # @return [Boolean]
     def self.value_title_node?(node)
-      node.classes.include?('value-title')
+      node.classes.include?("value-title")
     end
   end
 end

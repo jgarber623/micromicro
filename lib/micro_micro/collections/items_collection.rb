@@ -70,10 +70,10 @@ module MicroMicro
       # either a String or an Array of Strings.
       #
       # @example Search using a Hash with a String value
-      #   MicroMicro.parse(markup, url).items.where(types: 'h-card')
+      #   MicroMicro.parse(markup, url).items.where(types: "h-card")
       #
       # @example Search using a Hash with an Array value
-      #   MicroMicro.parse(markup, url).items.where(types: ['h-card', 'h-entry'])
+      #   MicroMicro.parse(markup, url).items.where(types: ["h-card", "h-entry"])
       #
       # When passing a block, each {MicroMicro::Item} in this collection is
       # yielded to the block and the returned collection will include
@@ -82,7 +82,7 @@ module MicroMicro
       #
       # @example Search using a block
       #   MicroMicro.parse(markup, url).items.where do |item|
-      #     item.properties.names.include?('email')
+      #     item.properties.names.include?("email")
       #   end
       #
       # @param args [Hash{Symbol => String, Array<String>}]

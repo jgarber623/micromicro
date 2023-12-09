@@ -3,11 +3,11 @@
 module MicroMicro
   module Parsers
     class ImpliedUrlPropertyParser < BaseImpliedPropertyParser
-      CSS_SELECTORS_ARRAY = ['> a[href]:only-of-type', '> area[href]:only-of-type'].freeze
+      CSS_SELECTORS_ARRAY = ["> a[href]:only-of-type", "> area[href]:only-of-type"].freeze
 
       HTML_ELEMENTS_MAP = {
-        'a'    => 'href',
-        'area' => 'href'
+        "a"    => "href",
+        "area" => "href"
       }.freeze
 
       # @see https://microformats.org/wiki/microformats2-parsing#parsing_for_implied_properties

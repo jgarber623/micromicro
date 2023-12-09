@@ -4,9 +4,9 @@ module MicroMicro
   module Parsers
     class ImpliedNamePropertyParser < BaseImpliedPropertyParser
       HTML_ELEMENTS_MAP = {
-        'img'  => 'alt',
-        'area' => 'alt',
-        'abbr' => 'title'
+        "img"  => "alt",
+        "area" => "alt",
+        "abbr" => "title"
       }.freeze
 
       # @see https://microformats.org/wiki/microformats2-parsing#parsing_for_implied_properties
@@ -22,15 +22,15 @@ module MicroMicro
       # @return [Array]
       def child_nodes
         [
-          node.at_css('> :only-child'),
-          node.at_css('> :only-child > :only-child')
+          node.at_css("> :only-child"),
+          node.at_css("> :only-child > :only-child")
         ].compact.reject { |child_node| Helpers.item_node?(child_node) }
       end
 
       # @return [String]
       def text_content
         Helpers.text_content_from(node) do |context|
-          context.css('img').each { |img| img.content = img['alt'] }
+          context.css("img").each { |img| img.content = img["alt"] }
         end
       end
     end
