@@ -5,8 +5,6 @@
 [![Gem](https://img.shields.io/gem/v/micromicro.svg?logo=rubygems&style=for-the-badge)](https://rubygems.org/gems/micromicro)
 [![Downloads](https://img.shields.io/gem/dt/micromicro.svg?logo=rubygems&style=for-the-badge)](https://rubygems.org/gems/micromicro)
 [![Build](https://img.shields.io/github/actions/workflow/status/jgarber623/micromicro/ci.yml?branch=main&logo=github&style=for-the-badge)](https://github.com/jgarber623/micromicro/actions/workflows/ci.yml)
-[![Maintainability](https://img.shields.io/codeclimate/maintainability/jgarber623/micromicro.svg?logo=code-climate&style=for-the-badge)](https://codeclimate.com/github/jgarber623/micromicro)
-[![Coverage](https://img.shields.io/codeclimate/c/jgarber623/micromicro.svg?logo=code-climate&style=for-the-badge)](https://codeclimate.com/github/jgarber623/micromicro/code)
 
 ## Key Features
 
