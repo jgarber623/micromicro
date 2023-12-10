@@ -26,7 +26,7 @@ module MicroMicro
 
         nodes << node.first_element_child.at_css(*CSS_SELECTORS_ARRAY) if node.element_children.one?
 
-        nodes.compact.reject { |child_node| Helpers.item_node?(child_node) }
+        nodes.reject { |child_node| child_node.nil? || Helpers.item_node?(child_node) }
       end
     end
   end

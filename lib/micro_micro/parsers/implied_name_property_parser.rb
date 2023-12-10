@@ -24,7 +24,7 @@ module MicroMicro
         [
           node.at_css("> :only-child"),
           node.at_css("> :only-child > :only-child")
-        ].compact.reject { |child_node| Helpers.item_node?(child_node) }
+        ].reject { |child_node| child_node.nil? || Helpers.item_node?(child_node) }
       end
 
       # @return [String]

@@ -11,8 +11,7 @@ module MicroMicro
     def self.from_context(context)
       context
         .css(%([href][rel]:not([rel=""])))
-        .reject { |node| Helpers.ignore_nodes?(node.ancestors) }
-        .map { |node| new(node) }
+        .filter_map { |node| new(node) unless Helpers.ignore_nodes?(node.ancestors) }
     end
 
     # Parse a node for relationship data.
