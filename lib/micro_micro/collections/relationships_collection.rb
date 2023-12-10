@@ -62,7 +62,7 @@ module MicroMicro
       #
       # @return [Array<String>]
       def rels
-        @rels ||= flat_map(&:rels).uniq.sort
+        @rels ||= Set[*flat_map(&:rels)].to_a.sort
       end
 
       # Retrieve an Array of this collection's unique {MicroMicro::Relationship}
@@ -72,7 +72,7 @@ module MicroMicro
       #
       # @return [Array<String>]
       def urls
-        @urls ||= map(&:href).uniq.sort
+        @urls ||= Set[*map(&:href)].to_a.sort
       end
 
       # Search this collection for {MicroMicro::Relationship}s matching the
