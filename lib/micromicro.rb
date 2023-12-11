@@ -10,7 +10,6 @@ require "nokogiri"
 require "nokogiri/html-ext"
 
 require_relative "micro_micro/version"
-require_relative "micro_micro/collectible"
 require_relative "micro_micro/helpers"
 
 require_relative "micro_micro/parsers/date_time_parser"
