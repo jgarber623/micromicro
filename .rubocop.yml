@@ -13,3 +13,8 @@ Layout/HashAlignment:
 # Checks if examples contain too many `expect` calls.
 RSpec/MultipleExpectations:
   Max: 2
+
+# Sort `require` and `require_relative` in alphabetical order.
+Style/RequireOrder:
+  Exclude:
+    - lib/micromicro.rb
