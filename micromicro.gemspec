@@ -3,7 +3,7 @@
 require_relative "lib/micro_micro/version"
 
 Gem::Specification.new do |spec|
-  spec.required_ruby_version = ">= 3.0", "< 4"
+  spec.required_ruby_version = ">= 3.0"
 
   spec.name          = "micromicro"
   spec.version       = MicroMicro::VERSION
