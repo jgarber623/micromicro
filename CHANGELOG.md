@@ -1,5 +1,27 @@
 # Changelog
 
+## 5.0.0 / 2023-12-11
+
+- Remove upper version constraint (#79) (86f09d8)
+- Miscellaneous cleanup (#78) (4023177)
+  - **Breaking change:** remove `Collectible` module (`next_all` and `prev_all`
+    no longer mixed in to various collection classes)
+  - reduce reliance on ActiveSupport
+- Address RuboCop Performance warnings (#77) (2d5d0c2)
+- RuboCop formatting fixes (#76) (9ab491e)
+- RuboCop: Single quotes within interpolated string (#75) (37f66c0)
+- RuboCop: `Style/StringLiterals` (#74) (918b58a)
+- Address RuboCop `Style/StringLiterals` warnings' (#73) (3fb3cf4)
+- Add IRB config file (#72) (1ce9fab)
+- Update project files (#71) (85a5dd4)
+- Remove CodeClimate references (#70) (0b86c34)
+- RuboCop: `Style/PerlBackrefs` (a360af0)
+- RuboCop: `Lint/RedundantDirGlobSort` (15c8aca)
+- RuboCop: `Style/RedundantRegexpArgument` (8c93eb7)
+- RuboCop: `Style/RedundantFreeze` (feaee51)
+- **Breaking change:** Set minimum supported Ruby to 3.0 (f39dbef)
+- **Breaking change:** Update development Ruby to v3.0.6 (6869e22)
+
 ## 4.0.0 / 2023-03-14
 
 - Parse HTML with `Nokogiri::HTML5::Document.parse` (330a2d1, 0de40d7)
