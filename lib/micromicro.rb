@@ -5,13 +5,11 @@ require "forwardable"
 require "active_support/core_ext/array/grouping"
 require "active_support/core_ext/enumerable"
 require "active_support/core_ext/hash/deep_transform_values"
-require "active_support/core_ext/hash/except"
 require "active_support/core_ext/object/blank"
 require "nokogiri"
 require "nokogiri/html-ext"
 
 require_relative "micro_micro/version"
-require_relative "micro_micro/collectible"
 require_relative "micro_micro/helpers"
 
 require_relative "micro_micro/parsers/date_time_parser"

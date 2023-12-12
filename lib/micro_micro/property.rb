@@ -2,8 +2,6 @@
 
 module MicroMicro
   class Property
-    include Collectible
-
     PROPERTY_PARSERS_MAP = {
       "dt" => Parsers::DateTimePropertyParser,
       "e"  => Parsers::EmbeddedMarkupPropertyParser,
@@ -34,6 +32,12 @@ module MicroMicro
     end
 
     private_constant :PropertyNodeSearch
+
+    # The {MicroMicro::PropertiesCollection} to which this
+    # {MicroMicro::Property} belongs.
+    #
+    # @return [MicroMicro::PropertiesCollection]
+    attr_accessor :collection
 
     # This {MicroMicro::Property}'s +name+ value.
     #

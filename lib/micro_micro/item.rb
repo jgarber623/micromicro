@@ -2,8 +2,6 @@
 
 module MicroMicro
   class Item
-    include Collectible
-
     class ItemNodeSearch
       attr_reader :node_set
 
@@ -29,6 +27,11 @@ module MicroMicro
     end
 
     private_constant :ItemNodeSearch
+
+    # The {MicroMicro::ItemsCollection} to which this {MicroMicro::Item} belongs.
+    #
+    # @return [MicroMicro::PropertiesCollection]
+    attr_accessor :collection
 
     # Extract {MicroMicro::Item}s from a context.
     #

@@ -2,7 +2,11 @@
 
 module MicroMicro
   class Relationship
-    include Collectible
+    # The {MicroMicro::RelationshipsCollection} to which this
+    # {MicroMicro::Relationship} belongs.
+    #
+    # @return [MicroMicro::RelationshipsCollection]
+    attr_accessor :collection
 
     # Extract {MicroMicro::Relationship}s from a context.
     #
