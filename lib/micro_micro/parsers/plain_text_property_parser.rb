@@ -4,9 +4,9 @@ module MicroMicro
   module Parsers
     class PlainTextPropertyParser < BasePropertyParser
       HTML_ATTRIBUTES_MAP = {
-        "title" => %w[abbr link],
-        "value" => %w[data input],
-        "alt"   => %w[area img]
+        "title" => ["abbr", "link"],
+        "value" => ["data", "input"],
+        "alt"   => ["area", "img"]
       }.freeze
 
       # @see https://microformats.org/wiki/microformats2-parsing#parsing_a_p-_property

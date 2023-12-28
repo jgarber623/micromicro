@@ -35,7 +35,7 @@ RSpec.describe MicroMicro::Collections::RelationshipsCollection, "#find_by" do
     end
 
     context "when value is an Array" do
-      subject(:relationship) { relationships.find_by(rels: %w[me webmention]) }
+      subject(:relationship) { relationships.find_by(rels: ["me", "webmention"]) }
 
       its(:rels) { is_expected.to eq(["webmention"]) }
     end

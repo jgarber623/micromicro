@@ -4,9 +4,9 @@ module MicroMicro
   module Parsers
     class DateTimePropertyParser < BasePropertyParser
       HTML_ATTRIBUTES_MAP = {
-        "datetime" => %w[del ins time],
-        "title"    => %w[abbr],
-        "value"    => %w[data input]
+        "datetime" => ["del", "ins", "time"],
+        "title"    => ["abbr"],
+        "value"    => ["data", "input"]
       }.freeze
 
       # @see https://microformats.org/wiki/microformats2-parsing#parsing_a_dt-_property

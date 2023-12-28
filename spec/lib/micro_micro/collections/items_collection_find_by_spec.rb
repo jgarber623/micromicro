@@ -43,7 +43,7 @@ RSpec.describe MicroMicro::Collections::ItemsCollection, "#find_by" do
     end
 
     context "when value is an Array" do
-      subject(:item) { items.find_by(types: %w[h-entry h-card]) }
+      subject(:item) { items.find_by(types: ["h-entry", "h-card"]) }
 
       its(:id) { is_expected.to eq("post-1") }
     end

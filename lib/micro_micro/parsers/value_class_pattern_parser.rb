@@ -8,10 +8,10 @@ module MicroMicro
       # @see https://microformats.org/wiki/value-class-pattern#Date_and_time_values
       #   microformats.org: Value Class Pattern § Date and time values
       HTML_ATTRIBUTES_MAP = {
-        "alt"      => %w[area img],
-        "value"    => %w[data],
-        "title"    => %w[abbr],
-        "datetime" => %w[del ins time]
+        "alt"      => ["area", "img"],
+        "value"    => ["data"],
+        "title"    => ["abbr"],
+        "datetime" => ["del", "ins", "time"]
       }.freeze
 
       # @param context [Nokogiri::XML::NodeSet, Nokogiri::XML::Element]
