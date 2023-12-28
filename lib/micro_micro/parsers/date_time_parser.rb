@@ -41,7 +41,7 @@ module MicroMicro
       # returned by the DATE_TIME_TIMEZONE_REGEXP regular expression.
       [:year, :ordinal, :month, :day, :hours, :minutes, :seconds, :abbreviation, :zulu, :offset].each do |name|
         define_method(name) { values[name] }
-        define_method("#{name}?") { public_send(name).present? }
+        define_method(:"#{name}?") { public_send(name).present? }
       end
 
       # @return [String, nil]
