@@ -2,7 +2,7 @@
 
 module MicroMicro
   module Helpers
-    IGNORED_NODE_NAMES = %w[script style template].freeze
+    IGNORED_NODE_NAMES = ["script", "style", "template"].freeze
 
     private_constant :IGNORED_NODE_NAMES
 

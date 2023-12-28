@@ -16,7 +16,7 @@ RSpec.describe MicroMicro::Collections::PropertiesCollection do
     HTML
   end
 
-  its(:names) { is_expected.to eq(%w[author name url]) }
+  its(:names) { is_expected.to eq(["author", "name", "url"]) }
 
   its(:values) do
     is_expected.to eq(

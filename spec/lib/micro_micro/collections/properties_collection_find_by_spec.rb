@@ -38,7 +38,7 @@ RSpec.describe MicroMicro::Collections::PropertiesCollection, "#find_by" do
     end
 
     context "when value is an Array" do
-      subject(:property) { properties.find_by(name: %w[author name]) }
+      subject(:property) { properties.find_by(name: ["author", "name"]) }
 
       its(:value) { is_expected.to eq("Hello, world!") }
     end

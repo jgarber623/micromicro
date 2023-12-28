@@ -4,20 +4,20 @@ require "json"
 
 module FixturesHelpers
   module MicroformatsTestSuite
-    TEST_CASE_TYPES = %w[
-      microformats-v2/h-adr
-      microformats-v2/h-card
-      microformats-v2/h-entry
-      microformats-v2/h-event
-      microformats-v2/h-feed
-      microformats-v2/h-geo
-      microformats-v2/h-product
-      microformats-v2/h-recipe
-      microformats-v2/h-resume
-      microformats-v2/h-review
-      microformats-v2/h-review-aggregate
-      microformats-v2/mixed
-      microformats-v2/rel
+    TEST_CASE_TYPES = [
+      "microformats-v2/h-adr",
+      "microformats-v2/h-card",
+      "microformats-v2/h-entry",
+      "microformats-v2/h-event",
+      "microformats-v2/h-feed",
+      "microformats-v2/h-geo",
+      "microformats-v2/h-product",
+      "microformats-v2/h-recipe",
+      "microformats-v2/h-resume",
+      "microformats-v2/h-review",
+      "microformats-v2/h-review-aggregate",
+      "microformats-v2/mixed",
+      "microformats-v2/rel"
     ].freeze
 
     def self.test_case_base_path
@@ -32,9 +32,9 @@ module FixturesHelpers
   end
 
   module MicroMicroTestSuite
-    TEST_CASE_TYPES = %w[
-      h-card
-      h-entry
+    TEST_CASE_TYPES = [
+      "h-card",
+      "h-entry"
     ].freeze
 
     def self.test_case_base_path
