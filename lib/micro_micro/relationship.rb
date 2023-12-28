@@ -44,7 +44,7 @@ module MicroMicro
     #
     # :nocov:
     def inspect
-      "#<#{self.class}:#{format('%#0x', object_id)} " \
+      "#<#{self.class}:#{format("%#0x", object_id)} " \
         "href: #{href.inspect}, " \
         "rels: #{rels.inspect}>"
     end

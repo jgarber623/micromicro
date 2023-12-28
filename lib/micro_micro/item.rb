@@ -91,7 +91,7 @@ module MicroMicro
     #
     # :nocov:
     def inspect
-      "#<#{self.class}:#{format('%#0x', object_id)} " \
+      "#<#{self.class}:#{format("%#0x", object_id)} " \
         "types: #{types.inspect}, " \
         "properties: #{properties.count}, " \
         "children: #{children.count}>"
