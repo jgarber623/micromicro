@@ -21,6 +21,8 @@ jobs:
         with:
           bundler-cache: true
       - uses: rubygems/release-gem@v1
+        with:
+          await-release: false
   publish-to-github-packages:
     name: Publish to GitHub Packages
     permissions:
