@@ -1,5 +1,14 @@
 # Changelog
 
+## 5.0.1 / 2024-01-01
+
+- Use rubygems/release-gem action (#81) (ab39770)
+- RuboCop: Style/WordArray (227a223)
+- RuboCop: Style/StringLiteralsInInterpolation (f5c350c)
+- RuboCop: Style/SymbolArray (6ccd949)
+- RuboCop: Performance/StringIdentifierArgument (477e25a)
+- Add `source_code_uri` to metadata (b3f49cf)
+
 ## 5.0.0 / 2023-12-11
 
 - Remove upper version constraint (#79) (86f09d8)
