@@ -13,5 +13,5 @@ RSpec.describe MicroMicro, ".parse" do
     HTML
   end
 
-  it { is_expected.to be_a(MicroMicro::Document) }
+  it { is_expected.to be_a(described_class::Document) }
 end
