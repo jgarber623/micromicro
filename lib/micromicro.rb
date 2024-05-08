@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "forwardable"
+require "uri"
 
 require "active_support/core_ext/array/grouping"
 require "active_support/core_ext/enumerable"
