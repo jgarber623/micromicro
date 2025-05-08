@@ -1,3 +1,6 @@
+> [!IMPORTANT]
+> This project has moved to [codeberg.org/jgarber/micromicro](https://codeberg.org/jgarber/micromicro).
+> 
 # MicroMicro
 
 **A Ruby gem for extracting [microformats2](https://microformats.org/wiki/microformats2)-encoded data from HTML documents.**
